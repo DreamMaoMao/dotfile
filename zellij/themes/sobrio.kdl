@@ -1,0 +1,15 @@
+themes {
+   sobrio {
+        fg "#8A8A8A"
+        bg "#040A0A"
+        red "#AF0000"
+        green "#7ac04b"
+        yellow "#df8e1d"
+        blue "#8caaee"
+        magenta "#ea76cb"
+        orange "#fe640b"
+        cyan "#99d1db"
+        black "#040A0A"
+        white "#c4a86f"
+    }
+}

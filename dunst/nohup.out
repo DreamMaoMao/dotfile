@@ -1,0 +1,21 @@
+WARNING: Setting always_run_scripts in section global doesn't exist
+ (+) Audio --aid=1 (vorbis 2ch 44100Hz)
+AO: [pipewire] 44100Hz stereo 2ch floatp
+[KA: 00:00:00 / 00:00:00 (0%)[KA: -00:00:00 / 00:00:00 (0%)
+
+Exiting... (End of file)
+ (+) Audio --aid=1 (vorbis 2ch 44100Hz)
+AO: [pipewire] 44100Hz stereo 2ch floatp
+[KA: -00:00:00 / 00:00:00 (0%)
+
+Exiting... (End of file)
+ (+) Audio --aid=1 (vorbis 2ch 44100Hz)
+AO: [pipewire] 44100Hz stereo 2ch floatp
+[KA: -00:00:00 / 00:00:00 (0%)
+
+Exiting... (End of file)
+ (+) Audio --aid=1 (vorbis 2ch 44100Hz)
+AO: [pipewire] 44100Hz stereo 2ch floatp
+[KA: -00:00:00 / 00:00:00 (0%)
+
+Exiting... (End of file)

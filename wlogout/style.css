@@ -1,0 +1,51 @@
+window {
+    font-family: CaskaydiaCove Nerd Font, monospace;
+    font-size: 12pt;
+    color: #f4dfcd; 
+    background-color: rgba(46, 42, 30, 0.69);
+}
+
+button {
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 40px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-size: 60%;
+    border: none;
+    color: #d5b497;
+    text-shadow: none;
+    border-radius: 20px 20px 20px 20px;
+    background-color: rgba(121, 81, 1, 0);
+    margin: 1px;
+    transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: rgba(184, 149, 80, 0.3);
+}
+
+#lock {
+    background-image: image(url("/home/wrq/.config/wlogout/icons/lock.png"));
+    background-size: 70%;
+}
+
+#logout {
+    background-image: image(url("/home/wrq/.config/wlogout/icons/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("/home/wrq/.config/wlogout/icons/sleep.png"));
+} 
+
+#shutdown {
+    background-image: image(url("/home/wrq/.config/wlogout/icons/power.png"));
+}
+
+#reboot {
+    background-image: image(url("/home/wrq/.config/wlogout/icons/restart.png"));
+}
+
+#hibernate {
+    background-image: image(url("/home/wrq/.config/wlogout/icons/hibernate.png"));
+}

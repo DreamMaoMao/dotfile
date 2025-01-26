@@ -1,0 +1,32 @@
+configuration {
+	font: "JetBrainsMono Nerd Font 20";
+  run-list-command: "";
+  drun-match-fields: "keywords,name";
+  modi: "drun,website:~/.config/rofi/website.py";
+  // cache-dir: "/home/wrq/.cache";
+  drun-use-desktop-cache: true;
+  drun-reload-desktop-cache:true;
+  input-method: "fcitx";
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+
+
+}
+
+
+
+//@theme "/usr/local/share/rofi/themes/android_notification.rasi"
+
+//@theme "/usr/local/share/rofi/themes/material.rasi"
+
+//@theme "/usr/local/share/rofi/themes/fancy2.rasi"
+
+//@theme "/usr/local/share/rofi/themes/arthur.rasi"
+
+@theme "~/.config/rofi/themes/fancy2.rasi"

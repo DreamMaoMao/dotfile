@@ -1,0 +1,373 @@
+* {
+  all: unset;
+  transition: 200ms ease-out;
+}
+
+.system-menu {
+  // background-color: $bg;
+  border-radius: 20px;
+  border: 2px solid #d4c390;
+  background-color: rgba(37, 40, 38,0.8);
+
+}
+
+.first-row-system {
+  margin: 20px 30px 10px 0px;
+}
+
+.second-row-system {
+  margin: 30px 30px 10px 0px;
+}
+
+.main-wifi-box-on {
+  background-color: $blue;
+  color: $bg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+
+.right-items-box {
+
+  margin-left: 580px;
+
+}
+
+
+.main-wifi-box-off {
+  background-color: $gray-alt;
+  color: $fg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-wifi-button {
+  font-size: 28px;
+  padding: 0px 15px 0px 15px;
+}
+
+.wifi-labels-box {
+  margin: 20px 10px 20px 0px;
+  font-size: 18px;
+}
+
+.wifi-label-button {
+  font-weight: bold;
+}
+
+.main-bluetooth-box-on {
+  background-color: $blue;
+  color: $bg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-bluetooth-box-off {
+  background-color: $gray-alt;
+  color: $fg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-bluetooth-button {
+  font-size: 28px;
+  padding: 0px 15px 0px 15px;
+}
+
+.bluetooth-labels-box {
+  margin: 20px 30px 20px 0px;
+  font-size: 18px;
+}
+
+.bluetooth-label-button {
+  font-weight: bold;
+}
+
+.seperator {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 40px;
+  color: $gray;
+  font-weight: bold;
+}
+
+.main-Shadow-box-on {
+  background-color: $blue;
+  color: $bg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-Shadow-box-off {
+  background-color: $gray-alt;
+  color: $fg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-Shadow-button {
+  font-size: 28px;
+  padding: 0px 15px 0px 15px;
+}
+
+.Shadow-labels-box {
+  margin: 20px 10px 20px 0px;
+  font-size: 18px;
+}
+
+.Shadow-label-button {
+  font-weight: bold;
+}
+
+.main-volume-box-on {
+  background-color: $blue;
+  color: $bg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-volume-box-off {
+  background-color: $gray-alt;
+  color: $fg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-volume-button {
+  font-size: 32px;
+  padding: 0px 15px 0px 15px;
+}
+
+.volume-labels-box {
+  margin: 20px 55px 20px 0px;
+  font-size: 18px;
+}
+
+.volume-label-button {
+  font-weight: bold;
+}
+
+
+.main-dnd-box-on {
+  background-color: $blue;
+  color: $bg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-dnd-box-off {
+  background-color: $gray-alt;
+  color: $fg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-dnd-button {
+  font-size: 28px;
+  padding: 0px 15px 0px 15px;
+}
+
+.dnd-labels-box {
+  margin: 20px 10px 20px 0px;
+  font-size: 18px;
+}
+
+.dnd-label-button {
+  font-weight: bold;
+}
+
+
+.main-redshift-box-on {
+  background-color: $blue;
+  color: $bg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-redshift-box-off {
+  background-color: $gray-alt;
+  color: $fg;
+  margin-left: 30px;
+  border-radius: 15px;
+}
+
+.main-redshift-button {
+  font-size: 28px;
+  padding: 0px 15px 0px 15px;
+}
+
+.redshift-labels-box {
+  margin: 20px 20px 20px 0px;
+  font-size: 18px;
+}
+
+.redshift-label-button {
+  font-weight: bold;
+}
+
+.arrow {
+  font-family: "feather";
+  font-size: 28px;
+  color: $gray;
+  padding-right: 10px;
+}
+
+.sliders-system {
+  margin: 20px 0px 20px 35px;
+}
+
+.volume-slider-icon {
+  color: $green-light;
+  font-size: 28px;
+  text-shadow: 0px 0px 4px #000000;
+}
+
+.brightness-slider-icon {
+  color: $yellow;
+  font-size: 24px;
+  text-shadow: 0px 0px 4px #000000;
+}
+
+.volume-slider {
+  margin-left: 20px;
+}
+
+.volume-slider trough {
+  padding: 0.5em;
+  background-color: $gray-alt;
+  border-radius: 15px;
+}
+
+.volume-slider highlight {
+  padding: 0.5em;
+  background-color: $green-light;
+  border-radius: 15px;
+}
+
+
+.brightness-slider {
+  margin-left: 25px;
+}
+
+.brightness-slider trough {
+  padding: 0.5em;
+  background-color: $gray-alt;
+  border-radius: 15px;
+}
+
+.brightness-slider highlight {
+  padding: 0.5em;
+  background-color: $yellow;
+  border-radius: 15px;
+}
+
+.volume-slider-button {
+  font-size: 22px;
+  margin: 0px 20px 0px 20px;
+  background-color: $gray-alt;
+  padding: 4px 5px 4px 5px;
+  border-radius: 100px;
+  font-weight: bold;
+  font-family: "feather";
+}
+
+.brightness-slider-button {
+  font-size: 22px;
+  margin: 0px 20px 0px 20px;
+  background-color: $gray-alt;
+  padding: 4px 5px 4px 5px;
+  border-radius: 100px;
+  font-weight: bold;
+  font-family: "feather";
+}
+
+.menu-profile-items-box {
+  background-color: $gray-alt;
+  margin: 20px 0px 0px 30px;
+  border-radius: 20px;
+}
+
+.menu-profile-image {
+  min-height: 20px;
+  min-width: 20px;
+  background-size: cover;
+  border-radius: 100px;
+  margin: 10px 0px 10px 10px;
+}
+
+.menu-profile-name {
+  margin: 3px 20px 0px 0px;
+}
+
+.color-picker {
+  font-size: 18px;
+  margin: 20px 0px 0px 0px;
+  background-color: $gray-alt;
+  border-radius: 100px;
+  padding: 0px 11px 0px 11px;
+}
+
+.menu-settings {
+  font-size: 18px;
+  margin: 20px 0px 0px 390px;
+  background-color: $gray-alt;
+  border-radius: 100px;
+  padding: 0px 11px 0px 11px;
+}
+
+.menu-power {
+  font-size: 18px;
+  margin: 20px 0px 0px 0px;
+  background-color: $gray-alt;
+  border-radius: 100px;
+  padding: 0px 11px 0px 11px;
+}
+
+.menu-exit {
+  font-size: 18px;
+  margin: 20px 5px 0px 0px;
+  background-color: $gray-alt;
+  border-radius: 100px;
+  padding: 0px 10px 0px 10px;
+}
+
+.battery-box {
+  margin: 5px 0px 20px 35px;
+}
+
+.power-profiles-box {
+  margin: 5px 30px 20px 20px;
+}
+
+.battery-icon {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 22px;
+}
+
+.battery-percentage {
+  font-family: "Sofia Pro";
+  font-weight: 500;
+  font-size: 22px;
+  margin: 5px 0px 15px 0px;
+}
+
+.battery-icon-charging {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 22px;
+  color: $green;
+}
+
+.balanced-icon {
+  font-size: 20px;
+  color: $rel-blue;
+}
+
+.performance-icon {
+  font-size: 20px;
+  color: $red;
+}
+
+.profile-switcher {
+  font-size: 40px;
+  padding: 0px 10px 0px 10px;
+  margin: 0px 10px 0px 5px;
+}

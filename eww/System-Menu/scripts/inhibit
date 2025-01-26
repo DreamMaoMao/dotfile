@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+STATUS="$(ps aux | grep -v grep |grep idleinhibit.sh)"
+
+icon() {
+    if [[ "$STATUS" == "" ]]; then
+        echo ""
+    else
+        echo ""
+    fi
+}
+
+toggle() {
+    if [[ $STATUS == "" ]]; then
+        $HOME/.config/eww/System-Menu/scripts/idleinhibit.sh &
+        notify-send --urgency=low "Shadow" "Shadow has been turned on!"
+    else
+        ps aux | grep -v grep |grep idleinhibit.sh | awk '{print $2}' | xargs kill
+        notify-send --urgency=low "Shadow" "Shadow has been turned off!"
+    fi
+}
+
+status() {
+    if [[ $STATUS == "" ]]; then
+        echo "Off"
+    else
+        echo "On"
+    fi
+}
+
+if [[ $1 == "--toggle" ]]; then
+    toggle
+elif [[ $1 == "--icon" ]]; then
+    icon
+elif [[ $1 == "--status" ]]; then
+    status
+fi

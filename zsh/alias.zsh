@@ -1,0 +1,5 @@
+# alias ls='ls --color=tty'
+alias ls='lsd'
+alias ll='lsd -lrt'
+alias lg='lazygit'
+alias e='exit'

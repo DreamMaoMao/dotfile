@@ -1,0 +1,29 @@
+
+; (defvar     notifications   "{}")
+
+
+
+
+
+; (deflisten  events      :initial "[]" `scripts/events get`)
+
+
+; (defvar real_name "Demeter")
+; (defvar user_name "@Aylur")
+
+
+; (include "./yuck/widgets.yuck")
+; (include "./yuck/windows.yuck")
+; (include "./setups/leftbar.yuck")
+
+(include "./System-Menu/eww.yuck")
+(include "./Misc/eww.yuck")
+
+(defwidget closer []
+    (eventbox :onclick "eww close-all"))
+  
+(defwindow background-closer
+  :monitor 0
+  :geometry (geometry :width "100%" :height "100%")
+  :stacking "fg"
+  (closer))

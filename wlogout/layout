@@ -1,0 +1,41 @@
+{
+    "label" : "lock",
+    "action" : "/home/wrq/.config/wlogout/scripts/anction lock",
+    "text" : "  Lock   ",
+    "keybind" : "l"
+}
+
+{
+    "label" : "logout",
+    "action" : "/home/wrq/.config/wlogout/scripts/anction logout",
+    "text" : " Logout  ",
+    "keybind" : "m"
+}
+
+{
+    "label" : "shutdown",
+    "action" : "/home/wrq/.config/wlogout/scripts/anction shutdown",
+    "text" : "Shutdown ",
+    "keybind" : "d"
+}
+
+{
+    "label" : "reboot",
+    "action" : "/home/wrq/.config/wlogout/scripts/anction reboot",
+    "text" : " Reboot  ",
+    "keybind" : "r"
+}
+
+{
+    "label" : "suspend",
+    "action" : "/home/wrq/.config/wlogout/scripts/anction suspend",
+    "text" : " Suspend ",
+    "keybind" : "s"
+}
+
+{
+    "label" : "hibernate",
+    "action" : "/home/wrq/.config/wlogout/scripts/anction hibernate",
+    "text" : "Hibernate",
+    "keybind" : "h"
+}

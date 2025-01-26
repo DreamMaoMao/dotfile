@@ -1,0 +1,18 @@
+* {
+  bg: rgba(45, 41, 36, 0.7);
+  bg-alt: #555040;
+
+  fg: #cea67e;
+  fg-alt: #cea67e;
+
+  text-color: #cea67e;
+
+  borders: #ff4647;
+  borders-alt: #cea67e;
+  background-color: @bg;
+  
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 15;
+}

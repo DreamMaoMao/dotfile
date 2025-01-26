@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+#if (("$TERM" != "xterm-kitty")); then
+#	exit 0
+#fi
+
+kitty +kitten icat \
+	--transfer-mode=file \
+	--clear 2>/dev/null

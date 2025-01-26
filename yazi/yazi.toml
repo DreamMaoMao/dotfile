@@ -1,0 +1,163 @@
+[manager]
+layout         = [ 1, 4, 3 ]
+sort_by        = "natural"
+sort_sensitive = true
+sort_reverse   = false
+sort_dir_first = true
+linemode       = "none"
+show_hidden    = false
+show_symlink   = true
+scrolloff      = 0
+
+[preview]
+tab_size        = 2
+max_width       = 600
+max_height      = 900
+cache_dir       = ""
+image_delay     = 30
+ueberzug_scale  = 1
+ueberzug_offset = [ 0, 0, 0, 0 ]
+
+[opener]
+folder = [
+	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
+	{ run = '''fish -c "lazygit -p "$1""''', block = true,desc = "lazygit", for = "linux" },
+	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
+	{ run = 'basename "$@" | xargs -I {} tar --use-compress-program=pigz -cf ~/down/{}.tar.gz {}',orphan = true, desc = "archive" , for = "linux"  },
+	{ run = 'GDK_BACKEND=x11 nemo "$@"',orphan = true, desc = "nemo" , for = "linux" },
+
+]
+archive = [
+	# { run = 'basename "$@" | xargs tar xf ', orphan = true, desc = "tar xf" , for = "linux" },
+	# { run = 'basename "$@" | xargs tar xzf ', orphan = true, desc = "tar xzf" , for = "linux" },
+	# { run = 'unzip "$1"', orphan = true, desc = "unzip" , for = "linux" },
+	# { run = 'unar "$1"', orphan = true, desc = "unrar" , for = "linux" },
+	{ run = 'ouch decompress "$1" ', orphan = true, desc = "ouch decompress" , for = "linux" },
+]
+
+text = [
+	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
+	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
+	{ run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit"  , for = "linux"},
+	# { run = 'nemo "$@"',orphan = true, desc = "nemo"  , for = "linux" },
+	{ run = 'zathura "$@"',orphan = true, desc = "zathura"  , for = "linux" },
+]
+image = [
+	{ run = 'eog  "$@"',  orphan = true, desc = "eog" , for = "linux"},
+	{ run = 'feh "$@"',  orphan = true, desc = "feh" , for = "linux"},
+]
+video = [
+	{ run = 'mpv "$@" ', orphan = true, desc = "mpv" , for = "linux" },
+	{ run = 'GDK_BACKEND=x11 nemo "$@"',orphan = true, desc = "nemo"  , for = "linux" },
+
+]
+audio = [
+	{ run = 'mpv "$@" ' , orphan = true, desc = "mpv" , for = "linux"},
+]
+
+document = [
+	{ run = 'xdg-open "$@"', orphan = true, desc = "xdg-open" , for = "linux" },
+	{ run = 'zathura "$@" ' , orphan = true, desc = "zathura" , for = "linux"},
+	{ run = 'evince "$@" ' , orphan = true, desc = "evince" , for = "linux"},
+	{ run = 'GTK_IM_MODULE=fcitx5 foliate "$@" ' , orphan = true, desc = "foliate" , for = "linux"},
+]
+
+fallback = [
+	{ run = 'xdg-open "$@"', orphan = true, desc = "xdg-open" , for = "linux" },
+	{ run = 'GDK_BACKEND=x11 nemo "$@"', orphan = true, desc = "nemo" , for = "linux" },	
+]
+
+[open]
+rules = [
+	{ name = "*/", use = ["folder"] },
+
+	{ mime = "text/*", use = ["text"] },
+	{ mime = "image/*", use = ["image"] },
+	{ mime = "video/*", use = ["video"] },
+	{ mime = "application/octet-stream",use = ["video"]},
+	{ mime = "audio/*", use = ["audio"] },
+	{ mime = "inode/empty", use = ["text"] },
+	{ mime = "application/json", use = ["text"] },
+
+	{ mime = "application/zip", use = ["archive"] },
+	{ mime = "application/gzip", use = ["archive"] },
+	{ mime = "application/x-bzip", use = ["archive"] },
+	{ mime = "application/x-bzip2", use = ["archive"] },
+	{ mime = "application/x-tar", use = ["archive"] },
+	{ mime = "application/x-7z-compressed", use = ["archive"] },
+	{ mime = "application/x-rar", use = ["archive"] },
+	{ mime = "application/pdf", use = ["document"] },
+	{ mime = "application/epub+zip", use = ["document"] },
+	{ mime = "application/x-mobipocket-ebook", use = ["document"] },
+
+	{ mime = "*", use = ["fallback"] },
+]
+
+[tasks]
+micro_workers = 5
+macro_workers = 10
+bizarre_retry = 5
+
+[log]
+enabled = false
+
+
+[plugin]
+prepend_previewers = [
+  { name = "*.md", run = "glow" },
+  { name = "*.html", run = "html" },
+  { mime = "text/html", run = "html" },
+  { mime = "application/epub+zip", run = "epub-preview" },
+  { mime= "application/octet-stream", run = "video"}
+]
+
+prepend_preloaders= [
+	# { mime = "image/{avif,hei?,jxl,svg+xml}", run = "disable" },
+	# { mime = "image/*", run = "disable" },
+	# Video
+	{ mime = "video/*", run = "disable" },
+	# PDF
+	# { mime = "application/pdf", run = "disable" },
+	# Font
+	{ mime = "font/*", run = "disable" },
+	{ mime = "application/vnd.ms-opentype", run = "disable" },
+]
+
+[[plugin.prepend_fetchers]]
+id   = "mime"
+if   = "!(mime|dummy)"
+name = "*"
+run  = "mime-ext"
+prio = "high"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"
+
+
+[[plugin.prepend_fetchers]]
+id   = "current-size"
+name = "*"
+run  = "current-size"
+
+[[plugin.prepend_fetchers]]
+id   = "current-size"
+name = "*/"
+run  = "current-size"
+
+
+# fetchers = [
+# 	# Mimetype
+# 	{ id = "mime-ext", name = "*", run = "mime-ext", prio = "high" },
+# 	{ id = "git", name = "*", run = "git", prio = "normal" },
+# 	{ id = "git", name = "*/", run = "git", prio = "normal" },
+# 	{ id = "current-size", name = "*/", run = "current-size", prio = "normal" },
+# 	{ id = "current-size", name = "*", run = "current-size",prio = "normal" },
+# ]
+#

@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+
+eww open-many --toggle background-closer system-menu

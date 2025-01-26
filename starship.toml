@@ -1,0 +1,4 @@
+[custom.parent]
+command = "cat /proc/$$/status | awk '/PPid/{print $2}' |xargs -I {} cat /proc/{}/status | awk '/PPid/{print $2}' |xargs -I {} cat /proc/{}/status | awk '/PPid/{print $2}' | xargs -I {} cat /proc/{}/status | awk '/Name/{print $2}'"
+when = "true"
+format = "[<$output> ](red bold)"

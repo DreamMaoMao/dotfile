@@ -1,0 +1,30 @@
+#!/usr/bin/bash
+
+case $1 in
+    shutdown)
+        eww close powermenu
+        shutdown now
+        ;;
+    reboot)
+        eww close powermenu
+        reboot
+        ;;
+    logout)
+        eww close powermenu
+        ~/.config/eww/Misc/scripts/logout
+        ;;
+    suspend)
+        eww close powermenu
+        systemctl suspend
+        ;;
+    sleep)
+        eww close powermenu
+        systemctl hibernate
+        ;;
+    lock)
+        eww close powermenu
+        swaylock -f -c 000000 &
+        ;;
+    *)
+        echo "error"
+esac

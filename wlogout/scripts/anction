@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+
+case $1 in
+    shutdown)
+        shutdown now
+        ;;
+    reboot)
+        reboot
+        ;;
+    logout)
+        pkill dwl 
+        hyprctl dispatch exit
+        ;;
+    suspend)
+        systemctl suspend
+        ;;
+    hibernate)
+        systemctl hibernate
+        ;;
+    lock)
+        swaylock -f -c 000000 &
+        ;;
+    *)
+        echo "error"
+esac

@@ -1,0 +1,29 @@
+# A theme for the lsd utility. Based on the Solarized color theme.
+# LIGHT VERSION
+user: "#cbb686"
+group: "#cbb686"
+permission:
+  read: "#e96962"
+  write: "#edc073"
+  exec: "#8ac94b"
+  exec-sticky: 125
+  no-access: "#cbb686"
+  octal: 37
+  acl: 37
+  context: 235
+date:
+  hour-old: "#92d46e"
+  day-old: "#65be35"
+  older: "#3faf03"
+size:
+  none: "#715f64"
+  small: "#dc9dae"
+  medium: "#d3496e"
+  large: "#cb193d"
+inode:
+  valid: 61
+  invalid: 160
+links:
+  valid: "#64a83f"
+  invalid: 235
+tree-edge: 235

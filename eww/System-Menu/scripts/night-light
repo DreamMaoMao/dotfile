@@ -1,0 +1,53 @@
+#!/usr/bin/bash
+
+if [[ "$XDG_SESSION_TYPE" == "x11" ]];then
+    is_active=$(pgrep redshift)
+else
+    is_active=$(pgrep wlsunset)
+fi
+
+toggle() {
+    if [[ -n $is_active ]]; then
+        if [[ "$XDG_SESSION_TYPE" == "x11" ]];then
+            pkill redshift
+        else
+            pkill wlsunset
+        fi
+        notify-send -i $HOME/tool/sunlight.jpeg --urgency=normal "Night Light" "Night Light has been turned off!"
+    else
+        if [[ "$XDG_SESSION_TYPE" == "x11" ]];then
+            redshift &           
+        else
+            wlsunset -T 3501 -t 3500 &
+        fi
+        notify-send -i $HOME/tool/nightlight.jpg --urgency=normal "Night Light" "Night Light has been turned on!"
+    fi
+}
+
+icon() {
+    if [[ -n $is_active ]]; then
+        echo "󰛨"
+        exit 1
+    else
+        echo "󰹏"
+        exit 1
+    fi
+}
+
+status() {
+    if [[ -n $is_active ]]; then
+        echo "Turned on"
+        exit 1
+    else
+        echo "Turned off"
+        exit 1
+    fi
+}
+
+if [[ $1 == "--toggle" ]]; then
+    toggle
+elif [[ $1 == "--icon" ]]; then
+    icon
+elif [[ $1 == "--status" ]]; then
+    status
+fi

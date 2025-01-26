@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+pkill dwm 
+pkill dwl 
+hyprctl dispatch exit

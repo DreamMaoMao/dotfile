@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [[ $1 == "settings" ]]; then
+    cd $HOME
+    /usr/local/bin/eww close-all
+    gnome-tweaks
+elif [[ $1 == "volume" ]]; then
+    cd $HOME
+    /usr/local/bin/eww close-all
+    pavucontrol
+elif [[ $1 == "display" ]]; then
+    cd $HOME
+    /usr/local/bin/eww close-all
+    xfce4-display-settings
+elif [[ $1 == "power" ]]; then
+    cd $HOME
+    /usr/local/bin/eww close-all
+    xfce4-power-manager --restart
+elif [[ $1 == "exit" ]]; then
+    cd $HOME
+    /usr/local/bin/eww close-all
+    /usr/local/bin/eww open-many --toggle background-closer powermenu 
+elif [[ $1 == "wifi" ]]; then
+    cd $HOME
+    /usr/local/bin/eww close-all
+    ~/.config//usr/local/bin/eww/System-Menu/scripts/networkmanager_dmenu 
+fi 

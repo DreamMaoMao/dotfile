@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+MODE=$(cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor | tail -1)
+
+cpu_num=$( ls /sys/devices/system/cpu/ | grep -E "cpu[0-9]+"  | wc -l )
+
+toggle() {
+    if [[ "$MODE" == "schedutil" ]]; then
+        while (( $cpu_num > 0 ));do
+            cpu_num=$(( $cpu_num - 1 ))
+            sudo cpupower -c $cpu_num frequency-set -g performance 
+        done
+    else
+        while (( $cpu_num > 0 ));do
+            cpu_num=$(( $cpu_num - 1 ))
+            sudo cpupower -c $cpu_num frequency-set -g schedutil 
+        done
+    fi
+}
+
+icon() {
+    if [[ "$MODE" == "schedutil" ]]; then
+        echo "󰔢"
+    else
+        echo "󰔡"
+    fi
+}
+
+if [[ $1 == "--toggle" ]]; then
+    toggle
+elif [[ $1 == "--mode" ]]; then
+    echo $MODE
+elif [[ $1 == "--icon" ]]; then
+    icon
+fi
