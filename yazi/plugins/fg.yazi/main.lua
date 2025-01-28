@@ -224,7 +224,7 @@ function M:entry(job)
 	end
 
 	if default_action == "nvim" or get_option() == "nvim" then
-		os.execute("nvim +"..line_number.." -n "..file_url.." 2> /dev/null")
+		os.execute("nvim +"..line_number.." -n "..file_url)
 	elseif (default_action == "jump" or get_option() == "jump") and file_url ~= ""  then
 		ya.manager_emit(file_url:match("[/\\]$") and "cd" or "reveal", { file_url })
 	else
