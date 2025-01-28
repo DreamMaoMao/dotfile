@@ -87,7 +87,7 @@ watch() {
   notification_mode=${1:-with-notifications}
 
   # Wayland -> X11
-  wl-paste --watch bash -c "clipsync insert $notification_mode" &
+  wl-paste --type text --watch bash -c "clipsync insert $notification_mode" &
 
   # X11 -> Wayland
   while clipnotify; do
