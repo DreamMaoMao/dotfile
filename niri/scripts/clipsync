@@ -26,7 +26,7 @@ insert() {
   # Read all the piped input into variable.
   value=$(cat)
   wValue=$(wl-paste -n 2>/dev/null || echo "")
-  xValue=$(xclip -o -selection clipboard -rmlastnl -t text/uri-list 2>/dev/null || echo "")
+  xValue=$(xclip -o -selection clipboard 2>/dev/null || echo "")
 
   notify() {
     if [ "$1" != "without-notifications" ]; then
@@ -52,7 +52,11 @@ insert() {
   if [ "$value" == "$wValue" ]; then
     if [ "$value" != "$xValue" ]; then
       notify "$1" "Wayland"
-      echo -n "$value" | xclip -selection clipboard -rmlastnl -t text/uri-list 
+      if [[ "$value" =~ ^file?:// ]]; then
+          echo -n "$value" | xclip -selection clipboard -rmlastnl -t text/uri-list
+      else
+          echo -n "$value" | xclip -i -selection clipboard -t text/plain
+      fi
       # Add to cliphist if it's installed
       if command -v cliphist >/dev/null 2>&1; then
         echo -n "$value" | cliphist store
@@ -83,20 +87,19 @@ watch() {
   notification_mode=${1:-with-notifications}
 
   # Wayland -> X11
-  wl-paste --type text/uri-list --watch bash -c "clipsync insert $notification_mode" &
+  wl-paste --watch bash -c "clipsync insert $notification_mode" &
 
   # X11 -> Wayland
   while clipnotify; do
-    xclip -o -selection clipboard -rmlastnl -t text/uri-list 2>/dev/null | clipsync insert "$notification_mode"
+    xclip -o -selection clipboard 2>/dev/null | clipsync insert "$notification_mode"
   done &
 }
 
 # Kill all background processes related to clipsync
 stop_clipsync() {
-  pkill -f "wl-paste --type text/uri-list --watch"
+  pkill -f "wl-paste --watch"
   pkill clipnotify
-  pkill -f "xclip -selection clipboard -rmlastnl -t text/uri-list"
-  pkill -f "clipsync insert"
+  pkill -f "clipsync watch"
 }
 
 help() {
