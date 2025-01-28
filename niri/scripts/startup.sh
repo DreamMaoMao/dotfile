@@ -58,5 +58,4 @@ sway-audio-idle-inhibit &
 #light and volume panel
 swayosd-server &
 
-clipsync watch without-notifications
 sleep 1s && echo "Xft.dpi: 140" | xrdb -merge

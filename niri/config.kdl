@@ -41,10 +41,10 @@ layout {
     gaps 8
     always-center-single-column
     struts {
-        left 0
-        right 0
-        top 0
-        bottom 0
+        left 30
+        right 30
+        top 10
+        bottom 10
     }
     focus-ring { off; }
     border {
@@ -100,11 +100,11 @@ binds {
     Ctrl+Right { spawn "/home/wrq/.config/niri/scripts/workspace-right.sh"; }
     Mod+Left { focus-workspace-up; }
     Mod+Right { focus-workspace-down; }
-    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollDown cooldown-ms=150 { spawn "/home/wrq/.config/niri/scripts/workspace-right.sh"; }
+    Mod+WheelScrollUp cooldown-ms=150 { spawn "/home/wrq/.config/niri/scripts/workspace-left.sh"; }
     Alt+WheelScrollDown cooldown-ms=150 { focus-column-right; }
     Alt+WheelScrollUp cooldown-ms=150 { focus-column-left; }
-    MouseMiddle { maximize-column; }
+    MouseMiddle { switch-preset-column-width; }
     Mod+Return { spawn "google-chrome"; }
     Alt+Return { spawn "foot"; }
     Alt+Q { close-window; }
@@ -117,6 +117,13 @@ binds {
     Mod+Alt+Return { spawn "sh" "-c" "mpv --player-operation-mode=pseudo-gui"; }
     Ctrl+Return { spawn "sh" "-c" "bash ~/tool/clash.sh "; }
     Ctrl+Alt+Return { spawn "sh" "-c" "foot -e ~/tool/ter-multiplexer.sh"; }
+        // Ctrl+Alt+Return { spawn "sh" "-c" ""; }
+    Mod+Space { spawn "sh" "-c" "rofi -normal-window -theme  ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py"; }
+    Ctrl+Space { spawn "sh" "-c" "rofi -normal-window -theme ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/search.py "; }
+    Ctrl+Shift+Return { spawn "sh" "-c" "foot -e aerc"; }
+    Mod+L { spawn "sh" "-c" "swaylock -f -c 000000"; }
+
+
 
     Alt+Backslash { toggle-window-floating; }
 
@@ -190,6 +197,13 @@ window-rule {
 
 window-rule {
     match title="图片查看器"
+    open-focused true
+    open-floating true
+    opacity 1.000000
+}
+
+window-rule {
+    match app-id="Rofi"
     open-focused true
     open-floating true
     opacity 1.000000
