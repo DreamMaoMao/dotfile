@@ -116,6 +116,7 @@ binds {
     Ctrl+Alt+a { spawn "sh" "-c" "grim -g \"$(slurp)\" - | swappy -f -"; }
     Mod+Alt+Return { spawn "sh" "-c" "mpv --player-operation-mode=pseudo-gui"; }
     Ctrl+Return { spawn "sh" "-c" "bash ~/tool/clash.sh "; }
+    Ctrl+Alt+Return { spawn "sh" "-c" "foot -e ~/tool/ter-multiplexer.sh"; }
 
     Alt+Backslash { toggle-window-floating; }
 
