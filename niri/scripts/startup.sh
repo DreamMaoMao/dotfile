@@ -1,6 +1,9 @@
 #!/bin/bash
 set +e
 
+# start xwayland
+/usr/sbin/xwayland-satellite &
+
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
 waybar -c ~/.config/niri/waybar/config -s ~/.config/niri/waybar/style.css  &
 swaybg -i ~/Images/Fantasy-Medieval_Travern.png  &
@@ -22,7 +25,6 @@ wl-clip-persist --clipboard regular &
 wl-paste --type text --watch cliphist store & 
 
 #anther tool
-fcitx5  &
 wlsunset -T 3501 -t 3500 &
 swaync &
 blueman-applet &
@@ -40,7 +42,9 @@ sway-audio-idle-inhibit &
 #light and volume panel
 swayosd-server &
 
-# sets x11 dpi
-/usr/sbin/xwayland-satellite &
-sleep 1s && echo "Xft.dpi: 140" | xrdb -merge && xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 1
 
+# The following applications require some registration actions after xwayland launches
+
+sleep 1s 
+echo "Xft.dpi: 140" | xrdb -merge && xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 1
+fcitx5 --replace -d  &

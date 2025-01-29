@@ -106,23 +106,23 @@ binds {
     Alt+WheelScrollUp cooldown-ms=150 { focus-column-left; }
     MouseMiddle { switch-preset-column-width; }
     Mod+Return { spawn "google-chrome"; }
-    Alt+Return { spawn "foot"; }
+    Alt+Return { spawn "st"; }
     Alt+Q { close-window; }
     Alt+Space { spawn "wofi"; }
     Alt+f { fullscreen-window; }
     Alt+Left { focus-column-left; }
     Alt+Right { focus-column-right; }
-    Ctrl+Mod+Return { spawn "sh" "-c" "foot -e yazi"; }
+    Ctrl+Mod+Return { spawn "sh" "-c" "st -e yazi"; }
     Ctrl+Alt+a { spawn "sh" "-c" "grim -g \"$(slurp)\" - | swappy -f -"; }
     Mod+Alt+Return { spawn "sh" "-c" "mpv --player-operation-mode=pseudo-gui"; }
     Ctrl+Return { spawn "sh" "-c" "bash ~/tool/clash.sh "; }
-    Ctrl+Alt+Return { spawn "sh" "-c" "foot -e ~/tool/ter-multiplexer.sh"; }
+    Ctrl+Alt+Return { spawn "sh" "-c" "st -e ~/tool/ter-multiplexer.sh"; }
         // Ctrl+Alt+Return { spawn "sh" "-c" ""; }
     Mod+Space { spawn "sh" "-c" "rofi -normal-window -theme  ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py"; }
     Ctrl+Space { spawn "sh" "-c" "rofi -normal-window -theme ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/search.py "; }
-    Ctrl+Shift+Return { spawn "sh" "-c" "foot -e aerc"; }
+    Ctrl+Shift+Return { spawn "sh" "-c" "st -e aerc"; }
     Mod+L { spawn "sh" "-c" "swaylock -f -c 000000"; }
-
+    Mod+H {spawn "sh" "-c" "bash ~/tool/hide_waybar_niri.sh";}
 
 
     Alt+Backslash { toggle-window-floating; }
@@ -199,6 +199,14 @@ window-rule {
     open-focused true
     open-floating true
     opacity 1.000000
+}
+window-rule {
+    match app-id="yesplaymusic"
+    open-on-workspace "5"
+    open-focused true
+    open-floating true
+    opacity 1.000000
+    default-floating-position x=180 y=0 relative-to="bottom-left"
 }
 
 window-rule {
