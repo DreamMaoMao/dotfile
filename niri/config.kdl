@@ -173,7 +173,6 @@ workspace "8"
 workspace "9"
 
 
-spawn-at-startup "/usr/sbin/xwayland-satellite"
 spawn-at-startup "/home/wrq/.config/niri/scripts/startup.sh"
 
 window-rule {
