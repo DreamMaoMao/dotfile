@@ -20,7 +20,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term foot
+set $term st
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -249,7 +249,7 @@ bindsym Mod4+space exec /usr/bin/rofi -config ~/.config/rofi/themes/trans.rasi -
 bindsym Mod4+return exec google-chrome
 bindsym Ctrl+return exec bash ~/tool/clash.sh 
 bindsym Mod4+k exec bash ~/tool/wshowkey.sh 
-bindsym Ctrl+Mod4+return exec foot -e yazi
+bindsym Ctrl+Mod4+return exec st -e yazi
 bindsym Ctrl+Alt+a exec grim -g "$(slurp)" - | swappy -f -
 bindsym Ctrl+Alt+return exec konsole -e "~/tool/ter-multiplexer.sh"
 # bindsym Ctrl+Alt+return exec konsole -e "zellij -s temp --config /home/wrq/.config/zellij/tempconfigwayland.kdl"

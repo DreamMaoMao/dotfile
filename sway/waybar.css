@@ -39,35 +39,35 @@ window#waybar {
 
 #workspaces{
     background-color: transparent;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 8px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    margin-right: 1px;
     margin-left: 10px;
 }
 #workspaces button{
     box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: #fff ;
+    background-color: #eeefed ;
     padding-bottom: 1px;
     padding-top: 1px;
     margin-right: 8px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 7px;
+    padding-left: 7px;
     background-size: 300% 300%;
     font-weight: bolder;
-    color: 	#cba6f7 ;
+    color: 	rgb(143, 102, 168);
     border: none;
     border-bottom: 6px solid #d6cdcd;
-    border-radius: 15px;
+    border-radius: 15px;  
 }
 
-#workspaces button.visible{
+#workspaces button.focused{
     box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: rgb(202,158,230);
+    background-color: rgb(186, 142, 213);
     padding-bottom: 1px;
     padding-top: 1px;
     margin-right: 8px;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
     background-size: 300% 300%;
     font-weight: bolder;
     color: 	#fff ;
@@ -92,18 +92,49 @@ window#waybar {
     border-radius: 15px;
 }
 
+window#waybar.empty #window {
+    background-color: transparent;
+    color: transparent;
+    border-bottom:none;
+    box-shadow: none;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+
+#window{
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
+    /* text-shadow: 0 0 2px rgba(0, 0, 0, 0.8); */
+    background-color: rgb(216, 178, 133);
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-right: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-weight: bolder;
+    color: 	rgb(30, 17, 1);
+    border: none;
+    border-bottom: 6px solid rgb(193, 146, 103);
+    border-radius: 15px;
+}
+
+
 #taskbar{
     background-color: transparent;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 12px;
+    margin-bottom: 12px;
     margin-right: 8px;
-    margin-left: 8px;
+    margin-left: 1px;
 }
 
 #taskbar button{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
     /* text-shadow: 0 0 2px rgba(0, 0, 0, 0.8); */
-    background-color: rgb(237, 196, 147);
+    background-color: rgb(223, 185, 139);
     margin-right: 8px;
     padding-top: 4px;
     padding-bottom: 2px;
