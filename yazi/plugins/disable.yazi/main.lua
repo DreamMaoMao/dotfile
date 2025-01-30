@@ -3,7 +3,7 @@ local M = {}
 
 
 function M:preload()
-  return 1
+  return true
 end
 
 return M
