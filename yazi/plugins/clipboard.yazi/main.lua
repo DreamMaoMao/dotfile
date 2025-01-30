@@ -31,7 +31,7 @@ return {
 		child, _ = Command("bash"):args({"-c",args}):spawn()
 	elseif ya.target_family() == "unix" and os.getenv("XDG_SESSION_TYPE") == "wayland" then
 		files = table.concat(urls, [[" "]])
-		args = string.format([[for path in "%s"; do echo -en "file://${path}\n"; done | wl-copy -t text/uri-list; wl-paste | xclip -i -selection clipboard -rmlastnl -t text/uri-list]], files)
+		args = string.format([[for path in "%s"; do echo -en "file://${path}\n"; done | wl-copy -t text/uri-list;]], files)
 		child, _ = Command("bash"):args({"-c",args}):spawn()
   else
 			ya.notify({

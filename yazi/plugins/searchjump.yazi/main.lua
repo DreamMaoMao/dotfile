@@ -9985,15 +9985,23 @@ local insert_next_char = ya.sync(function(state,next_char)
 
     if next_char:byte() > 127 then
         if CH_TABLE[next_char] then
-            state.next_char[CH_TABLE[next_char][1]] = ""
-            if CH_TABLE[next_char][2] then
-                state.next_char[CH_TABLE[next_char][2]] = ""
+            for i = 1,#CH_TABLE[next_char] do
+                state.next_char[CH_TABLE[next_char][i]] = ""
             end
         end
     else
         state.next_char[next_char] = ""
     end
 end)
+
+local check_is_match_ch_char = function(target_char,ch_char_initial)
+    for i = 1,#ch_char_initial do
+        if target_char == ch_char_initial[i] then
+            return true
+        end
+    end
+    return false
+end
 
 local function get_match_position(name, find_str)
 	if find_str == "" or find_str == nil then
@@ -10035,7 +10043,7 @@ local function get_match_position(name, find_str)
             is_valid_ch_char = (is_ch_char and ch_char_initial)
 
             if is_valid_ch_char then
-                is_match_char = (find_str:sub(i,i) == ch_char_initial[1] or find_str:sub(i,i) == ch_char_initial[2])
+                is_match_char = check_is_match_ch_char(find_str:sub(i,i),ch_char_initial)
             else
                 is_match_char = find_str:sub(i,i) == index_wide_char
             end

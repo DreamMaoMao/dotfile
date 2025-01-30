@@ -1,10 +1,13 @@
 local FILES = {
+	[".envrc"] = "text/plain",
 	[".gitconfig"] = "text/plain",
 	[".gitignore"] = "text/plain",
 	[".luacheckrc"] = "text/lua",
+	[".styluaignore"] = "text/plain",
 	[".zshenv"] = "text/plain",
 	[".zshrc"] = "text/plain",
 	["cargo.lock"] = "application/json",
+	["flake.lock"] = "application/json",
 	license = "text/plain",
 }
 
@@ -69,6 +72,8 @@ local EXTS = {
 	bcpio = "application/bcpio",
 	bdf = "application/font-bdf",
 	bdm = "application/syncml.dm+wbxml",
+	bean = "text/plain",
+	beancount = "text/plain",
 	bed = "application/realvnc.bed",
 	bh2 = "application/fujitsu.oasysprs",
 	bin = "application/octet-stream",
@@ -599,6 +604,7 @@ local EXTS = {
 	p7s = "application/pkcs7-signature",
 	p8 = "application/pkcs8",
 	pas = "text/pascal",
+	patch = "text/diff",
 	paw = "application/pawaafile",
 	pbd = "application/powerbuilder6",
 	pbm = "image/portable-bitmap",
@@ -1057,13 +1063,16 @@ function M:setup(opts)
 end
 
 function M:fetch(job)
-
 	local opts = options()
 	local merged_files = ya.dict_merge(FILES, opts.with_files or {})
 	local merged_exts = ya.dict_merge(EXTS, opts.with_exts or {})
 
 	local updates, unknown = {}, {}
 	for _, file in ipairs(job.files) do
+		if file.cha.is_dummy then
+			goto continue
+		end
+
 		local mime
 		if file.cha.len == 0 then
 			mime = "inode/empty"
@@ -1079,11 +1088,11 @@ function M:fetch(job)
 		else
 			updates[tostring(file.url)] = "application/octet-stream"
 		end
+		::continue::
 	end
 
 	if next(updates) then
 		ya.manager_emit("update_mimes", { updates = updates })
-		ya.manager_emit("update_mimetype", { updates = updates }) -- TODO: remove this
 	end
 
 	if #unknown > 0 then
@@ -1091,7 +1100,10 @@ function M:fetch(job)
 		return require("mime"):fetch(job)
 	end
 
-	return 1
+	if not ya.__250127 then -- TODO: remove this
+		return 1
+	end
+	return true
 end
 
 return M

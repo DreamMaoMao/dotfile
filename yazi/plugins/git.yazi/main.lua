@@ -223,7 +223,7 @@ function M:fetch()
 	if path then
 		update_git_status(path)	
 	end
-	return 3
+	return true
 end
 
 return M
