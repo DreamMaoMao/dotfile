@@ -107,7 +107,7 @@ local M = {
 
 function M:fetch()
 	update_current_size()	
-	return true	
+	return false
 end
 
 return M
