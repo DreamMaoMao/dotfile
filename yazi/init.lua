@@ -66,7 +66,8 @@ require("cd-last"):setup()
 
 require("git"):setup()
 require("current-size"):setup({
-    folder_size_ignore = {"~","/","/home"},
+    equal_ignore = {"~","/","/home"}, -- full path match
+	-- sub_ignore = {"~/deskenv/master","~/deskenv/dev"} -- sub path match
 })
 
 require("full-border"):setup()

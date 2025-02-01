@@ -29,24 +29,44 @@ local flush_empty_folder_status = ya.sync(function(st)
 end)
 
 local set_opts_default = ya.sync(function(state)
-	if (state.opt_folder_size_ignore == nil) then
-		state.opt_folder_size_ignore = {}
+	if (state.opt_equal_ignore == nil) then
+		state.opt_equal_ignore = {}
+	end
+	if (state.opt_sub_ignore == nil) then
+		state.opt_sub_ignore = {}
 	end
 end)
 
-local update_current_size = ya.sync(function(st)
-	local cwd = cx.active.current.cwd
-
-	for _, value in ipairs(st.opt_folder_size_ignore) do
+local is_ignore_folder = ya.sync(function(st,cwd)
+	for _, value in ipairs(st.opt_equal_ignore) do
 		if value:sub(1,1) == "~" then
 			value = os.getenv("HOME")..value:sub(2,value:len())
 		end
 		if value == tostring(cwd) then
-			return
+			return true
 		elseif value.."/" == tostring(cwd) then
-			return
+			return true
 		end
 	end
+
+	for _, value in ipairs(st.opt_sub_ignore) do
+		if value:sub(1,1) == "~" then
+			value = os.getenv("HOME")..value:sub(2,value:len())
+		end
+		if string.find(tostring(cwd),value) == 1 then
+			return true
+		end
+	end
+
+	return false
+end)
+
+local update_current_size = ya.sync(function(st)
+	local cwd = cx.active.current.cwd
+	if is_ignore_folder(cwd) then
+		return
+	end
+
 	ya.manager_emit("plugin", { "current-size", args = ya.quote(tostring(cwd))})	
 end)
 
@@ -55,8 +75,12 @@ local M = {
 
 		set_opts_default()
 
-		if (opts ~= nil and opts.folder_size_ignore ~= nil ) then
-			st.opt_folder_size_ignore  = opts.folder_size_ignore
+		if (opts ~= nil and opts.equal_ignore ~= nil ) then
+			st.opt_equal_ignore  = opts.equal_ignore
+		end
+
+		if (opts ~= nil and opts.sub_ignore ~= nil ) then
+			st.opt_sub_ignore  = opts.sub_ignore
 		end
 		
 		local function header_size(self)
@@ -64,16 +88,7 @@ local M = {
 			if st.cwd ~= cwd then
 				st.cwd = cwd
 				local ignore_caculate_size = false
-				for _, value in ipairs(st.opt_folder_size_ignore) do
-					if value:sub(1,1) == "~" then
-						value = os.getenv("HOME")..value:sub(2,value:len())
-					end
-					if value == tostring(cwd) then
-						ignore_caculate_size = true
-					elseif value.."/" == tostring(cwd) then
-						ignore_caculate_size = true
-					end
-				end
+				ignore_caculate_size = is_ignore_folder(cwd)
 				clear_state()
 				if not ignore_caculate_size then
 					ya.manager_emit("plugin", { "current-size", args = ya.quote(tostring(cwd))})			
