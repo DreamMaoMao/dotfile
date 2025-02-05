@@ -19,7 +19,7 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 swaync &
 wlsunset -T 3501 -t 3500 &
 swaybg -i ~/Images/Fantasy-Medieval_Travern.png &
-waybar -c ~/.config/plume/waybar/config -s ~/.config/plume/waybar/style.css &
+waybar -c ~/.config/maomao/waybar/config -s ~/.config/maomao/waybar/style.css &
 echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 # cp ~/.config/zellij/configwayland.kdl ~/.config/zellij/config.kdl
 # cp ~/.config/fcitx/dwm_profile ~/.config/fcitx/profile -f

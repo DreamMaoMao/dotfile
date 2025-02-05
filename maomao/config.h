@@ -1,4 +1,4 @@
-/* speedie's plume config */
+/* speedie's maomao config */
 
 #define COLOR(hex)    { ((hex >> 24) & 0xFF) / 255.0f, \
                         ((hex >> 16) & 0xFF) / 255.0f, \
@@ -50,7 +50,7 @@ static int warpcursor = 1; /* Warp cursor to focused client */
 static const char *const autostart[] = {
 	"/bin/sh",
 	"-c",
-	"~/.config/plume/autostart.sh",
+	"~/.config/maomao/autostart.sh",
 	NULL,
 	NULL,
 };
@@ -194,12 +194,12 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
 
 /* commands */
 // static const char *termcmd[] = { "st", NULL };
-// static const char *menucmd[] = { "wofi --conf ~/.config/plume/wofi/config_menu", NULL };
+// static const char *menucmd[] = { "wofi --conf ~/.config/maomao/wofi/config_menu", NULL };
 
 static const Key keys[] = {
 	/* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
 	/* modifier                  			key                 	function        			argument */
-	{ MODKEY,					 			XKB_KEY_space,      	spawn,          			SHCMD("wofi --normal-window -c ~/.config/plume/wofi/config -s ~/.config/plume/wofi/style.css") },
+	{ MODKEY,					 			XKB_KEY_space,      	spawn,          			SHCMD("wofi --normal-window -c ~/.config/maomao/wofi/config -s ~/.config/maomao/wofi/style.css") },
 	{ MODKEY, 					 			XKB_KEY_Return,     	spawn,          			SHCMD("st") },
     { WLR_MODIFIER_LOGO,         			XKB_KEY_Return, 		spawn, 						SHCMD("google-chrome") },
     { WLR_MODIFIER_LOGO,         			XKB_KEY_space, 			spawn, 						SHCMD("microsoft-edge") },
@@ -224,7 +224,7 @@ static const Key keys[] = {
     { WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,   XKB_KEY_backslash, 		spawn, 						SHCMD("swaync-client -t") },  
     { WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,   XKB_KEY_BackSpace, 		spawn, 						SHCMD("swaync-client -C") }, 
     { WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT, XKB_KEY_P, 				spawn, 						SHCMD("wlr-randr --output eDP-1 --on") },    //打开笔记本显示器
-    { WLR_MODIFIER_LOGO,   					XKB_KEY_p, 				spawn, 						SHCMD("bash ~/.config/plume/scripts/monitor.sh") },   //关闭笔记本显示器
+    { WLR_MODIFIER_LOGO,   					XKB_KEY_p, 				spawn, 						SHCMD("bash ~/.config/maomao/scripts/monitor.sh") },   //关闭笔记本显示器
     { WLR_MODIFIER_LOGO,   					XKB_KEY_k, 				spawn, 						SHCMD("bash ~/tool/wshowkey.sh") },   //显示按键
 
 
