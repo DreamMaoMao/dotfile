@@ -8,8 +8,14 @@
 /* animaion */
 static const char *animation_type = "slide"; //是否启用动画 //slide,zoom
 static const bool animations = true; //是否启用动画
+static const char animation_fade_in = 1; // Enable animation fade in
 static const float zoom_initial_ratio = 0.5; //动画起始窗口比例
-static const uint32_t animation_duration = 300; //动画速度
+static const float fadeout_begin_opacity = 0.9; // Begin opacity for animations fadeout
+static const float fadein_begin_opacity = 0; // Begin opac window ratio for animations
+static const uint32_t animation_duration_move = 400; // Animation move speed
+static const uint32_t animation_duration_open = 400; // Animation open speed
+static const uint32_t animation_duration_close = 300; // Animation close speed
+static const uint32_t animation_duration_tag = 300; // Animation tag speed
 static const double animation_curve[4] = {0.46,1.0,0.29,0.99}; //动画曲线
 
 /* appearance */
