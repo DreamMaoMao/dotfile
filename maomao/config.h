@@ -16,6 +16,8 @@ static const double animation_curve[4] = {0.46,1.0,0.29,0.99}; //动画曲线
 static const unsigned int axis_bind_apply_timeout = 100; //滚轮绑定动作的触发的时间间隔
 static const unsigned int focus_on_activate = 1; //收到窗口激活请求是否自动跳转聚焦
 static const unsigned int new_is_master = 1; //新窗口是否插在头部
+static const unsigned int default_mfact = 0.55f; // master 窗口比例
+static const unsigned int default_nmaster = 1; //默认master数量
 /* logging */
 static int log_level = WLR_ERROR;
 static const unsigned int numlockon = 1; //是否打开右边小键盘
@@ -81,11 +83,11 @@ static const Rule rules[] = {
 	{ "Clash for Windows",  					NULL,       		0,       		1,   0, 	NULL,		0,-1, 1400,800},
 	{ "electron-netease-cloud-music",  			NULL,       		0,       		1,   0, 	NULL,		0,-1, 1300,900},
 	{ "yesplaymusic",  							NULL,       		1 << 4,       	1,   0, 	NULL,      0,-1, 1500,900},
-	{ NULL,  									"图片查看器",   	  0,       		  1,   0, 	NULL,		 0,-1, 0,0},
-	{ NULL,  									"图片查看",     	 0,       		  1,   0, 	NULL,		 0,-1, 0,0},
-	{ NULL,  									"选择文件",     	 0,       		  1,   0, 	NULL,		 0,-1, 1200,800},
-	{ NULL,  									"打开文件",     	 0,       		 1,   0, 	NULL,		 0,-1, 1200,800},
-	/* { "polkit-gnome-authentication-agent-1",  	NULL,       		0,       		1,   0, 	NULL,		1,-1, 930,230}, */
+	{ NULL,  									"图片查看器",   	  0,       		  1,   0, 	"zoom",		 0,-1, 0,0},
+	{ NULL,  									"图片查看",     	 0,       		  1,   0, 	"zoom",		 0,-1, 0,0},
+	{ NULL,  									"选择文件",     	 0,       		  1,   0, 	"zoom",		 0,-1, 1200,800},
+	{ NULL,  									"打开文件",     	 0,       		 1,   0, 	"zoom",		 0,-1, 1200,800},
+	{ "polkit-gnome-authentication-agent-1",  	NULL,       		0,       		1,   0, 	"zoom",		0,-1, 0,0},
 	{ "blueman-manager",  						NULL,       		0,       		1,   0, 	NULL,		0,-1, 700,600},
 	{ "clash-verge",  							NULL,       		0,       		1,   0, 	NULL,		0,-1, 1200,800},
 	{ "Gnome-system-monitor",  					NULL,       		0,       		0,   0, 	NULL,		0,-1, 700,600},
