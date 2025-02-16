@@ -18,7 +18,7 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 # dunst -config ~/.config/dunst/dwl_dunstrc &
 swaync &
 wlsunset -T 3501 -t 3500 &
-swaybg -i ~/Images/Fantasy-Medieval_Travern.png &
+swaybg -i ~/Images/room.png &
 waybar -c ~/.config/maomao/waybar/config -s ~/.config/maomao/waybar/style.css &
 echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 # cp ~/.config/zellij/configwayland.kdl ~/.config/zellij/config.kdl
@@ -32,7 +32,6 @@ systemctl --user mask xdg-desktop-portal-hyprland
 # mako & # 开启通知server
 
 wl-clip-persist --clipboard regular &
-# wl-paste -t text --watch clipman store --no-persist &
 wl-paste --type text --watch cliphist store & 
 blueman-applet &
 nm-applet &

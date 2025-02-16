@@ -2,15 +2,14 @@
     margin: 0px;
     border: 2px solid #bca0cc;
     background-color: rgba(14, 15, 0, 0.8);
-    border-radius: 18px;
+    border-radius: 15px;
 }
 
 #test {
     margin: 0px;
     border: 2px solid rgba(93, 74, 22, 0.7);
-    background-color: #a79e67
-    cba6f7 ;
-    border-radius: 18px;
+    background-color: #C66E25;
+    border-radius: 15px;
 }
 
 #input {
@@ -18,7 +17,7 @@
     padding-bottom: 10px;
     border: none;
     color: #d3d3ce;
-    border-radius: 18px;
+    border-radius: 15px;
     background-color: rgba(14, 15, 0, 0.2);
 }
 

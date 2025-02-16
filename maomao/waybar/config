@@ -158,6 +158,6 @@
         "format-disconnected": "\uf071 Disconnected",
         "tooltip-format": "{ifname} {ipaddr}/{cidr} via {gwaddr}",
         "format-alt": "\uf1eb↓{bandwidthDownBytes} ↑{bandwidthUpBytes}",
-        "on-click-right":"~/.config/dwl/rofi/networkmanager_dmenu"
+        "on-click-right":"~/.config/maomao/scripts/networkmanager_dmenu"
     }
 }
