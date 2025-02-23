@@ -9,7 +9,7 @@
     hl-color:rgb(188, 138, 84);
     hlt-color: #000000cc;
     alt-color: #111111cc;
-    wbg-color: #000000aa;
+    wbg-color: #201B14;
     w-border: 2px solid;
     w-border-color: #C66E25;
     w-padding: 12px;

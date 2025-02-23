@@ -112,8 +112,8 @@
         "critical-threshold": 10,
         "format-critical": "{temperatureC}°C",
         "format": "",
-        "on-click":"rofi -normal-window -theme ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py",
-        "on-click-right":"rofi -normal-window -theme ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/recentfile.py"
+        "on-click":"rofi -normal-window -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py",
+        "on-click-right":"rofi -normal-window -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/recentfile.py"
         // "on-click":"$DWL/wofi/history_wofi.py",
         // "on-click-right":"$DWL/wofi/recentfile_wofi.py"
     },
