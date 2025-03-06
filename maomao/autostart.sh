@@ -20,8 +20,6 @@ waybar -c ~/.config/maomao/waybar/config -s ~/.config/maomao/waybar/style.css &
 echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 # 开启输入法
 fcitx5 --replace -d &
-systemctl --user mask xdg-desktop-portal-gnome
-systemctl --user mask xdg-desktop-portal-hyprland
 
 wl-clip-persist --clipboard regular &
 wl-paste --type text --watch cliphist store & 
