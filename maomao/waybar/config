@@ -1,15 +1,15 @@
 {
-    "layer": "bottom", 
-    "position": "top", 
+    "layer": "bottom",
+    "position": "top",
     "height": 62,
-    "spacing": 5, 
+    "spacing": 5,
 
     "margin-bottom":-11,
     "modules-left": ["dwl/tags","wlr/taskbar","dwl/window"],
     "modules-right": ["custom/notification","tray","network","cpu","temperature","memory","clock","pulseaudio","backlight","battery"],
     "dwl/tags": {
         "num-tags":9,
-        "hide-unused-tag":false
+        "hide-unused-tag":true
     },
     "custom/notification": {
         "tooltip": false,
@@ -43,7 +43,7 @@
       },
  "pulseaudio": {
         "interval":1,
-        "scroll-step": 1, 
+        "scroll-step": 1,
         "format": "{volume}%{icon}",
         "format-bluetooth": "{volume}%",
         "format-bluetooth-muted": "{volume}%",
@@ -55,7 +55,7 @@
         "on-click-right":"amixer set Master toggle",
     },
     "keyboard-state": {
-        "interval":1,       
+        "interval":1,
         "numlock": true,
         "capslock": true,
         "format": "{name} {icon}",
@@ -130,10 +130,10 @@
         "bat": "BAT0",
         "interval": 60,
         "states": {
-            "warning": 30,      
-            "critical": 10      
-        },   
-        "format": "{capacity}% {icon}",   
+            "warning": 30,
+            "critical": 10
+        },
+        "format": "{capacity}% {icon}",
         "format-icons": ["", "", "", "", ""],
         "on-click-right":"~/.config/eww/System-Menu/launch",
         "on-click":"wlogout --protocol layer-shell -b 6"

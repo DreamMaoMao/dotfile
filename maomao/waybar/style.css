@@ -27,6 +27,24 @@ window#waybar {
 
 #tags button{
     box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
+    background-color: #5d5d5b ;
+    padding-bottom: 1px;
+    padding-top: 1px;
+    margin-right: 8px;
+    padding-right: 7px;
+    padding-left: 7px;
+    background-size: 300% 300%;
+    font-weight: bolder;
+    color: 	#d9baff ;
+    border: none;
+    border-bottom: 6px solid #3d3c3c;
+    border-radius: 15px;
+}
+
+
+
+#tags button.occupied{
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
     background-color: #fff ;
     padding-bottom: 1px;
     padding-top: 1px;
@@ -38,24 +56,6 @@ window#waybar {
     color: 	#a585cd ;
     border: none;
     border-bottom: 6px solid #d6cdcd;
-    border-radius: 15px;
-}
-
-
-
-#tags button.occupied{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: #8fcd12 ;
-    padding-bottom: 1px;
-    padding-top: 1px;
-    margin-right: 8px;
-    padding-right: 7px;
-    padding-left: 7px;
-    background-size: 300% 300%;
-    font-weight: bolder;
-    color: 	#fff ;
-    border: none;
-    border-bottom: 6px solid #8fcd12;
     border-radius: 15px;
 }
 
