@@ -3,15 +3,13 @@
 
 set +e
 
-pkill xdg
-pkill clash
 
-systemctl --user unmask xdg-desktop-portal-hyprland
-systemctl --user mask xdg-desktop-portal-gnome
+# systemctl --user unmask xdg-desktop-portal-hyprland
+# systemctl --user mask xdg-desktop-portal-gnome
 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-/usr/lib/xdg-desktop-portal-hyprland &
+# /usr/lib/xdg-desktop-portal-hyprland &
 
 swaync &
 wlsunset -T 3501 -t 3500 &
