@@ -1,2 +1,13 @@
 crash.log
+lastopen.json
+bookmarker.json
+filtercache
+sortcache
+target/
+Code Cache/
+GPUCache/
+obsidian-*.asar
+rime/
+log/
+
 
