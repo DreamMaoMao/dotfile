@@ -74,12 +74,19 @@ require("full-border"):setup()
 
 require("mime-preview"):setup()
 
-require("autofilter"):setup()
-require("autosort"):setup()
+require("autofilter"):setup({
+  -- cache_path = '/home/wrq/autofiltercache',
+})
+require("autosort"):setup({
+  -- cache_path = '/home/wrq/autosortcache',
+})
 -- require("session"):setup({
 -- 	sync_yanked = true,
 -- })
 
+require("lastopen"):setup({
+  -- cache_path = '/home/wrq/lastopencache',
+})
 require("mime-ext"):setup {
 	-- Expand the existing filename database (lowercase), for example:
 	-- with_files = {

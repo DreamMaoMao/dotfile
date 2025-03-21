@@ -1,8 +1,3 @@
-local LINUX_BASE_PATH = "/.config/yazi/plugins/autofilter.yazi/filtercache"
-local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autofilter.yazi\\filtercache"
-
-local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
-
 local function string_split(input,delimiter)
 
 	local result = {}
@@ -147,7 +142,7 @@ local delete_all_autofilter = ya.sync(function(state)
 	ya.manager_emit("filter_do", { "", smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	delete_lines_by_content(SERIALIZE_PATH,".*")
+	delete_lines_by_content(state.cache_path,".*")
 end)
 
 local SUPPORTED_TYPES = "application/audio/biosig/chemical/font/image/inode/message/model/rinex/text/vector/video/x-epoc/"
@@ -193,12 +188,21 @@ local flush_mime_by_ext = ya.sync(function(state)
 
 end)
 
+local get_cache_path = ya.sync(function(state)
+	return state.cache_path
+end)
 
 return {
 	setup = function(st,opts)
 		
-		local color = opts and opts.color and config.color or "#CE91A0"
-
+		local LINUX_BASE_PATH = "/.config/yazi/plugins/autofilter.yazi/filtercache"
+		local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autofilter.yazi\\filtercache"
+		
+		local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
+		
+		local color = opts and opts.color and opts.color or "#CE91A0"
+		st.cache_path = opts and opts.cache_path and opts.cache_path or SERIALIZE_PATH
+		ya.err(opts.cache_path)
 		-- add a nil module to header to detect cwd change
 		local function cwd_change_detect(self)
 			local cwd = cx.active.current.cwd
@@ -245,13 +249,15 @@ return {
 			return
 		end
 
+		local cache_path = get_cache_path()
+
 		if action == "resave" then
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "init" then
 			local data = {}
-			local file = io.open(SERIALIZE_PATH, "r")
+			local file = io.open(cache_path, "r")
 			if file then 
 		
 				for line in file:lines() do
@@ -272,7 +278,7 @@ return {
 			end
 			--auto clean no-exists-path line
 			load_file_to_state(data)
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "flush_mime_by_ext" then

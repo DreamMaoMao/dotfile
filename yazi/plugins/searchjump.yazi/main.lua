@@ -10462,10 +10462,10 @@ return {
 		end
 	end,
 
-	entry = function(_, args)
+	entry = function(_, job)
 
 		local opt_search_patterns = set_opts_default()
-		set_args_default(args)
+		set_args_default(job.args)
 
 		toggle_ui()
 

@@ -1,5 +1,3 @@
-local LINUX_BASE_PATH = "/.config/yazi/plugins/autosort.yazi/sortcache"
-local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autosort.yazi\\sortcache"
 
 local sort_mode_select = {
 	"alphabetical" ,
@@ -36,7 +34,6 @@ local dir_first_select_cand = {
 	{ on = {"n"}, desc = "no dir first" },
 }
 
-local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
 
 local function string_split(input,delimiter)
 
@@ -174,7 +171,7 @@ local delete_all_autosort = ya.sync(function(state)
 	ya.manager_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	delete_lines_by_content(SERIALIZE_PATH,".*")
+	delete_lines_by_content(state.cache_path,".*")
 end)
 
 local backup_state = ya.sync(function(state)
@@ -186,12 +183,21 @@ local backup_state = ya.sync(function(state)
 
 end)
 
+local get_cache_path = ya.sync(function(state)
+	return state.cache_path
+end)
+
 
 return {
 	setup = function(st,opts)
 		
-		local color = opts and opts.color and config.color or "#CE91A0"
-
+		local color = opts and opts.color and opts.color or "#CE91A0"
+		local LINUX_BASE_PATH = "/.config/yazi/plugins/autosort.yazi/sortcache"
+		local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autosort.yazi\\sortcache"
+		
+		local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
+		
+		st.cache_path = opts and opts.cache_path and opts.cache_path or SERIALIZE_PATH
 		-- add a nil module to header to detect cwd change
 		local function cwd_change_detect(self)
 			local cwd = cx.active.current.cwd
@@ -245,15 +251,17 @@ return {
 			return
 		end
 
+		local cache_path = get_cache_path()
+
 		if action == "resave" then
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "init" then
 			local data = {}
 			backup_state()
 
-			local file = io.open(SERIALIZE_PATH, "r")
+			local file = io.open(cache_path, "r")
 			if file then 
 				for line in file:lines() do
 					line = line:gsub("[\r\n]", "")
@@ -275,7 +283,7 @@ return {
 			end
 			--auto clean no-exists-path line
 			load_file_to_state(data)
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "save" then
