@@ -8,8 +8,7 @@ case $1 in
         reboot
         ;;
     logout)
-        pkill dwl 
-        hyprctl dispatch exit
+        mmsg -q
         ;;
     suspend)
         systemctl suspend
