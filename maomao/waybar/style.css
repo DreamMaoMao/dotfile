@@ -1,6 +1,7 @@
 * {
-    font-family: CartographCF Nerd Font,FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 20px;
+    font-weight: bolder;
 }
 
 tooltip {
@@ -175,7 +176,7 @@ window#waybar {
     padding-bottom: 1px;
     padding-right: 5px;
     padding-left: 5px;
-    font-weight: bolder;
+    font-weight: normal;
     color: 	rgb(63, 37, 5);
     border: none;
     border-bottom: 4px solid rgb(193, 146, 103);
@@ -320,7 +321,7 @@ window#waybar {
     background-size: 300% 300%;
     /* animation: gradient 20s ease infinite; */
     font-size: 20px;
-    padding-top: 3px;
+    padding-top: 5px;
     padding-bottom: 3px;
     padding-right: 15px;
     font-weight: bolder;
@@ -332,7 +333,7 @@ window#waybar {
 
 #battery.charging, #battery.plugged {
     box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    padding-top: 3px;
+    padding-top: 5px;
     padding-bottom: 3px;
     min-width: 70px;
     color: #bdf8da;
@@ -376,17 +377,13 @@ window#waybar {
     animation-direction: alternate;
 }
 
-label:focus {
-   
-}
-
 #cpu {
     box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
     min-width: 80px;
     margin-right: 1px;
     margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 5px;
+    padding-bottom: 1px;
     background: rgb(39, 154, 207);
     /* background: linear-gradient(52deg, rgba(180,190,254,1) 0%, rgba(137,220,235,1) 32%, rgba(137,180,250,1) 72%, rgba(166,227,161,1) 100%);  */
     background-size: 300% 300%;
@@ -506,7 +503,7 @@ label:focus {
     font-weight: bolder;
     margin-right: 1px;
     margin-left: 1px;
-    padding-top: 3px;
+    padding-top: 5px;
     padding-bottom: 3px;
     min-width: 40px;
     background-color:  	#fab387;
@@ -558,7 +555,7 @@ label:focus {
     font-weight: bolder;
     margin-right: 1px;
     margin-left: 1px;
-    padding-top: 6px;
+    padding-top: 5px;
     padding-bottom: 1px;
     background-color: #ce91a0 ;
     color:#50393f;
