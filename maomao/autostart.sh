@@ -11,13 +11,13 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 wl-clip-persist --clipboard regular &
 wl-paste --type text --watch cliphist store & 
 
-# notify mananer
+# notify manager
 swaync &
 
 # night light
 wlsunset -T 3501 -t 3500 &
 
-# wayllpaper
+# wallpaper
 swaybg -i ~/.config/maomao/wallpaper/room.png &
 
 # status bar
