@@ -12,7 +12,7 @@ wl-clip-persist --clipboard regular &
 wl-paste --type text --watch cliphist store & 
 
 # notify mananer
-dunst &
+swaync &
 
 # night light
 wlsunset -T 3501 -t 3500 &
