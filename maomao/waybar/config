@@ -1,22 +1,25 @@
 {
     "layer": "bottom",
     "position": "top",
-    "height": 62,
-    "spacing": 5,
+    "height": 40,
+    "spacing": 3,
 
-    "margin-bottom":-11,
+    "margin-bottom":-15,
     "modules-left": ["dwl/tags","wlr/taskbar","dwl/window"],
     "modules-right": ["custom/notification","tray","network","cpu","temperature","memory","clock","pulseaudio","backlight","battery"],
     "dwl/tags": {
         "num-tags":9,
-        "hide-unused-tag":true
+        "hide-vacant":true,
+        "tag-labels":[
+            "1","2","3","4","5","6","7","8","9"
+        ]
     },
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
         "format-icons": {
           "notification": "<span foreground='red'><sup></sup></span>",
-          "none": "",
+          "none": "  ",
           "dnd-notification": "<span foreground='red'><sup></sup></span>",
           "dnd-none": "",
           "inhibited-notification": "<span foreground='red'><sup></sup></span>",
