@@ -97,7 +97,7 @@ local clear_state = ya.sync(function(st)
 end)
 
 local function update_git_status(path)
-	ya.manager_emit("plugin", { "git"})	
+	ya.mgr_emit("plugin", { "git"})	
 end
 
 local is_in_git_dir = ya.sync(function(st)
@@ -109,7 +109,7 @@ local flush_empty_folder_status = ya.sync(function(st)
 	local folder = cx.active.current
 	if #folder.window == 0 then
 		clear_state()
-		ya.manager_emit("plugin", { "git", args = ya.quote(tostring(cwd))})		
+		ya.mgr_emit("plugin", { "git", ya.quote(tostring(cwd))})		
 	end
 end)
 
@@ -143,7 +143,7 @@ local M = {
 				end
 			
 				local color = set_status_color(git_status)
-				if f:is_hovered() then
+				if f.is_hovered then
 					git_span = (git_status ) and ui.Span(git_status .." ") or ui.Span("✓ ")	
 				else
 					git_span = (git_status) and ui.Span(git_status .." "):fg(color) or ui.Span("✓ "):fg(color)	
@@ -159,7 +159,7 @@ local M = {
 			if st.cwd ~= cwd then
 				st.cwd = cwd
 				clear_state()
-				ya.manager_emit("plugin", { "git"})		
+				ya.mgr_emit("plugin", { "git"})		
 			end
 			return ui.Line{}				
 		end

@@ -1,5 +1,3 @@
-local LINUX_BASE_PATH = "/.config/yazi/plugins/autosort.yazi/sortcache"
-local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autosort.yazi\\sortcache"
 
 local sort_mode_select = {
 	"alphabetical" ,
@@ -36,7 +34,6 @@ local dir_first_select_cand = {
 	{ on = {"n"}, desc = "no dir first" },
 }
 
-local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
 
 local function string_split(input,delimiter)
 
@@ -136,10 +133,10 @@ local save_autosort = ya.sync(function(state,word,reverse,dir_first)
 	if dir_first == "dir_first" then
 		set_dir_first = true
 	end
-	ya.manager_emit("sort", { word, reverse = set_reverse, dir_first = set_dir_first })
+	ya.mgr_emit("sort", { word, reverse = set_reverse, dir_first = set_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.manager_emit("plugin",{"autosort",args="resave"})
+	ya.mgr_emit("plugin",{"autosort","resave"})
 end)
 
 local delete_autosort = ya.sync(function(state)
@@ -157,10 +154,10 @@ local delete_autosort = ya.sync(function(state)
 		level = "info",
 	}
 	state.autosort[key] = nil
-	ya.manager_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
+	ya.mgr_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.manager_emit("plugin",{"autosort",args="resave"})
+	ya.mgr_emit("plugin",{"autosort","resave"})
 end)
 
 local delete_all_autosort = ya.sync(function(state)
@@ -171,10 +168,10 @@ local delete_all_autosort = ya.sync(function(state)
 		level = "info",
 	}
 	state.autosort = nil
-	ya.manager_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
+	ya.mgr_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	delete_lines_by_content(SERIALIZE_PATH,".*")
+	delete_lines_by_content(state.cache_path,".*")
 end)
 
 local backup_state = ya.sync(function(state)
@@ -186,12 +183,21 @@ local backup_state = ya.sync(function(state)
 
 end)
 
+local get_cache_path = ya.sync(function(state)
+	return state.cache_path
+end)
+
 
 return {
 	setup = function(st,opts)
 		
-		local color = opts and opts.color and config.color or "#CE91A0"
-
+		local color = opts and opts.color and opts.color or "#CE91A0"
+		local LINUX_BASE_PATH = "/.config/yazi/plugins/autosort.yazi/sortcache"
+		local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autosort.yazi\\sortcache"
+		
+		local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
+		
+		st.cache_path = opts and opts.cache_path and opts.cache_path or SERIALIZE_PATH
 		-- add a nil module to header to detect cwd change
 		local function cwd_change_detect(self)
 			local cwd = cx.active.current.cwd
@@ -209,7 +215,7 @@ return {
 					if st.autosort[tostring(cwd)].dir_first == "dir_first" then
 						set_dir_first = true
 					end
-					ya.manager_emit("sort", { st.autosort[tostring(cwd)].word, reverse = set_reverse, dir_first = set_dir_first })
+					ya.mgr_emit("sort", { st.autosort[tostring(cwd)].word, reverse = set_reverse, dir_first = set_dir_first })
 					st.need_flush_mime = true
 					st.url =  cx.active.current.hovered and tostring(cx.active.current.hovered.url) or ""
 				else
@@ -222,7 +228,7 @@ return {
 				return ui.Line{}
 			else
 				st.has_exit_autosort_folder = true
-				ya.manager_emit("sort", { st.sort_by, reverse = st.sort_reverse, dir_first = st.sort_dir_first })
+				ya.mgr_emit("sort", { st.sort_by, reverse = st.sort_reverse, dir_first = st.sort_dir_first })
 				return ui.Line{}
 			end
 		end
@@ -231,7 +237,7 @@ return {
 
 
 		-- Async load data, avoid block yazi start
-		ya.manager_emit("plugin",{"autosort",args="init"})
+		ya.mgr_emit("plugin",{"autosort","init"})
 	end,
 
 	entry = function(_,job)
@@ -245,15 +251,17 @@ return {
 			return
 		end
 
+		local cache_path = get_cache_path()
+
 		if action == "resave" then
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "init" then
 			local data = {}
 			backup_state()
 
-			local file = io.open(SERIALIZE_PATH, "r")
+			local file = io.open(cache_path, "r")
 			if file then 
 				for line in file:lines() do
 					line = line:gsub("[\r\n]", "")
@@ -275,7 +283,7 @@ return {
 			end
 			--auto clean no-exists-path line
 			load_file_to_state(data)
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "save" then

@@ -252,7 +252,7 @@ local toggle_ui = ya.sync(function(st)
 
 	if st.icon or st.mode then
 		Entity.icon, Status.mode, st.icon, st.mode = st.icon, st.mode, nil, nil
-		ya.manager_emit("peek", { force = true })
+		ya.mgr_emit("peek", { force = true })
 		ya.render()
 		return
 	end
@@ -262,7 +262,7 @@ local toggle_ui = ya.sync(function(st)
 	Entity.icon = function(self)
 		local file = self._file
 		local icon = file:icon()
-		local span_icon_before = file:is_hovered() and ui.Span(file:icon().text .. " ") or ui.Span(file:icon().text .. " "):style(icon.style)
+		local span_icon_before = file.is_hovered and ui.Span(file:icon().text .. " ") or ui.Span(file:icon().text .. " "):style(icon.style)
 		
 		if st.type == "global" then
 			local pos, view = rel_position(file, "all")
@@ -310,7 +310,7 @@ local toggle_ui = ya.sync(function(st)
 		}
 	end
 
-	ya.manager_emit("peek", { force = true })
+	ya.mgr_emit("peek", { force = true })
 	ya.render()
 end)
 
@@ -350,72 +350,72 @@ local apply = ya.sync(function(state, arg_cand, arg_current_num, arg_parent_num,
 		elseif special_key_str == "z" then
 			return true
 		elseif special_key_str == "<Enter>" then
-			ya.manager_emit("open", {})
+			ya.mgr_emit("open", {})
 			return true
 		elseif special_key_str == "<Left>" then
-			ya.manager_emit("leave", {})
+			ya.mgr_emit("leave", {})
 			return false
 		elseif special_key_str == "<Right>" then
-			ya.manager_emit("enter", {})
+			ya.mgr_emit("enter", {})
 			return false
 		elseif special_key_str == "<Up>" then
-			ya.manager_emit("arrow", { "-1" })
+			ya.mgr_emit("arrow", { "-1" })
 			return false
 		elseif special_key_str == "<Down>" then
-			ya.manager_emit("arrow", { "1" })
+			ya.mgr_emit("arrow", { "1" })
 			return false
 		elseif special_key_str == "<Space>" then
 			local under_cursor_file = cx.active.current.window[folder.cursor - folder.offset + 1]
 			local toggle_state = under_cursor_file:is_selected() and "false" or "true"
-			ya.manager_emit("toggle", { state = toggle_state })
-			ya.manager_emit("arrow", { 1 })
+			ya.mgr_emit("toggle", { state = toggle_state })
+			ya.mgr_emit("arrow", { 1 })
 			return false
 		elseif special_key_str == "h"then
 			if state.type == "global" then
-				ya.manager_emit("leave", {})
+				ya.mgr_emit("leave", {})
 			end
 			return false
 		elseif special_key_str == "j"then
 			if state.type == "global" then
-				ya.manager_emit("arrow", { "1" })
+				ya.mgr_emit("arrow", { "1" })
 			end
 			return false
 		elseif special_key_str == "k"then
 			if state.type == "global" then
-				ya.manager_emit("arrow", { "-1" })
+				ya.mgr_emit("arrow", { "-1" })
 			end
 			return false
 		elseif special_key_str == "l"then
 			if state.type == "global" then			
-				ya.manager_emit("enter", {})
+				ya.mgr_emit("enter", {})
 			end
 			return false
 		elseif special_key_str == "J" then
-			ya.manager_emit("arrow", { "5" })
+			ya.mgr_emit("arrow", { "5" })
 			return false
 		elseif special_key_str == "K" then
-			ya.manager_emit("arrow", { "-5" })
+			ya.mgr_emit("arrow", { "-5" })
 			return false
 		elseif special_key_str == "<A-j>" then
-			ya.manager_emit("seek", { "5" })
+			ya.mgr_emit("seek", { "5" })
 			return false
 		elseif special_key_str == "<A-k>" then
-			ya.manager_emit("seek", { "-5" })
+			ya.mgr_emit("seek", { "-5" })
 			return false
 		elseif special_key_str == "<C-j>" then
-			ya.manager_emit("arrow", { "100%" })
+			ya.mgr_emit("arrow", { "100%" })
 			return false
 		elseif special_key_str == "<C-k>" then
-			ya.manager_emit("arrow", { "-100%" })
+			ya.mgr_emit("arrow", { "-100%" })
 			return false
 		elseif special_key_str == "y"then
 			if state.type == "global" then
-				ya.manager_emit("yank", {})
+				ya.mgr_emit("yank", {})
 			end
 			return false
 		elseif special_key_str == "p"then
 			if state.type == "global" then
-				ya.manager_emit("paste", {})
+				ya.mgr_emit("paste", {})
 			end
 			return false
 
@@ -427,18 +427,18 @@ local apply = ya.sync(function(state, arg_cand, arg_current_num, arg_parent_num,
 		-- hit current area
 		if cand <= current_entry_num then -- hit normal key
 			local current_folder = cx.active.current
-			ya.manager_emit("arrow", { cand - 1 + current_folder.offset - current_folder.cursor })
+			ya.mgr_emit("arrow", { cand - 1 + current_folder.offset - current_folder.cursor })
 		-- hit parent area
 		elseif cand > current_entry_num and cand <= (current_entry_num + parent_entry_num) then
 			local parent_folder = cx.active.parent
-			ya.manager_emit("leave", {})
-			ya.manager_emit("arrow", { cand - current_entry_num - 1 + parent_folder.offset - parent_folder.cursor })
+			ya.mgr_emit("leave", {})
+			ya.mgr_emit("arrow", { cand - current_entry_num - 1 + parent_folder.offset - parent_folder.cursor })
 		-- hit preview area
 		elseif
 			cand > (current_entry_num + parent_entry_num) and cand <= (current_entry_num + parent_entry_num + preview_entry_num) then
 			local preview_folder = cx.active.preview.folder
-			ya.manager_emit("enter", {})
-			ya.manager_emit(
+			ya.mgr_emit("enter", {})
+			ya.mgr_emit(
 				"arrow",
 				{ cand - current_entry_num - parent_entry_num - 1 + cx.active.preview.skip - preview_folder.cursor }
 			)
@@ -460,7 +460,7 @@ local apply = ya.sync(function(state, arg_cand, arg_current_num, arg_parent_num,
 	if state.type == "select" then
 		if cand <= current_entry_num then -- hit normal key
 			local folder = cx.active.current
-			ya.manager_emit("arrow", { cand - 1 + folder.offset - folder.cursor })
+			ya.mgr_emit("arrow", { cand - 1 + folder.offset - folder.cursor })
 		end
 
 		return false
@@ -468,12 +468,12 @@ local apply = ya.sync(function(state, arg_cand, arg_current_num, arg_parent_num,
 
 	-- apply keep mode and normal mode
 	if (state.type == "keep" or not state.type) and folder.window[cand] then
-		ya.manager_emit("arrow", { cand - 1 + folder.offset - folder.cursor })
+		ya.mgr_emit("arrow", { cand - 1 + folder.offset - folder.cursor })
 	end
 
 	-- keep mode will auto enter when select folder and continue keep mode
 	if state.type == "keep" and folder.window[cand] and folder.window[cand].cha.is_dir then
-		ya.manager_emit("enter", {})
+		ya.mgr_emit("enter", {})
 		return false
 	elseif folder.window[cand] == nil then
 		return false
@@ -485,7 +485,7 @@ end)
 
 local update_double_first_key = ya.sync(function(state, str)
 	state.double_first_key = str
-	ya.manager_emit("peek", { force = true })
+	ya.mgr_emit("peek", { force = true })
 end)
 
 local recaculate_preview_num  = ya.sync(function(state, cwd)
@@ -730,7 +730,7 @@ local add_cwd_status_watch = ya.sync(function(state)
 		if ((#cx.active.current.window >0 and cx.active.current.hovered and cx.active.current.hovered.url) or state.preview_num == 0) and state.again then
 			state.again = false
 			local times = state.times and state.times or ""
-			ya.manager_emit("plugin", { "keyjump", args = ya.quote(state.type).." "..times})	
+			ya.mgr_emit("plugin", { "keyjump", ya.quote(state.type).." "..times})	
 		end
 		return ui.Line{}
 	end
@@ -791,7 +791,7 @@ return {
 			end
 			local cmd = split_yazi_cmd_arg(go_table[cand].run)
 			recaculate_preview_num(cmd[2])
-			ya.manager_emit(cmd[1], { cmd[2], args=cmd[3] }) 
+			ya.mgr_emit(cmd[1], { cmd[2], args=cmd[3] }) 
 			set_keep_hook(true)
 			go_again()
 		elseif want_exit == false and action and action ~= "" then

@@ -1,8 +1,3 @@
-local LINUX_BASE_PATH = "/.config/yazi/plugins/autofilter.yazi/filtercache"
-local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autofilter.yazi\\filtercache"
-
-local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
-
 local function string_split(input,delimiter)
 
 	local result = {}
@@ -109,10 +104,10 @@ local save_autofilter = ya.sync(function(state,word)
 		timeout = 2,
 		level = "info",
 	}
-	ya.manager_emit("filter_do", { word, smart = true })
+	ya.mgr_emit("filter_do", { word, smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.manager_emit("plugin",{"autofilter",args="resave"})
+	ya.mgr_emit("plugin",{"autofilter","resave"})
 end)
 
 local delete_autofilter = ya.sync(function(state)
@@ -130,10 +125,10 @@ local delete_autofilter = ya.sync(function(state)
 		level = "info",
 	}
 	state.autofilter[key] = nil
-	ya.manager_emit("filter_do", { "", smart = true })
+	ya.mgr_emit("filter_do", { "", smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.manager_emit("plugin",{"autofilter",args="resave"})
+	ya.mgr_emit("plugin",{"autofilter","resave"})
 end)
 
 local delete_all_autofilter = ya.sync(function(state)
@@ -144,10 +139,10 @@ local delete_all_autofilter = ya.sync(function(state)
 		level = "info",
 	}
 	state.autofilter = nil
-	ya.manager_emit("filter_do", { "", smart = true })
+	ya.mgr_emit("filter_do", { "", smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	delete_lines_by_content(SERIALIZE_PATH,".*")
+	delete_lines_by_content(state.cache_path,".*")
 end)
 
 local SUPPORTED_TYPES = "application/audio/biosig/chemical/font/image/inode/message/model/rinex/text/vector/video/x-epoc/"
@@ -183,22 +178,31 @@ local flush_mime_by_ext = ya.sync(function(state)
 
 
 	if #mimes then
-		ya.manager_emit("update_mimes", { updates = mimes })
-		ya.manager_emit("update_mimetype", { updates = mimes })
+		ya.mgr_emit("update_mimes", { updates = mimes })
+		ya.mgr_emit("update_mimetype", { updates = mimes })
 	end
 	
 	if #state.unmatch_ext_urls then
-		ya.manager_emit("plugin",{"autofilter",args="flush_mime_by_file_cmd"})
+		ya.mgr_emit("plugin",{"autofilter","flush_mime_by_file_cmd"})
 	end
 
 end)
 
+local get_cache_path = ya.sync(function(state)
+	return state.cache_path
+end)
 
 return {
 	setup = function(st,opts)
 		
-		local color = opts and opts.color and config.color or "#CE91A0"
-
+		local LINUX_BASE_PATH = "/.config/yazi/plugins/autofilter.yazi/filtercache"
+		local WINDOWS_BASE_PATH = "\\yazi\\config\\plugins\\autofilter.yazi\\filtercache"
+		
+		local SERIALIZE_PATH = ya.target_family() == "windows" and os.getenv("APPDATA") .. WINDOWS_BASE_PATH or os.getenv("HOME") .. LINUX_BASE_PATH
+		
+		local color = opts and opts.color and opts.color or "#CE91A0"
+		st.cache_path = opts and opts.cache_path and opts.cache_path or SERIALIZE_PATH
+		ya.err(opts.cache_path)
 		-- add a nil module to header to detect cwd change
 		local function cwd_change_detect(self)
 			local cwd = cx.active.current.cwd
@@ -207,7 +211,7 @@ return {
 				st.cwd = cwd
 				if st.autofilter and st.autofilter[tostring(cwd)] then
 					st.is_auto_filter_cwd = true
-					ya.manager_emit("filter_do", { st.autofilter[tostring(cwd)].word, smart = true })
+					ya.mgr_emit("filter_do", { st.autofilter[tostring(cwd)].word, smart = true })
 					st.need_flush_mime = true
 					st.url =  tostring(cx.active.current.hovered.url)
 				else
@@ -224,7 +228,7 @@ return {
 			local url = cx.active.current.hovered and tostring(cx.active.current.hovered.url) or ""
 			if (st.need_flush_mime and url ~= st.url and window and #window > 0) or st.force_fluse_mime then
 				st.force_fluse_mime = false
-				ya.manager_emit("plugin",{"autofilter",args="flush_mime_by_ext"})
+				ya.mgr_emit("plugin",{"autofilter","flush_mime_by_ext"})
 				st.need_flush_mime = false
 				st.url = url
 			end
@@ -235,7 +239,7 @@ return {
 		Status:children_add(Status_mime,100000,Status.LEFT)
 
 		-- Async load data, avoid block yazi start
-		ya.manager_emit("plugin",{"autofilter",args="init"})
+		ya.mgr_emit("plugin",{"autofilter","init"})
 	end,
 
 	entry = function(_,job)
@@ -245,13 +249,15 @@ return {
 			return
 		end
 
+		local cache_path = get_cache_path()
+
 		if action == "resave" then
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "init" then
 			local data = {}
-			local file = io.open(SERIALIZE_PATH, "r")
+			local file = io.open(cache_path, "r")
 			if file then 
 		
 				for line in file:lines() do
@@ -272,7 +278,7 @@ return {
 			end
 			--auto clean no-exists-path line
 			load_file_to_state(data)
-			save_to_file(SERIALIZE_PATH)
+			save_to_file(cache_path)
 		end
 
 		if action == "flush_mime_by_ext" then
@@ -310,8 +316,8 @@ return {
 	  		end
 
 			if #mimes then
-				ya.manager_emit("update_mimes", { updates = mimes })
-				ya.manager_emit("update_mimetype", { updates = mimes })
+				ya.mgr_emit("update_mimes", { updates = mimes })
+				ya.mgr_emit("update_mimetype", { updates = mimes })
 			end
 		
 		end

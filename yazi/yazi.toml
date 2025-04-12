@@ -21,8 +21,9 @@ ueberzug_offset = [ 0, 0, 0, 0 ]
 [opener]
 folder = [
 	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
-	{ run = '''fish -c "lazygit -p "$1""''', block = true,desc = "lazygit", for = "linux" },
 	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
+	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
+	{ run = '''fish -c "lazygit -p "$1""''', block = true,desc = "lazygit", for = "linux" },
 	{ run = 'basename "$@" | xargs -I {} tar --use-compress-program=pigz -cf ~/down/{}.tar.gz {}',orphan = true, desc = "archive" , for = "linux"  },
 	{ run = 'GDK_BACKEND=x11 nemo "$@"',orphan = true, desc = "nemo" , for = "linux" },
 
@@ -38,16 +39,17 @@ archive = [
 text = [
 	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
 	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
+	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
 	{ run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit"  , for = "linux"},
 	# { run = 'nemo "$@"',orphan = true, desc = "nemo"  , for = "linux" },
 	{ run = 'zathura "$@"',orphan = true, desc = "zathura"  , for = "linux" },
 ]
 image = [
-	{ run = 'eog  "$@"',  orphan = true, desc = "eog" , for = "linux"},
-	{ run = 'feh "$@"',  orphan = true, desc = "feh" , for = "linux"},
+	{ run = 'mirage  "$@"',  orphan = true, desc = "mirage" , for = "linux"},
 ]
 video = [
 	{ run = 'mpv "$@" ', orphan = true, desc = "mpv" , for = "linux" },
+	{ run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif"  , for = "linux" },	
 	{ run = 'GDK_BACKEND=x11 nemo "$@"',orphan = true, desc = "nemo"  , for = "linux" },
 
 ]

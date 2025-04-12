@@ -1419,9 +1419,9 @@ local function match_mimetype(s)
 end
 
 local flush = ya.sync(function (state,mimes)
-	ya.manager_emit("update_mimes", { updates = mimes })
-	ya.manager_emit("update_mimetype", { updates = mimes }) -- TODO: remove this
-	ya.manager_emit("peek", { force = true })
+	ya.mgr_emit("update_mimes", { updates = mimes })
+	ya.mgr_emit("update_mimetype", { updates = mimes }) -- TODO: remove this
+	ya.mgr_emit("peek", { force = true })
 end)
 
 local get_data = ya.sync(function (state)
@@ -1461,7 +1461,7 @@ local M = {
 		local function Status_mime(self)
 			local url = cx.active.current.hovered and tostring(cx.active.current.hovered.url) or ""
 			if cx.active.preview.folder and #cx.active.preview.folder.window > 0 and st.task and st.task == url then
-				ya.manager_emit("plugin", { "mime-preview", args = ya.quote(tostring(""))})	
+				ya.mgr_emit("plugin", { "mime-preview", ya.quote(tostring(""))})	
 				st.task =  nil
 			end
 			if st.url ~= url then

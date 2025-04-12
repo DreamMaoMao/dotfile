@@ -9,7 +9,7 @@ local toggle_ui = ya.sync(function(self)
 end)
 
 local init_ui_data = ya.sync(function(self,file_url)
-	self.opt = {"nvim", "jump"}
+	self.opt = {"nvim", "helix", "jump"}
 	self.title = "fg"
 	self.title_color = "#82ab3a"
 	self.cursor = 0
@@ -34,7 +34,9 @@ local get_default_action = ya.sync(function(self)
 end)
 
 local update_cursor = ya.sync(function(self, cursor)
-	self.cursor = ya.clamp(0, self.cursor + cursor,  1)
+	-- if add opt, need to add change 3th arg.
+	-- forexample, 2 mean 3 opt. circle 0 to 2.
+	self.cursor = ya.clamp(0, self.cursor + cursor,  2)
 	ya.render()
 end)
 
@@ -199,7 +201,7 @@ function M:entry(job)
 	init_ui_data(cwd.."/"..file_url)
 	local default_action = get_default_action()
 
-	if default_action == "menu" or default_action == nil then
+	if (default_action == "menu" or default_action == nil) and args[1] ~= "fzf" then
 		_permit:drop()
 		toggle_ui()
 		while true do
@@ -223,10 +225,12 @@ function M:entry(job)
 		_permit = ya.hide()
 	end
 
-	if default_action == "nvim" or get_option() == "nvim" then
+	if (default_action == "nvim" or get_option() == "nvim" ) and args[1] ~= "fzf" then
 		os.execute("nvim +"..line_number.." -n "..file_url)
-	elseif (default_action == "jump" or get_option() == "jump") and file_url ~= ""  then
-		ya.manager_emit(file_url:match("[/\\]$") and "cd" or "reveal", { file_url })
+	elseif (default_action == "helix" or get_option() == "helix" ) and args[1] ~= "fzf" then
+		os.execute("hx +"..line_number.." "..file_url)
+	elseif (default_action == "jump" or get_option() == "jump" or args[1] == "fzf") and file_url ~= ""  then
+		ya.mgr_emit(file_url:match("[/\\]$") and "cd" or "reveal", { file_url })
 	else
 		return
 	end
@@ -239,7 +243,8 @@ function M:redraw()
 	local rows = {}
 
 	rows[1] = ui.Row { "open with nvim" }
-	rows[2] = ui.Row { "reach at yazi" }
+	rows[2] = ui.Row { "open with helix" }
+	rows[3] = ui.Row { "reach at yazi" }
 	return {
 		ui.Clear(self._area),
 		ui.Border(ui.Border.ALL)
@@ -256,9 +261,9 @@ function M:redraw()
 end
 
 
-function M.fail(s, ...) 
-	ya.manager_emit("plugin", {"mount", args = "refresh" })
-	ya.notify { title = "fg", content = string.format(s, ...), timeout = 10, level = "error" } 
+function M.fail(s, ...)
+	ya.mgr_emit("plugin", {"mount", "refresh" })
+	ya.notify { title = "fg", content = string.format(s, ...), timeout = 10, level = "error" }
 end
 
 function M:click() end
