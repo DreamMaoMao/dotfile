@@ -54,8 +54,8 @@ unset_alt  = { fg = "#A89984", bg = "#3c3937", bold = true }
 # : Status {{{
 
 [status]
-separator_open  = ""
-separator_close = ""
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
 separator_style = { fg = "#3c3937", bg = "#3c3937" }
 
 # Progress
@@ -118,7 +118,7 @@ icon_error = ""
 
 # : Completion {{{
 
-[completion]
+[cmp]
 border   = { fg = "#8bca4b" }
 active   = { bg = "#3c3937" }
 inactive = {}
