@@ -14,7 +14,7 @@ tab_size        = 2
 max_width       = 600
 max_height      = 900
 cache_dir       = ""
-image_delay     = 30
+image_delay     = 20
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
@@ -45,6 +45,7 @@ text = [
 	{ run = 'zathura "$@"',orphan = true, desc = "zathura"  , for = "linux" },
 ]
 image = [
+	{ run = 'sxiv -a "$@"',  orphan = true, desc = "mirage" , for = "linux"},
 	{ run = 'mirage  "$@"',  orphan = true, desc = "mirage" , for = "linux"},
 ]
 video = [

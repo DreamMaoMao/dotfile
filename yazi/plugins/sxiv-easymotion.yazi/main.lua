@@ -15,7 +15,7 @@ end)
 return {
 	entry = function()
 		local cwd = get_cwd();
-		local out, err = Command("sxiv"):args({"-t",cwd}):output()
+		local out, err = Command("sxiv"):args({"-a","-t",cwd}):output()
 		if out.status.success == false or err ~= nil then
 			ya.dbg(err, out.stdout)
 			return
