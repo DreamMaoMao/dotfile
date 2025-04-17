@@ -45,7 +45,7 @@ text = [
 	{ run = 'zathura "$@"',orphan = true, desc = "zathura"  , for = "linux" },
 ]
 image = [
-	{ run = 'sxiv -a "$@"',  orphan = true, desc = "mirage" , for = "linux"},
+	{ run = 'sxiv -a "$@"',  orphan = true, desc = "sxiv" , for = "linux"},
 	{ run = 'mirage  "$@"',  orphan = true, desc = "mirage" , for = "linux"},
 ]
 video = [
