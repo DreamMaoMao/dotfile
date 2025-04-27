@@ -19,7 +19,7 @@ echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 # 开启输入法
 fcitx5 --replace -d &
 
-wl-clip-persist --clipboard regular &
+# wl-clip-persist --clipboard regular &
 wl-paste --type text --watch cliphist store & 
 blueman-applet &
 nm-applet &
