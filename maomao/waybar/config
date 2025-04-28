@@ -14,6 +14,15 @@
             "1","2","3","4","5","6","7","8","9"
         ]
     },
+    "dwl/window": {
+        "format": "{title}",
+        // "max-length": 50,
+        // "rewrite": {
+        //    "(.*) - Mozilla Firefox": "🌎 $1",
+        //    "(.*) - vim": " $1",
+        //    "(.*) - zsh": " [$1]"
+        // }
+    },
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
@@ -125,6 +134,7 @@
         "device": "amdgpu_bl0",
         "format": "{percent}% {icon}",
         "format-icons": ["󰖔","󰖨"],
+        "on-click":"bash ~/.config/maomao/scripts/screenshot.sh",
         "on-scroll-up":"~/.config/hypr/scripts/lightup",
         "on-scroll-down":"~/.config/hypr/scripts/lightdown",
         "smooth-scrolling-threshold":1

@@ -94,6 +94,22 @@ window#waybar {
     border-radius: 5px;
 }
 
+#tags button.overview{
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
+    background-color:  rgb(180, 131, 208);
+    padding-bottom: 1px;
+    padding-top: 1px;
+    margin-right: 8px;
+    padding-right: 7px;
+    padding-left: 7px;
+    background-size: 300% 300%;
+    font-weight: bolder;
+    color: 	#fff ;
+    border: none;
+    border-bottom: 4px solid rgb(143, 102, 168);
+    border-radius: 5px;
+}
+
 #taskbar{
     background-color: transparent;
     margin-top: 5px;

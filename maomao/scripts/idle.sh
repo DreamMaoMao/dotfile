@@ -8,8 +8,8 @@
 #		resume 'bash $HOME/.config/hypr/scripts/lightresume.sh resume' \
 #	timeout 3600 'systemctl suspend'
 
-swayidle -w \
+swayidle \
 	timeout 1800 'wlr-dpms off' \
-	resume 'wlr-dpms on && ~/.config/hypr/scripts/restart_wlsunset.sh' \
+	resume 'wlr-dpms on && ~/.config/maomao/scripts/restart_wlsunset.sh' \
 	timeout 300 'dimland -a 0.3' \
-	resume 'dimland -a 0'
+	resume '~/.config/maomao/scripts/exitdim.sh'
