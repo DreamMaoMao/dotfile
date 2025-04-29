@@ -63,8 +63,8 @@
         "format-icons": {
             "default": ["", "", ""]
         },
-        "on-click": "blueman-manager",
-        "on-click-right":"amixer set Master toggle",
+        // "on-click": "blueman-manager",
+        "on-click":"amixer set Master toggle",
     },
     "keyboard-state": {
         "interval":1,
@@ -87,13 +87,13 @@
         "format-alt": "{:%A, %b %d} ",
         "tooltip-format": "{:%Y}",
         // "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "on-click-right": "gnome-calendar",
+        // "on-click-right": "gnome-calendar",
         "calendar": {
           "mode"          : "year",
           "mode-mon-col"  : 3,
           "weeks-pos"     : "right",
           "on-scroll"     : 1,
-          "on-click-right": "gnome-calendar",
+        //   "on-click-right": "gnome-calendar",
           "format": {
           "months":     "<span color='#ffead3'><b>{}</b></span>",
           "days":       "<span color='#ecc6d9'><b>{}</b></span>",
@@ -106,16 +106,16 @@
     "cpu": {
         "interval": 2,
         "format": "{load}% ",
-        "on-click-right":"gnome-system-monitor",
-        "on-click":"nwg-drawer -ovl"
+        // "on-click-right":"gnome-system-monitor",
+        "on-click":"bash ~/.config/maomao/scripts/hide_lavalauncher_maomao.sh",
         // "on-click-right":"bash ~/.config/eww/scripts/launcher toggle_menu quicksettings",
         // "max-length": 10
     },
     "memory": {
         "interval":2,
         "format": "{}% 󰍛",
-        "on-click":"GDK_BACKEND=x11 nemo",
-        "on-click-right":"cliphist list | rofi -dmenu -normal-window | cliphist decode | wl-copy"
+        // "on-click":"GDK_BACKEND=x11 nemo",
+        // "on-click-right":"cliphist list | rofi -dmenu -normal-window | cliphist decode | wl-copy"
         // "on-click-right":"clipman pick -t wofi"
     },
     "temperature": {
@@ -124,8 +124,8 @@
         "critical-threshold": 10,
         "format-critical": "{temperatureC}°C",
         "format": "",
-        "on-click":"rofi -normal-window -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py",
-        "on-click-right":"rofi -normal-window -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/recentfile.py"
+        // "on-click":"rofi -normal-window -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py",
+        // "on-click-right":"rofi -normal-window -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/recentfile.py"
         // "on-click":"$DWL/wofi/history_wofi.py",
         // "on-click-right":"$DWL/wofi/recentfile_wofi.py"
     },
@@ -134,7 +134,7 @@
         "device": "amdgpu_bl0",
         "format": "{percent}% {icon}",
         "format-icons": ["󰖔","󰖨"],
-        "on-click":"bash ~/.config/maomao/scripts/screenshot.sh",
+        // "on-click":"bash ~/.config/maomao/scripts/screenshot.sh",
         "on-scroll-up":"~/.config/hypr/scripts/lightup",
         "on-scroll-down":"~/.config/hypr/scripts/lightdown",
         "smooth-scrolling-threshold":1

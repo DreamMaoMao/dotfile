@@ -522,10 +522,10 @@ window#waybar {
     padding-top: 5px;
     padding-bottom: 3px;
     min-width: 40px;
-    background-color:  	#fab387;
-    color: #734a31;
+    background-color:  	#ec8867;
+    color: #452815;
     border: none;
-    border-bottom: 4px solid #b87c57;
+    border-bottom: 4px solid #be684b;
     border-radius: 5px;
 }
 
@@ -586,9 +586,9 @@ window#waybar {
     margin-left: 3px;
     padding-top: 3px;
     padding-bottom: 3px;
-    background-color: #96d5dd;
+    background: linear-gradient(to bottom, #E8C07D, #CC8B3C);
     border: none;
-    border-bottom: 4px solid #66a1a9;
+    border-bottom: 4px solid #a56f2c;
     border-radius: 5px;
 }
 
