@@ -522,10 +522,10 @@ window#waybar {
     padding-top: 5px;
     padding-bottom: 3px;
     min-width: 40px;
-    background-color:  	#ec8867;
+    background-color:  	#d79b87;
     color: #452815;
     border: none;
-    border-bottom: 4px solid #be684b;
+    border-bottom: 4px solid #a77666;
     border-radius: 5px;
 }
 
