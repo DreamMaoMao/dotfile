@@ -107,7 +107,7 @@
         "interval": 2,
         "format": "{load}% ",
         // "on-click-right":"gnome-system-monitor",
-        "on-click":"bash ~/.config/maomao/scripts/hide_lavalauncher_maomao.sh",
+        // "on-click":"bash ~/.config/maomao/scripts/hide_lavalauncher_maomao.sh",
         // "on-click-right":"bash ~/.config/eww/scripts/launcher toggle_menu quicksettings",
         // "max-length": 10
     },
