@@ -57,3 +57,4 @@ sway-audio-idle-inhibit &
 
 # change light value and volume value by swayosd-client in keybind
 swayosd-server &
+
