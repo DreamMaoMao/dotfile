@@ -11,227 +11,116 @@ tooltip {
 }
   
 tooltip label {
-  color: #EBDBB2;
+    color: #EBDBB2;
 }
 
 window#waybar {
     background-color: transparent;
 }
 
-#tags{
-    background-color: transparent;
-    margin-top: 5px;
-    margin-bottom: 12px;
-    margin-right: 1px;
-    margin-left: 10px;
+/* Common button styles */
+button {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -3px 5px 5px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bolder;
+    padding: 1px 7px 3px;
+    margin-right: 8px;
 }
 
-#tags button{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: #5d5d5b ;
-    padding-bottom: 1px;
-    padding-top: 5px;
-    margin-right: 8px;
-    padding-right: 7px;
-    padding-left: 7px;
-    background-size: 300% 300%;
-    font-weight: bolder;
-    color: 	#d9baff ;
-    border: none;
+/* Tags module */
+#tags {
+    background-color: transparent;
+    margin: 5px 1px 12px 10px;
+}
+
+#tags button {
+    background-color: #5d5d5b;
+    color: #d9baff;
     border-bottom: 4px solid #3d3c3c;
-    border-radius: 5px;
 }
 
-
-
-#tags button.occupied{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: #fff ;
-    padding-bottom: 1px;
-    padding-top: 5px;
-    margin-right: 8px;
-    padding-right: 7px;
-    padding-left: 7px;
-    background-size: 300% 300%;
-    font-weight: bolder;
-    color: 	#7f5daa ;
-    border: none;
+#tags button.occupied {
+    background-color: #fff;
+    color: #7f5daa;
     border-bottom: 4px solid #d6cdcd;
-    border-radius: 5px;
 }
 
-#tags button.focused{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
+#tags button.focused {
     background-color: rgb(180, 131, 208);
-    padding-bottom: 1px;
-    padding-top: 5px;
-    margin-right: 8px;
-    padding-right: 10px;
-    padding-left: 10px;
-    background-size: 300% 300%;
-    font-weight: bolder;
-    color: 	#fff ;
-    border: none;
-    border-bottom: 4px solid rgb(143, 102, 168);
-    border-radius: 5px;
-}
-
-#tags button.urgent{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    padding-bottom: 1px;
-    padding-top: 1px;
-    margin-right: 8px;
-    padding-right: 7px;
-    padding-left: 7px;
-    padding-bottom: 3px;
-    background: rgb(171, 101, 101);
-    /* background: linear-gradient(45deg, rgba(202,158,230,1) 0%, rgba(245,194,231,1) 43%, rgba(180,190,254,1) 80%, rgba(137,180,250,1) 100%);  */
-    background-size: 300% 300%;
-    /* animation: gradient 10s ease infinite; */
     color: #fff;
-    border: none;
-    border-bottom: 4px solid rgb(105, 57, 57);
-    border-radius: 5px;
-}
-
-#tags button.overview{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color:  rgb(180, 131, 208);
-    padding-bottom: 1px;
-    padding-top: 1px;
-    margin-right: 8px;
-    padding-right: 7px;
-    padding-left: 7px;
-    background-size: 300% 300%;
-    font-weight: bolder;
-    color: 	#fff ;
-    border: none;
+    padding: 1px 10px 3px;
     border-bottom: 4px solid rgb(143, 102, 168);
-    border-radius: 5px;
 }
 
-#taskbar{
+#tags button.urgent {
+    background: rgb(171, 101, 101);
+    color: #fff;
+    border-bottom: 4px solid rgb(105, 57, 57);
+}
+
+#tags button.overview {
+    background-color: rgb(180, 131, 208);
+    color: #fff;
+    border-bottom: 4px solid rgb(143, 102, 168);
+}
+
+/* Taskbar module */
+#taskbar {
     background-color: transparent;
-    margin-top: 5px;
-    margin-bottom: 12px;
-    margin-right: 1px;
-    margin-left: 1px;
-
+    margin: 5px 1px 12px 1px;
 }
 
-#taskbar button{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    /* text-shadow: 0 0 2px rgba(0, 0, 0, 0.8); */
+#taskbar button {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
     background-color: rgb(237, 196, 147);
-    margin-right: 8px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-    padding-right: 5px;
-    padding-left: 5px;
-    font-weight: bolder;
-    color: 	#ededed ;
-    border: none;
+    color: #ededed;
     border-bottom: 4px solid rgb(193, 146, 103);
-    border-radius: 5px;
+    padding: 2px 5px 1px;
 }
 
-#taskbar button.minimized{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
+#taskbar button.minimized {
     background-color: rgb(146, 140, 151);
-    margin-right: 8px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-    padding-right: 5px;
-    padding-left: 5px;
-    font-weight: bolder;
-    color: 	#cba6f7 ;
-    border: none;
+    color: #cba6f7;
     border-bottom: 4px solid rgb(98, 97, 99);
-    border-radius: 5px;
 }
 
-#taskbar button.urgent{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
+#taskbar button.urgent {
     background-color: rgb(238, 92, 92);
-    margin-right: 8px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-    padding-right: 5px;
-    padding-left: 5px;
-    font-weight: bolder;
-    color: 	#cba6f7 ;
-    border: none;
+    color: #cba6f7;
     border-bottom: 4px solid rgb(183, 63, 63);
-    border-radius: 5px;
 }
 
-#taskbar button.active{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
+#taskbar button.active {
     background-color: rgb(186, 238, 225);
-    margin-right: 8px;
-    padding-top: 2px;
-    padding-bottom: 1px;
-    padding-right: 5px;
-    padding-left: 5px;
-    font-weight: bolder;
-    color: 	#cba6f7 ;
-    border: none;
+    color: #cba6f7;
     border-bottom: 4px solid rgb(131, 184, 171);
-    border-radius: 5px;
 }
 
-#window{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    /* text-shadow: 0 0 2px rgba(0, 0, 0, 0.8); */
+/* Window module */
+#window {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
     background-color: rgb(237, 196, 147);
-    margin-top: 5px;
-    margin-bottom: 12px;
-    margin-right: 5px;
-    margin-left: 1px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-right: 5px;
-    padding-left: 5px;
+    margin: 5px 5px 12px 1px;
+    padding: 1px 5px;
     font-weight: normal;
-    color: 	rgb(63, 37, 5);
-    border: none;
+    color: rgb(63, 37, 5);
     border-bottom: 4px solid rgb(193, 146, 103);
     border-radius: 5px;
 }
 
-
+/* Notification module */
 #custom-notification {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: #cb7cc6 ;
-    padding-bottom: 1px;
-    padding-top: 1px;
-    padding-right: 5px;
-    padding-left: 5px;
-    background-size: 300% 300%;
-    font-weight: bolder;
-    color: 	rgb(244, 240, 233) ;
-    border: none;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -3px 5px 5px;
+    background-color: #cb7cc6;
+    padding: 1px 5px;
+    color: rgb(244, 240, 233);
     border-bottom: 4px solid #904e8b;
     border-radius: 5px;
-    margin-top: 5px;
-    margin-bottom: 12px;
-    margin-right: 1px;
-    margin-left: 1px;
+    margin: 5px 1px 12px 1px;
 }
 
-@keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
-
+/* Common module styles */
 #clock,
 #battery,
 #cpu,
@@ -241,426 +130,168 @@ window#waybar {
 #backlight,
 #network,
 #pulseaudio,
-#custom-media,
 #tray,
 #mode,
-#idle_inhibitor,
-#custom-expand,
-#custom-cycle_wall,
-#custom-ss,
-#custom-dynamic_pill,
-#mpd {
+#idle_inhibitor {
     padding: 0 10px;
     border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
+    margin: 5px 1px 12px;
     background-color: #cdd6f4;
     color: #516079;
-    box-shadow: rgba(0, 0, 0, 0.116) 2 2 5 2px;
-    margin-top: 5px;
-    margin-bottom: 12px;
-    margin-right: 1px;
 }
 
-#custom-dynamic_pill.low{
-    background: rgb(148,226,213);
-    background: linear-gradient(52deg, rgba(148,226,213,1) 0%, rgba(137,220,235,1) 19%, rgba(116,199,236,1) 43%, rgba(137,180,250,1) 56%, rgba(180,190,254,1) 80%, rgba(186,187,241,1) 100%); 
-    background-size: 300% 300%;
-    /* text-shadow: 0 0 5px rgba(0, 0, 0, 0.377); */
-    animation: gradient 15s ease infinite;
-    font-weight: bolder;
-    color: #fff;
-}
-#custom-dynamic_pill.normal{
-    background: rgb(166,209,137);
-    background: linear-gradient(52deg, rgba(166,209,137,1) 0%, rgba(166,227,161,1) 26%, rgba(148,226,213,1) 65%, rgba(129,200,190,1) 100%); 
-    background-size: 300% 300%;
-    animation: gradient 15s ease infinite;
-    /* text-shadow: 0 0 5px rgba(0, 0, 0, 0.377); */
-    font-weight: bolder;
-    color: #fff;
-}
-#custom-dynamic_pill.critical{
-    background: rgb(235,160,172);
-    background: linear-gradient(52deg, rgba(235,160,172,1) 0%, rgba(243,139,168,1) 30%, rgba(231,130,132,1) 48%, rgba(250,179,135,1) 77%, rgba(249,226,175,1) 100%); 
-    background-size: 300% 300%;
-    animation: gradient 15s ease infinite;
-    /* text-shadow: 0 0 5px rgba(0, 0, 0, 0.377); */
-    font-weight: bolder;
-    color: #fff;
-}
-
-
-#custom-dynamic_pill.playing{
-    background: rgb(249,226,175);
-    background: linear-gradient(45deg, rgba(249,226,175,1) 0%, rgba(245,194,231,1) 20%, rgba(180,190,254,1) 100%); 
-    background-size: 300% 300%;
-    animation: gradient 15s ease infinite;
-    /* text-shadow: 0 0 5px rgba(0, 0, 0, 0.377); */
-    font-weight: 900;
-    color: #fff ;
-}
-#custom-dynamic_pill.paused{
-    background: #fff ;
-    font-weight: bolder;
-    color: #b4befe;
-}
-
-#custom-ss{
-    background: #fff;
-    color: rgba(203,166,247,1);
-    font-weight:  bolder;
-    padding: 5px;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 5px;
-}
-
-#custom-cycle_wall{
-    background: rgb(245,194,231);
-    /* background: linear-gradient(45deg, rgba(245,194,231,1) 0%, rgba(203,166,247,1) 0%, rgba(243,139,168,1) 13%, rgba(235,160,172,1) 26%, rgba(250,179,135,1) 34%, rgba(249,226,175,1) 49%, rgba(166,227,161,1) 65%, rgba(148,226,213,1) 77%, rgba(137,220,235,1) 82%, rgba(116,199,236,1) 88%, rgba(137,180,250,1) 95%);  */
-    color: #fff;
-    background-size: 500% 500%;
-    /* animation: gradient 7s linear infinite; */
-    font-weight:  bolder;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-
+/* Clock */
 #clock {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
     background: rgb(179, 42, 142);
-    /* background: linear-gradient(45deg, rgb(99, 6, 74) 0%, rgba(203,166,247,1) 64%, rgba(202,158,230,1) 100%);  */
-    margin-left: 1px;
-    margin-right: 1px;
     min-width: 50px;
-    color: #f8e1b7 ;
-    background-size: 300% 300%;
-    /* animation: gradient 20s ease infinite; */
+    color: #f8e1b7;
     font-size: 20px;
-    padding-top: 5px;
-    padding-bottom: 3px;
-    padding-right: 15px;
-    font-weight: bolder;
-    padding-left: 15px;
-    border: none;
+    padding: 5px 15px 3px;
     border-bottom: 4px solid rgb(155, 32, 122);
-    border-radius: 5px;
+}
+
+/* Battery */
+#battery {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
+    background-color: #07683e;
+    color: #eae4d0;
+    font-size: 20px;
+    padding: 3px 15px;
+    border-bottom: 4px solid #297f5a;
 }
 
 #battery.charging, #battery.plugged {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    padding-top: 5px;
-    padding-bottom: 3px;
     min-width: 70px;
     color: #bdf8da;
-    background: #495026 ;
-    margin-right: 10px;
-    border: none;
+    background: #495026;
     border-bottom: 4px solid #3a401d;
-    border-radius: 5px;
-}
-
-#battery {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    background-color: #07683e;
-    color:#eae4d0;
-    font-weight: bolder;
-    font-size: 20px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-right: 10px;
-    border: none;
-    border-bottom: 4px solid #297f5a;
-    border-radius: 5px;
 }
 
 @keyframes blink {
     to {
         background-color: #f9e2af;
-        color:#96804e;
+        color: #96804e;
     }
 }
 
 #battery.critical:not(.charging) {
-    background-color:  #f38ba8;
-    color:#bf5673;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    background-color: #f38ba8;
+    color: #bf5673;
+    animation: blink 0.5s linear infinite alternate;
 }
 
+/* CPU */
 #cpu {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
     min-width: 80px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 5px;
-    padding-bottom: 1px;
+    padding: 5px 10px 1px;
     background: rgb(39, 154, 207);
-    /* background: linear-gradient(52deg, rgba(180,190,254,1) 0%, rgba(137,220,235,1) 32%, rgba(137,180,250,1) 72%, rgba(166,227,161,1) 100%);  */
-    background-size: 300% 300%;
-    /* animation: gradient 20s ease infinite; */
-    /* text-shadow: 0 10 5px rgba(0, 0, 0, 0.8); */
-    /* background-color: #b4befe; */
-    color: 	#edebe6;
-    font-weight: bolder;
-    border: none;
+    color: #edebe6;
     border-bottom: 4px solid rgb(58, 125, 156);
-    border-radius: 5px;
-
-
 }
 
+/* Memory */
 #memory {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    min-width: 60px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
+    min-width: 70px;
+    padding: 3px;
     background-color: #cba6f7;
-    color: 	#55406e;
-    font-weight: bolder;
-    border: none;
+    color: #55406e;
     border-bottom: 4px solid #9172b6;
-    border-radius: 5px;
-
 }
 
+/* Disk */
 #disk {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
     background-color: #cca45a;
     color: #572e05;
 }
 
+/* Backlight */
 #backlight {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    font-weight: bolder;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
+    min-width: 70px;
+    padding: 3px;
     color: #090427;
-    min-width: 40px;
-    background-color: #c3cac2 ;
-    border: none;
+    background-color: #c3cac2;
     border-bottom: 4px solid #8a9488;
-    border-radius: 5px;
 }
 
-#network{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    font-weight: bolder;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    color:#000;
+/* Network */
+#network {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
+    padding: 3px;
+    color: #000;
 }
 
-#network.disabled{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+#network.disabled {
     background-color: #45475a;
 }
 
-#network.disconnected{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+#network.disconnected {
     background: rgb(243,139,168);
-    /* background: linear-gradient(45deg, rgba(243,139,168,1) 0%, rgba(250,179,135,1) 100%);  */
     color: #fff;
-    font-weight: bolder;
     padding-right: 11px;
-    border: none;
     border-bottom: 4px solid rgb(213, 115, 142);
-    border-radius: 5px;
 }
 
-#network.linked, #network.wifi{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-color: #a6e3a1 ;
-    border: none;
+#network.linked, #network.wifi, #network.ethernet {
+    background-color: #a6e3a1;
     border-bottom: 4px solid #79b574;
-    border-radius: 5px;
 }
 
-#network.ethernet{
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-color: #a6e3a1 ;
-    border: none;
-    border-bottom: 4px solid #79b574;
-    border-radius: 5px;
-}
-
-
+/* Pulseaudio */
 #pulseaudio {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    font-weight: bolder;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 5px;
-    padding-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
     min-width: 40px;
-    background-color:  	#d79b87;
+    padding: 5px 10px 3px;
+    background-color: #d79b87;
     color: #452815;
-    border: none;
     border-bottom: 4px solid #a77666;
-    border-radius: 5px;
 }
 
 #pulseaudio.muted {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
     background-color: #9f7154;
 }
 
-#custom-media {
-    margin-right: 1px;
-    margin-left: 1px;
-    color: #66cc99;
-}
-
-#custom-media.custom-spotify {
-    margin-right: 1px;
-    margin-left: 1px;
-    background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-    margin-right: 1px;
-    margin-left: 1px;
-    background-color: #ffa000;
-}
-
+/* Temperature */
 #temperature {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    font-weight: bolder;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
+    padding: 3px;
     background-color: #f9e2af;
-    color:#96804e;
-}
-#temperature.critical {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    font-weight: bolder;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 5px;
-    padding-bottom: 1px;
-    background-color: #ce91a0 ;
-    color:#50393f;
-    border: none;
-    border-bottom: 4px solid #a26a79;
-    border-radius: 5px;
+    color: #96804e;
 }
 
+#temperature.critical {
+    padding: 5px 10px 1px;
+    background-color: #ce91a0;
+    color: #50393f;
+    border-bottom: 4px solid #a26a79;
+}
+
+/* Tray */
 #tray {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
+    padding: 3px;
     margin-left: 3px;
-    padding-top: 3px;
-    padding-bottom: 3px;
     background: linear-gradient(to bottom, #E8C07D, #CC8B3C);
-    border: none;
     border-bottom: 4px solid #a56f2c;
-    border-radius: 5px;
 }
 
 #tray > .passive {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
     -gtk-icon-effect: dim;
 }
 
 #tray > .needs-attention {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6 3 1px;
-    margin-right: 1px;
-    margin-left: 1px;
-    padding-top: 3px;
-    padding-bottom: 3px;
     -gtk-icon-effect: highlight;
     background-color: #eb4d4b;
 }
 
-#idle_inhibitor {
-    margin-right: 1px;
-    margin-left: 1px;
-    background-color: #2d3436;
-}
-
-#idle_inhibitor.activated {
-    margin-right: 1px;
-    margin-left: 1px;
-    background-color: #ecf0f1;
-    color: #2d3436;
-}
-
-#mpd {
-    background-color: #66cc99;
-    color: #2a5c45;
-}
-
-#mpd.disconnected {
-    background-color: #f53c3c;
-}
-
-#mpd.stopped {
-    background-color: #90b1b1;
-}
-
-#mpd.paused {
-    background-color: #51a37a;
-}
-
-#language {
-    background: #00b093;
-    color: #740864;
-    padding: 0 5px;
-    margin: 0 5px;
-    min-width: 16px;
-}
-
-#keyboard-state {
-    background: #97e1ad;
-    color: #000000;
-    padding: 0 0px;
-    margin: 0 5px;
-    min-width: 16px;
-}
-
-#keyboard-state > label {
-    padding: 0 5px;
-}
-
-#keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
+/* Animation */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
