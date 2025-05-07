@@ -3,7 +3,7 @@
     "position": "top",
     "height": 40,
     "spacing": 3,
-    "margin-bottom": -15,
+    "margin-bottom": -10,
   
     "modules-left": ["dwl/tags", "wlr/taskbar", "dwl/window"],
     "modules-right": [
