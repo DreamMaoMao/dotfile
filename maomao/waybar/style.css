@@ -1,297 +1,355 @@
 * {
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: bolder;
-}
-
-tooltip {
-    background: #3C3A38;
-    border: 2px solid #85796F;
-    border-radius: 10px;
-}
-  
-tooltip label {
-    color: #EBDBB2;
+  border: none;
+  font-family: Maple Mono NF CN;
+  font-weight: 800;
+  font-size: 18px;
+  min-height: 0;
 }
 
 window#waybar {
-    background-color: transparent;
+  background: none;
+  margin: 0px;
+  padding: 0px;
 }
 
-/* Common button styles */
-button {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3px 5px 5px;
-    border: none;
-    border-radius: 5px;
-    font-weight: bolder;
-    padding: 1px 7px 3px;
-    margin-right: 8px;
+tooltip {
+  background: rgba(40, 40, 40, 0.76);
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  color: #ddca9e;
 }
 
-/* Tags module */
-#tags {
-    background-color: transparent;
-    margin: 5px 1px 12px 5px;
-}
-
-#tags button {
-    background-color: #5d5d5b;
-    color: #d9baff;
-    border-bottom: 4px solid #3d3c3c;
-}
-
-#tags button.occupied {
-    background-color: #fff;
-    color: #7f5daa;
-    border-bottom: 4px solid #d6cdcd;
-}
-
-#tags button.focused {
-    background-color: rgb(180, 131, 208);
-    color: #fff;
-    padding: 1px 10px 3px;
-    border-bottom: 4px solid rgb(143, 102, 168);
-}
-
-#tags button.urgent {
-    background: rgb(171, 101, 101);
-    color: #fff;
-    border-bottom: 4px solid rgb(105, 57, 57);
-}
-
-#tags button.overview {
-    background-color: rgb(180, 131, 208);
-    color: #fff;
-    border-bottom: 4px solid rgb(143, 102, 168);
-}
-
-/* Taskbar module */
-#taskbar {
-    background-color: transparent;
-    margin: 5px 1px 12px 1px;
-}
-
-#taskbar button {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    background-color: rgb(237, 196, 147);
-    color: #ededed;
-    border-bottom: 4px solid rgb(193, 146, 103);
-    padding: 2px 5px 1px;
-}
-
-#taskbar button.minimized {
-    background-color: rgb(146, 140, 151);
-    color: #cba6f7;
-    border-bottom: 4px solid rgb(98, 97, 99);
-}
-
-#taskbar button.urgent {
-    background-color: rgb(238, 92, 92);
-    color: #cba6f7;
-    border-bottom: 4px solid rgb(183, 63, 63);
-}
-
-#taskbar button.active {
-    background-color: rgb(186, 238, 225);
-    color: #cba6f7;
-    border-bottom: 4px solid rgb(131, 184, 171);
-}
-
-/* Window module */
-#window {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    background-color: rgb(237, 196, 147);
-    margin: 5px 5px 12px 1px;
-    padding: 1px 5px;
-    font-weight: normal;
-    color: rgb(63, 37, 5);
-    border-bottom: 4px solid rgb(193, 146, 103);
-    border-radius: 5px;
-}
-
-/* Notification module */
-#custom-notification {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -3px 5px 5px;
-    background-color: #cb7cc6;
-    padding: 1px 5px;
-    color: rgb(244, 240, 233);
-    border-bottom: 4px solid #904e8b;
-    border-radius: 5px;
-    margin: 5px 1px 12px 1px;
-}
-
-/* Common module styles */
+#language,
+#custom-updates,
+#custom-weather,
+#window,
+#taskbar,
+#tags,
+#custom-playerctl,
 #clock,
 #battery,
+#pulseaudio,
 #cpu,
-#memory,
-#disk,
 #temperature,
 #backlight,
 #network,
-#pulseaudio,
+#workspaces,
 #tray,
-#mode,
-#idle_inhibitor {
-    padding: 0 10px;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.116) 2px 2px 5px 2px;
-    margin: 5px 1px 12px;
-    background-color: #cdd6f4;
-    color: #516079;
+#cava,
+#keyboard-state,
+#custom-notification,
+#custom-power {
+  background: none;
+  padding: 0px 10px;
+  margin: 0px;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
 
-/* Clock */
-#clock {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    background: rgb(179, 42, 142);
-    min-width: 50px;
-    color: #f8e1b7;
-    font-size: 20px;
-    padding: 5px 15px 3px;
-    border-bottom: 4px solid rgb(155, 32, 122);
+
+#tags {
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  margin-left: 4px;
+  padding-left: 4px;
 }
 
-/* Battery */
-#battery {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    background-color: #07683e;
-    color: #eae4d0;
-    font-size: 20px;
-    padding: 3px 15px;
-    border-bottom: 4px solid #297f5a;
+#tags button {
+  border: none;
+  transition-duration: 0.3s;
+  background: none;
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: #928374;
+  padding: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
-#battery.charging, #battery.plugged {
-    min-width: 70px;
-    color: #bdf8da;
-    background: #495026;
-    border-bottom: 4px solid #3a401d;
+#tags button {
+  color: #928374;
 }
 
-@keyframes blink {
-    to {
-        background-color: #f9e2af;
-        color: #96804e;
-    }
+#tags button.occupied {
+  color: #ddca9e;
 }
 
-#battery.critical:not(.charging) {
-    background-color: #f38ba8;
-    color: #bf5673;
-    animation: blink 0.5s linear infinite alternate;
+#tags button.overview {
+  color: #ddca9e;
 }
 
-/* CPU */
-#cpu {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    min-width: 80px;
-    padding: 5px 10px 1px;
-    background: rgb(39, 154, 207);
-    color: #edebe6;
-    border-bottom: 4px solid rgb(58, 125, 156);
+#tags button:hover {
+  color: #d79921;
 }
 
-/* Memory */
-#memory {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    min-width: 70px;
-    padding: 3px;
-    background-color: #cba6f7;
-    color: #55406e;
-    border-bottom: 4px solid #9172b6;
+#tags button.focused {
+  background-color: #ddca9e;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  border-radius: 3px;
 }
 
-/* Disk */
-#disk {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    background-color: #cca45a;
-    color: #572e05;
+#tags button.urgent {
+  color: #cc241d;
 }
 
-/* Backlight */
-#backlight {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    min-width: 70px;
-    padding: 3px;
-    color: #090427;
-    background-color: #c3cac2;
-    border-bottom: 4px solid #8a9488;
-}
-
-/* Network */
-#network {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    padding: 3px;
-    color: #000;
-}
-
-#network.disabled {
-    background-color: #45475a;
-}
-
-#network.disconnected {
-    background: rgb(243,139,168);
-    color: #fff;
-    padding-right: 11px;
-    border-bottom: 4px solid rgb(213, 115, 142);
-}
-
-#network.linked, #network.wifi, #network.ethernet {
-    background-color: #a6e3a1;
-    border-bottom: 4px solid #79b574;
-}
-
-/* Pulseaudio */
-#pulseaudio {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    min-width: 40px;
-    padding: 5px 10px 3px;
-    background-color: #d79b87;
-    color: #452815;
-    border-bottom: 4px solid #a77666;
-}
-
-#pulseaudio.muted {
-    background-color: #9f7154;
-}
-
-/* Temperature */
-#temperature {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    padding: 3px;
-    background-color: #f9e2af;
-    color: #96804e;
-}
-
-#temperature.critical {
-    padding: 5px 10px 1px;
-    background-color: #ce91a0;
-    color: #50393f;
-    border-bottom: 4px solid #a26a79;
-}
-
-/* Tray */
 #tray {
-    box-shadow: rgba(0, 0, 0, 0.5) 0 -6px 3px 1px;
-    padding: 3px;
-    margin-left: 3px;
-    background: linear-gradient(to bottom, #E8C07D, #CC8B3C);
-    border-bottom: 4px solid #a56f2c;
+  background: rgba(40, 40, 40, 0.76);
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  margin-right: 4px;
+  margin-left: 4px;
+  padding-right: 8px;
+  padding-left: 9px;
+  padding-top: 2px;
+  color: #ddca9e;
 }
 
-#tray > .passive {
-    -gtk-icon-effect: dim;
+#network {
+  background: rgba(40, 40, 40, 0.76);
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  margin-right: 4px;
+  margin-left: 0px;
+  padding-right: 8px;
+  padding-left: 9px;
+  padding-top: 2px;
+  color: #ddca9e;
 }
 
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
+#workspaces {
+  background: rgba(40, 40, 40, 0.76);
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  margin-left: 4px;
+  padding-right: 6px;
+  padding-left: 4px;
 }
 
-/* Animation */
-@keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+#language {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  border-radius: 4px 0px 0px 4px;
+  min-width: 24px;
+}
+
+#keyboard-state {
+  background: none;
+  color: #ddca9e;
+  border: none;
+  padding-top: 1px;
+}
+
+#custom-updates {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-radius: 0px 4px 4px 0px;
+  border-width: 2px;
+  border-left: 0px;
+  border-style: solid;
+  border-color: #c9b890;
+}
+
+#window {
+  background: rgba(40, 40, 40, 0.76);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-radius: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #ddca9e;
+}
+
+#taskbar {
+  background: rgba(40, 40, 40, 0.76);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-radius: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+  color: #ddca9e;
+}
+
+#taskbar button {
+  margin-right: 3px;
+}
+
+#taskbar button.minimized {
+  background-color: #709d1c;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
+}
+
+#taskbar button.urgent {
+  background-color: #ce3d0d;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
+}
+
+#taskbar button.active {
+  background-color: #ddca9e;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
+}
+
+#custom-playerctl {
+  background: rgba(40, 40, 40, 0.76);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  border-left: 0px;
+  color: #ddca9e;
+}
+
+#cava {
+  background: rgba(40, 40, 40, 0.76);
+  border-radius: 4px 0px 0px 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  margin-left: 4px;
+  color: #ddca9e;
+}
+
+#clock {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 2px;
+  border-radius: 4px 0px 0px 4px;
+}
+
+#pulseaudio {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  margin-left: 0px;
+  border-radius: 4px 0px 0px 4px;
+}
+
+#cpu  {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  border-left: 0px;
+  border-radius: 0px;
+}
+
+#temperature {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  border-left: 0px;
+  border-radius: 0px;
+}
+
+#backlight {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-radius: 0px 4px 4px 0px;
+  border-left: 0px;
+  margin-right: 4px;
+}
+
+#battery {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-radius: 0px;
+  border-right: 0px;
+  border-left: 0px;
+}
+
+#custom-weather {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-radius: 4px 0px 0px 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-right: 0px;
+  margin-left: 4px;
+  padding-right: 7px;
+  padding-top: 1px;
+}
+
+#custom-notification {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-left: 0px;
+  border-right: 0px;
+  border-radius: 0px;
+  min-width: 18px;
+}
+
+#custom-power {
+  background: rgba(40, 40, 40, 0.76);
+  color: #ddca9e;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  border-radius: 0px 4px 4px 0px;
+  border-left: 0px;
+  margin-left: 0px;
+  margin-right: 4px;
+  padding-right: 14px;
 }
