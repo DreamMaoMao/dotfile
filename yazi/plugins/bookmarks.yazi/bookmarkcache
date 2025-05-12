@@ -5,5 +5,7 @@ k###/home/wrq/.config/mpv###mpvconfig###true
 d###/home/wrq/Downloads###down###true
 n###/home/wrq/.config/niri###niri###true
 m###/home/wrq/.config/maomao###maomaoconfig###true
-i###/home/wrq/refer/maomaowm/maomao.c###tm###false
 h###/home/wrq/.config/hypr###hypr###true
+i###/home/wrq/deskenv/maomaowm###watch###true
+u###/home/wrq/deskenv/aur###aur###true
+o###/home/wrq/mynote/xs1/带着ai去修仙###xs###true

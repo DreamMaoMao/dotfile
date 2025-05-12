@@ -60,8 +60,7 @@ audio = [
 
 document = [
 	{ run = 'xdg-open "$@"', orphan = true, desc = "xdg-open" , for = "linux" },
-	{ run = 'zathura "$@" ' , orphan = true, desc = "zathura" , for = "linux"},
-	{ run = 'evince "$@" ' , orphan = true, desc = "evince" , for = "linux"},
+	{ run = 'okular "$@" ' , orphan = true, desc = "okular" , for = "linux"},
 	{ run = 'GTK_IM_MODULE=fcitx5 foliate "$@" ' , orphan = true, desc = "foliate" , for = "linux"},
 ]
 
@@ -114,17 +113,17 @@ prepend_previewers = [
   { mime= "application/octet-stream", run = "video"}
 ]
 
-prepend_preloaders= [
-	# { mime = "image/{avif,hei?,jxl,svg+xml}", run = "disable" },
-	# { mime = "image/*", run = "disable" },
-	# Video
-	{ mime = "video/*", run = "disable" },
-	# PDF
-	# { mime = "application/pdf", run = "disable" },
-	# Font
-	{ mime = "font/*", run = "disable" },
-	{ mime = "application/vnd.ms-opentype", run = "disable" },
-]
+# prepend_preloaders= [
+# 	# { mime = "image/{avif,hei?,jxl,svg+xml}", run = "disable" },
+# 	{ mime = "image/*", run = "disable" },
+# 	# Video
+# 	{ mime = "video/*", run = "disable" },
+# 	# PDF
+# 	# { mime = "application/pdf", run = "disable" },
+# 	# Font
+# 	{ mime = "font/*", run = "disable" },
+# 	{ mime = "application/vnd.ms-opentype", run = "disable" },
+# ]
 
 [[plugin.prepend_fetchers]]
 id   = "mime"
@@ -154,13 +153,3 @@ id   = "current-size"
 name = "*/"
 run  = "current-size"
 
-
-# fetchers = [
-# 	# Mimetype
-# 	{ id = "mime-ext", name = "*", run = "mime-ext", prio = "high" },
-# 	{ id = "git", name = "*", run = "git", prio = "normal" },
-# 	{ id = "git", name = "*/", run = "git", prio = "normal" },
-# 	{ id = "current-size", name = "*/", run = "current-size", prio = "normal" },
-# 	{ id = "current-size", name = "*", run = "current-size",prio = "normal" },
-# ]
-#

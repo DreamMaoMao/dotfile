@@ -37,8 +37,8 @@ keymap = [
 	{ on = [ "z", "o" ], run = "linemode owner",       desc = "Set linemode to owner" },
 
 	{ on = [ "u","i" ],     run = "plugin cmd -- lazygit",              desc = "lazygit" },
-	{ on = [ "u","f" ], run = '''shell ' QT_QPA_PLATFORM=xcb ~/deskenv/master/qxdrag/qxdrag.py -x -e -b -p "$1"' --confirm''',desc="dragon x11" },
-	{ on = [ "u","w" ], run = '''shell ' QT_QPA_PLATFORM=wayland ~/deskenv/master/qxdrag/qxdrag.py -x -e -b -p "$1"' --confirm''',desc="dragon wayland" },
+	{ on = [ "u","f" ], run = '''shell ' QT_QPA_PLATFORM=xcb ~/deskenv/archieve/qxdrag/qxdrag.py -x -e -b -p "$1"' --confirm''',desc="dragon x11" },
+	{ on = [ "u","w" ], run = '''shell ' QT_QPA_PLATFORM=wayland ~/deskenv/archieve/qxdrag/qxdrag.py -x -e -b -p "$1"' --confirm''',desc="dragon wayland" },
 	# { on = [ "u","w" ], run = '''shell ' GDK_BACKEND=wayland dragon -x -i -T "$1"' --confirm''',desc="dragon wayland" },
 	# { on = [ "u","r" ], run = '''shell ' GDK_BACKEND=x11 dragon -x -i -T "$1"' --confirm''',desc="dragon wayland" },
 
@@ -164,7 +164,6 @@ keymap = [
 
 	# Goto
 	{ on = [ "g", "w" ],       run = "cd ~/文档/WeChat_Data/home",       desc = "Go to weixin" },
-	{ on = [ "g", "n" ],       run = "cd ~/_install",       desc = "Go to _install" },
 	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go to home" },
 	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go to config" },
 	{ on = [ "g", "u" ],       run = "cd /media/UUI/",     desc = "Go to Mobile disk" },
@@ -174,7 +173,7 @@ keymap = [
 	{ on = [ "g", "y" ],       run = "cd ~/.config/yazi/",          desc = "Go to video" },
 	{ on = [ "g", "i" ],       run = "cd ~/Images",          desc = "Go to image" },
 	{ on = [ "g", "r" ],       run = "cd /",          desc = "Go to /" },
-	{ on = [ "g", "j" ],       run = "cd /home/wrq/deskenv/dev",          desc = "Go to dev" },
+	{ on = [ "g", "j" ],       run = "cd /home/wrq/deskenv/archieve/",          desc = "Go to dev" },
 	{ on = [ "g", "k" ],       run = "cd /home/wrq/deskenv/master",       desc = "Go to master" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Go by interactive" },
 

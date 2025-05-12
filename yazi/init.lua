@@ -52,7 +52,7 @@ require("header-hidden"):setup({
 })
 
 require("header-host"):setup({
-    color = "#8bca4b"
+    color = "#B5B520"
 })
 
 

@@ -746,7 +746,6 @@ local ext_mime_map = {
 	["link66"] = "application/vnd.route66.link66+xml",
 	["st"] = "application/vnd.sailingtracker.track",
 	["SAR"] = "application/vnd.sar",
-	["scd"] = "application/vnd.scribus",
 	["sla"] = "application/vnd.scribus",
 	["slaz"] = "application/vnd.scribus",
 	["s3df"] = "application/vnd.sealed.3df",
