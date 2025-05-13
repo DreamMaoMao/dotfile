@@ -56,6 +56,7 @@ tooltip {
   border-color: #c9b890;
   margin-left: 4px;
   padding-left: 10px;
+  padding-right: 6px;
   background: rgba(40, 40, 40, 0.76);
 
 }
@@ -70,6 +71,7 @@ tooltip {
   padding: 1px;
   padding-left: 1px;
   padding-right: 1px;
+  margin-right: 4px;
 }
 
 #tags button {
@@ -99,7 +101,13 @@ tooltip {
 }
 
 #tags button.urgent {
-  color: #cc241d;
+  background-color: #ef5e5e;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  border-radius: 3px;
 }
 
 #tray {
