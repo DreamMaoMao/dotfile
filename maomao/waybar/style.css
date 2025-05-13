@@ -55,7 +55,9 @@ tooltip {
   border-style: solid;
   border-color: #c9b890;
   margin-left: 4px;
-  padding-left: 4px;
+  padding-left: 10px;
+  background: rgba(40, 40, 40, 0.76);
+
 }
 
 #tags button {
