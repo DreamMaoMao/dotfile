@@ -173,7 +173,7 @@ tooltip {
   border-style: solid;
   border-color: #c9b890;
   border-radius: 4px;
-  margin-left: 10px;
+  margin-left: 0px;
   margin-right: 10px;
   color: #ddca9e;
 }
@@ -187,6 +187,17 @@ tooltip {
   margin-left: 10px;
   margin-right: 10px;
   color: #ddca9e;
+}
+
+#taskbar.empty {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 10px;
+  padding-right: 0px;
+  border-radius: 0px;
+  border-color: transparent;
+  border: none;
+  background-color: transparent;
 }
 
 #taskbar button {
