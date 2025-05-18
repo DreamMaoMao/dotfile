@@ -63,7 +63,6 @@ tooltip {
 
 #tags button {
   border: none;
-  transition-duration: 0.3s;
   background: none;
   box-shadow: inherit;
   text-shadow: inherit;
@@ -72,6 +71,16 @@ tooltip {
   padding-left: 1px;
   padding-right: 1px;
   margin-right: 4px;
+}
+
+#tags button:not(.occupied):not(.focused) {
+  font-size: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: -17px;
+  padding: 0;
+  color: transparent;
+  background-color: transparent;
 }
 
 #tags button {
@@ -293,7 +302,7 @@ tooltip {
   border-radius: 4px 0px 0px 4px;
 }
 
-#cpu  {
+#cpu {
   background: rgba(40, 40, 40, 0.76);
   color: #ddca9e;
   border-width: 2px;
