@@ -14,7 +14,7 @@ swaync &
 wlsunset -T 3501 -t 3500 &
 
 # wallpaper
-swaybg -i ~/.config/maomao/wallpaper/room.png &
+swaybg -i ~/.config/maomao/wallpaper/boat.jpg &
 
 # top bar
 waybar -c ~/.config/maomao/waybar/config -s ~/.config/maomao/waybar/style.css &
