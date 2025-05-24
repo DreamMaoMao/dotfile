@@ -14,7 +14,6 @@ keymap = [
 	
   { on = [ "<A-k>" ],    run = "plugin arrow-parent -- -1", desc = "arrow parent up" },
 	{ on = [ "<A-j>" ],  run = "plugin arrow-parent -- 1",  desc = "arrow parent down" },
-	{ on = [ "U" ], run = "plugin cd-last", desc = "cd last path" },
 
 	{ on = [ "u","a" ], run = "plugin bookmarks -- save", desc = "Add hovered as bookmark" },
 	{ on = [ "u","m" ], run = "plugin bookmarks -- modify", desc = "modify a bookmarks key to hovered" },
