@@ -14,7 +14,7 @@ swaync &
 wlsunset -T 3501 -t 3500 &
 
 # wallpaper
-swaybg -i ~/.config/maomao/wallpaper/boat.jpg &
+swaybg -i ~/.config/maomao/wallpaper/czd.png &
 
 # top bar
 waybar -c ~/.config/maomao/waybar/config -s ~/.config/maomao/waybar/style.css &
@@ -46,8 +46,6 @@ nm-applet &
 
 # for private use not for you
 [ -e /dev/sda4 ] && udisksctl mount -t ext4 -b /dev/sda4
-cp ~/.config/eww/System-Menu/eww.yuck.hyprland  ~/.config/eww/System-Menu/eww.yuck
-eww daemon &
 
 # idle to lightdown and shutdown screen
 ~/.config/maomao/scripts/idle.sh &

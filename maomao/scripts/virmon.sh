@@ -12,7 +12,7 @@ if [ -z "$HEADLESS_DISPLAY" ]; then
     mmsg -d create_virtual_output
     notify-send "Creating virtual monitor"
     HEADLESS_DISPLAY=$(find_headless_display)
-    wlr-randr --output "$HEADLESS_DISPLAY" --pos 1921,0 --scale 1 --custom-mode 1920x1080@60Hz --on
+    wlr-randr --output "$HEADLESS_DISPLAY" --pos 1926,0 --scale 1 --custom-mode 1920x1080@60Hz --on
     wlr-randr --output eDP-1 --pos 0,0 --scale 1 
     notify-send "Starting sunshine"
     sunshine &

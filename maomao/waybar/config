@@ -163,7 +163,12 @@
         "format": "",
         "tooltip": false,
         "on-click": "wlogout -b 6 --protocol layer-shell",
-        "on-click-right": "bash ~/.config/eww/System-Menu/launch"
+  		  "menu": "on-click-right",
+  		  "menu-file": "~/.config/maomao/waybar/battery_menu.xml",
+		    "menu-actions": {
+			   "performance": "bash ~/.config/maomao/scripts/power-profile  --performance",
+			   "schedutil": "bash ~/.config/maomao/scripts/power-profile --schedutil",
+        },
     },
     "pulseaudio#microphone": {
         "format": "{format_source}",
