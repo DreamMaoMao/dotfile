@@ -27,7 +27,7 @@ lavalauncher -c ~/.config/maomao/lavalauncher/lavalauncher.conf &
 xrdb merge ~/.Xresources
 
 # ime input
-fcitx5 --replace -d &
+fcitx5 --replace -d 2> /dev/null &
 
 # keep clipboard content
 wl-clip-persist --clipboard regular --reconnect-tries 0 &
