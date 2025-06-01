@@ -42,7 +42,7 @@ blueman-applet &
 nm-applet &
 
 # Permission authentication
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/lib/xfce-polkit/xfce-polkit &
 
 # for private use not for you
 [ -e /dev/sda4 ] && udisksctl mount -t ext4 -b /dev/sda4
