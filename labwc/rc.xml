@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+
+<!--
+  This is a very simple config file with many options missing. For a complete
+  set of options with comments, see docs/rc.xml.all
+-->
+
+<labwc_config>
+
+  <theme>
+    <name>gruvbox-material-dark-blocks</name>
+    <cornerRadius>10</cornerRadius>
+    <font name="Maple Mono NF CN" size="18" />
+  </theme>
+
+   <desktops>
+    <popupTime>1000</popupTime>
+    <names>
+      <name>1</name>
+      <name>2</name>
+      <name>3</name>
+      <name>4</name>
+      <name>5</name>
+      <name>6</name>
+      <name>7</name>
+      <name>8</name>
+      <name>9</name>
+    </names>
+  </desktops>
+
+  <keyboard>
+      <numlock>on</numlock>
+
+    <!-- load default keybinds by uncommenting the following line -->
+    <default />
+
+    <!-- Use a different terminal emulator -->
+    <keybind key="A-Return">
+      <action name="Execute" command="foot" />
+    </keybind>
+
+    <keybind key="A-space">
+      <action name="Execute" command="rofi -config ~/.config/labwc/rofi/config.rasi -show drun" />
+    </keybind>
+
+    <keybind key="W-space">
+      <action name="Execute" command="rofi -theme ~/.config/labwc/rofi/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.lua" />
+    </keybind>
+
+    <keybind key="W-Return">
+      <action name="Execute" command="google-chrome-stable" />
+    </keybind>
+
+    <keybind key="A-q">
+      <action name="Close"/>
+    </keybind>
+
+    <keybind key="A-a">
+      <action name="ToggleMaximize"/>
+    </keybind>
+
+    <keybind key="A-f">
+      <action name="ToggleFullscreen"/>
+    </keybind>
+
+    <keybind key="W-m">
+      <action name="Exit"/>
+    </keybind>
+
+    <keybind key="C-W-Return">
+      <action name="Execute" command="foot -e yazi" />
+    </keybind>
+
+    <keybind key="A-W-Return">
+      <action name="Execute" command="mpv --player-operation-mode=pseudo-gui" />
+    </keybind>
+
+    <keybind key="W-k">
+      <action name="Execute" command="bash ~/tool/wshowkey.sh" />
+    </keybind>
+
+    <keybind key="C-Return">
+      <action name="Execute" command="bash ~/tool/clash.sh" />
+    </keybind>
+
+    <keybind key="W-Left">
+      <action name="GoToDesktop" to="left" wrap="no" />
+    </keybind>
+
+    <keybind key="W-Right">
+      <action name="GoToDesktop" to="right" wrap="no" />
+    </keybind>
+
+    <keybind key="C-Left">
+      <action name="GoToDesktop" to="left-occupied" wrap="no" />
+    </keybind>
+
+    <keybind key="C-Right">
+      <action name="GoToDesktop" to="right-occupied" wrap="no" />
+    </keybind>
+
+    <keybind key="C-W-left">
+      <action name="SendToDesktop" to="left" wrap="no" />
+    </keybind>
+
+    <keybind key="C-W-right">
+      <action name="SendToDesktop" to="right" wrap="no" />
+    </keybind>
+
+    <keybind key="A-right">
+      <action name="SnapToEdge" direction="right" />
+    </keybind>
+    <keybind key="A-left">
+      <action name="SnapToEdge" direction="left" />
+    </keybind>
+    <keybind key="A-up">
+      <action name="SnapToEdge" direction="up" />
+    </keybind>
+    <keybind key="A-down">
+      <action name="SnapToEdge" direction="down" />
+    </keybind>
+
+    <keybind key="A-backslash">
+      <action name="ToggleSnapToEdge" direction="center" />
+    </keybind>
+
+    <keybind key="W-i">
+      <action name="Iconify" />
+    </keybind>
+
+    <keybind key="C-A-left">
+      <action name="ResizeRelative" left="0" right="-50" top="0" bottom="0" />
+    </keybind>
+
+    <keybind key="C-A-right">
+      <action name="ResizeRelative" left="0" right="50" top="0" bottom="0" />
+    </keybind>
+
+    <keybind key="C-A-up">
+      <action name="ResizeRelative" left="0" right="0" top="0" bottom="-50" />
+    </keybind>
+
+    <keybind key="C-A-down">
+      <action name="ResizeRelative" left="0" right="0" top="0" bottom="50" />
+    </keybind>
+
+
+   <keybind key="C-S-left">
+     <action name="MoveRelative" x="-50" y="0" />
+    </keybind>
+    <keybind key="C-S-right">
+      <action name="MoveRelative" x="50" y="0" />
+    </keybind>
+    <keybind key="C-S-up">
+      <action name="MoveRelative" x="0" y="-50" />
+    </keybind>
+    <keybind key="C-S-down">
+      <action name="MoveRelative" x="0" y="50" />
+    </keybind>
+
+    <keybind key="C-KP_1">
+      <action name="GoToDesktop" to="1" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_2">
+      <action name="GoToDesktop" to="2" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_3">
+      <action name="GoToDesktop" to="3" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_4">
+      <action name="GoToDesktop" to="4" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_5">
+      <action name="GoToDesktop" to="5" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_6">
+      <action name="GoToDesktop" to="6" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_7">
+      <action name="GoToDesktop" to="7" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_8">
+      <action name="GoToDesktop" to="8" wrap="no" />
+    </keybind>
+
+    <keybind key="C-KP_9">
+      <action name="GoToDesktop" to="9" wrap="no" />
+    </keybind>
+
+
+    <keybind key="A-KP_1">
+      <action name="SendToDesktop" to="1" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_2">
+      <action name="SendToDesktop" to="2" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_3">
+      <action name="SendToDesktop" to="3" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_4">
+      <action name="SendToDesktop" to="4" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_5">
+      <action name="SendToDesktop" to="5" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_6">
+      <action name="SendToDesktop" to="6" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_7">
+      <action name="SendToDesktop" to="7" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_8">
+      <action name="SendToDesktop" to="8" wrap="no" />
+    </keybind>
+
+    <keybind key="A-KP_9">
+      <action name="SendToDesktop" to="9" wrap="no" />
+    </keybind>
+
+    <!--
+      Remove a previously defined keybind
+      A shorter alternative is <keybind key="W-F4" />
+    -->
+    <keybind key="W-F4">
+      <action name="None" />
+    </keybind>
+  </keyboard>
+<mouse>
+  <!-- load default mouse binds by uncommenting the following line -->
+  <default />
+  
+    <context name="Frame">
+      <mousebind button="W-Left" action="Press">
+        <action name="Move" />
+      </mousebind>
+      <mousebind button="W-Right" action="Drag">
+        <action name="Resize" />
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+              <action name="ToggleMaximize"/>
+      </mousebind>
+      <mousebind button="W-Middle" action="Press">
+              <action name="Close"/>
+      </mousebind>
+    </context>
+  <!-- 桌面右键菜单 -->
+    <context name="Root">
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu" menu="some-custom-menu" />
+      </mousebind>
+    </context>
+
+  <!-- 全局 Win+滚轮切换工作区 -->
+    <context name="All">
+      <mousebind direction="W-Up" action="Scroll">
+      <action name="GoToDesktop" to="left-occupied" wrap="no" />
+      </mousebind>
+      <mousebind direction="W-Down" action="Scroll">
+      <action name="GoToDesktop" to="right-occupied" wrap="no" />
+      </mousebind>
+    </context>
+</mouse>
+
+</labwc_config>
