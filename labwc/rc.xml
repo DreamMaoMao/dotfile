@@ -28,6 +28,49 @@
     </names>
   </desktops>
 
+<windowRules>
+
+  <!-- Action -->
+  <!-- <windowRule identifier="" title="" type="">
+    <action name=""/>
+  </windowRule> -->
+
+  <!-- Property -->
+  <!-- <windowRule identifier="" serverDecoration="" /> -->
+
+
+  <windowRule identifier="qxdrag.py">
+    <action name="ToggleAlwaysOnTop" />
+  </windowRule>
+
+  <windowRule identifier="python3" title="qxdrag">
+    <action name="ToggleAlwaysOnTop" />
+  </windowRule>
+
+  <windowRule title="wemeetapp">
+    <action name="ToggleOmnipresent" />
+  </windowRule>
+
+
+   <windowRule identifier="Google-chrome">
+        <action name="SendToDesktop" to="4"/>
+   </windowRule>
+
+   <windowRule identifier="QQ">
+        <action name="SendToDesktop" to="3"/>
+   </windowRule>
+
+   <windowRule identifier="yesplaymusic">
+        <action name="SendToDesktop" to="5"/>
+   </windowRule>
+
+   <windowRule identifier="mpv">
+        <action name="SendToDesktop" to="2"/>
+   </windowRule>
+
+</windowRules>
+
+
   <keyboard>
       <numlock>on</numlock>
 
@@ -244,6 +287,12 @@
   <default />
   
     <context name="Frame">
+
+        <mousebind button="A-Left" action="Press" />
+        <mousebind button="A-Left" action="Drag" />
+        <mousebind button="A-Right" action="Press" />
+        <mousebind button="A-Right" action="Drag" />
+
       <mousebind button="W-Left" action="Press">
         <action name="Move" />
       </mousebind>
