@@ -7,6 +7,24 @@
 
 <labwc_config>
 
+  <core>
+    <decoration>server</decoration>
+    <gap>8</gap>
+    <adaptiveSync>no</adaptiveSync>
+    <allowTearing>no</allowTearing>
+    <autoEnableOutputs>yes</autoEnableOutputs>
+    <reuseOutputMode>no</reuseOutputMode>
+    <xwaylandPersistence>yes</xwaylandPersistence>
+  </core>
+
+  <focus>
+    <followMouse>yes</followMouse>
+    <followMouseRequiresMovement>yes</followMouseRequiresMovement>
+    <raiseOnFocus>no</raiseOnFocus>
+  </focus>
+
+  <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="yes" />
+
   <theme>
     <name>gruvbox-material-dark-blocks</name>
     <cornerRadius>10</cornerRadius>
@@ -38,6 +56,9 @@
   <!-- Property -->
   <!-- <windowRule identifier="" serverDecoration="" /> -->
 
+  <windowRule identifier="mpv">
+    <action name="ToggleMaximize" />
+  </windowRule>
 
   <windowRule identifier="qxdrag.py">
     <action name="ToggleAlwaysOnTop" />
@@ -79,7 +100,7 @@
 
     <!-- Use a different terminal emulator -->
     <keybind key="A-Return">
-      <action name="Execute" command="foot" />
+      <action name="Execute" command="st" />
     </keybind>
 
     <keybind key="A-space">
@@ -90,8 +111,23 @@
       <action name="Execute" command="rofi -theme ~/.config/labwc/rofi/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.lua" />
     </keybind>
 
+    <keybind key="C-space">
+      <action name="Execute" command="rofi -theme ~/.config/labwc/rofi/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/search.py" />
+    </keybind>
+
+
     <keybind key="W-Return">
       <action name="Execute" command="google-chrome-stable" />
+    </keybind>
+
+    <keybind key="C-A-a">
+      <action name="Execute" command="bash ~/.config/labwc/scripts/screenshot.sh" />
+    </keybind>
+    <keybind key="C-A-Return">
+      <action name="Execute" command="st -e ~/tool/ter-multiplexer.sh" />
+    </keybind>
+    <keybind key="C-S-Return">
+      <action name="Execute" command="st -e aerc" />
     </keybind>
 
     <keybind key="A-q">
@@ -111,7 +147,7 @@
     </keybind>
 
     <keybind key="C-W-Return">
-      <action name="Execute" command="foot -e yazi" />
+      <action name="Execute" command="st -e yazi" />
     </keybind>
 
     <keybind key="A-W-Return">
