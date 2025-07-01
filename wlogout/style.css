@@ -1,6 +1,7 @@
 window {
-    font-family: CaskaydiaCove Nerd Font, monospace;
+    font-family: HYLeMiaoTiJ,CaskaydiaCove Nerd Font, monospace;
     font-size: 12pt;
+    font-weight: bold;
     color: #f4dfcd; 
     background-color: rgba(46, 42, 30, 0.69);
 }
@@ -15,7 +16,8 @@ button {
     text-shadow: none;
     border-radius: 20px 20px 20px 20px;
     background-color: rgba(121, 81, 1, 0);
-    margin: 1px;
+    margin-top: 120px;
+    margin-bottom: 120px;
     transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.5s ease-in;
 }
 
