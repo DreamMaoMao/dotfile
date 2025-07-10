@@ -76,6 +76,7 @@ require("autofilter"):setup({
 require("autosort"):setup({
   -- cache_path = '/home/wrq/autosortcache',
 })
+
 -- require("session"):setup({
 -- 	sync_yanked = true,
 -- })

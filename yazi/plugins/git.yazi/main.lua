@@ -187,7 +187,7 @@ local M = {
 
 		local git_branch
 		local result, _ = Command("git")
-		:args({ "symbolic-ref", "HEAD" })
+		:arg({ "symbolic-ref", "HEAD" })
 		:stdout(Command.PIPED)
 		:output()
 
@@ -205,7 +205,7 @@ local M = {
 		local git_status_str = ""
 		local git_file_status = nil
 		local result, _ = Command("git")
-		:args({ "--no-optional-locks","-c", "core.quotePath=", "status", "--ignored", "-s", "--ignore-submodules=dirty" })
+		:arg({ "--no-optional-locks","-c", "core.quotePath=", "status", "--ignored", "-s", "--ignore-submodules=dirty" })
 		:stdout(Command.PIPED)
 		:output()
 

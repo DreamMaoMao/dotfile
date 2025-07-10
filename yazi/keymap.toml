@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 
 keymap = [
 
@@ -315,13 +315,13 @@ keymap = [
 ]
 
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on  = [ "c","l" ]
 run = [ "plugin clipboard" ]
 desc = "clip to clipboard"
 
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on   = ["u", "u"]
 run  = "plugin sxiv-easymotion"
 desc = "Preview images in sxiv"

@@ -2,7 +2,7 @@
 
 # : Manager {{{
 
-[manager]
+[mgr]
 cwd = { fg = "#cfc251" }
 
 # Hovered
@@ -38,6 +38,15 @@ syntect_theme = "~/.config/yazi/bat-theme/Gruvbox-N.tmTheme"
 # syntect_theme = "~/.config/yazi/bat-theme/Catppuccin-macchiato.tmTheme"
 
 # : }}}
+#
+
+[tabs]
+active   = { bg = "#AC9259",fg="#000000" }
+inactive = { fg = "#CAAA75", bg = "#201B14" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+#
+
 [mode]
 
 normal_main = { fg = "#000000", bg = "#A89984", bold = true }

@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 layout         = [ 1, 4, 3 ]
 sort_by        = "natural"
 sort_sensitive = true
@@ -14,7 +14,7 @@ tab_size        = 2
 max_width       = 600
 max_height      = 900
 cache_dir       = ""
-image_delay     = 20
+image_delay     = 5
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
@@ -25,7 +25,6 @@ folder = [
 	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
 	{ run = '''fish -c "lazygit -p "$1""''', block = true,desc = "lazygit", for = "linux" },
 	{ run = 'basename "$@" | xargs -I {} tar --use-compress-program=pigz -cf ~/down/{}.tar.gz {}',orphan = true, desc = "archive" , for = "linux"  },
-	{ run = 'GDK_BACKEND=x11 nemo "$@"',orphan = true, desc = "nemo" , for = "linux" },
 
 ]
 archive = [
@@ -41,7 +40,6 @@ text = [
 	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
 	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
 	{ run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit"  , for = "linux"},
-	# { run = 'nemo "$@"',orphan = true, desc = "nemo"  , for = "linux" },
 	{ run = 'zathura "$@"',orphan = true, desc = "zathura"  , for = "linux" },
 ]
 image = [
@@ -51,7 +49,6 @@ image = [
 video = [
 	{ run = 'mpv "$@" ', orphan = true, desc = "mpv" , for = "linux" },
 	{ run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif"  , for = "linux" },	
-	{ run = 'GDK_BACKEND=x11 nemo "$@"',orphan = true, desc = "nemo"  , for = "linux" },
 
 ]
 audio = [
@@ -66,7 +63,6 @@ document = [
 
 fallback = [
 	{ run = 'xdg-open "$@"', orphan = true, desc = "xdg-open" , for = "linux" },
-	{ run = 'GDK_BACKEND=x11 nemo "$@"', orphan = true, desc = "nemo" , for = "linux" },	
 ]
 
 [open]
@@ -103,28 +99,6 @@ bizarre_retry = 5
 [log]
 enabled = false
 
-
-[plugin]
-prepend_previewers = [
-  { name = "*.md", run = "glow" },
-  { name = "*.html", run = "html" },
-  { mime = "text/html", run = "html" },
-  { mime = "application/epub+zip", run = "epub-preview" },
-  { mime= "application/octet-stream", run = "video"}
-]
-
-# prepend_preloaders= [
-# 	# { mime = "image/{avif,hei?,jxl,svg+xml}", run = "disable" },
-# 	{ mime = "image/*", run = "disable" },
-# 	# Video
-# 	{ mime = "video/*", run = "disable" },
-# 	# PDF
-# 	# { mime = "application/pdf", run = "disable" },
-# 	# Font
-# 	{ mime = "font/*", run = "disable" },
-# 	{ mime = "application/vnd.ms-opentype", run = "disable" },
-# ]
-
 [[plugin.prepend_fetchers]]
 id   = "mime"
 if   = "!(mime|dummy)"
@@ -152,4 +126,29 @@ run  = "current-size"
 id   = "current-size"
 name = "*/"
 run  = "current-size"
+
+
+[[plugin.prepend_previewers]]
+name = "*.md"
+run  = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'
+
+[[plugin.prepend_previewers]]
+name = "*.html"
+run  = 'piper -- w3m -I UTF-8 -T text/html "$1"'
+
+[[plugin.prepend_previewers]]
+mime = "text/html"
+run  = 'piper -- w3m -I UTF-8 -T text/html "$1"'
+
+[[plugin.prepend_previewers]]
+mime = "application/epub+zip"
+run  = "epub-preview"
+
+[[plugin.prepend_previewers]]
+mime = "application/octet-stream"
+run  = "video"
+
+[[plugin.prepend_previewers]]
+name = "*.csv"
+run  = 'piper -- bat -p --color=always "$1"'
 
