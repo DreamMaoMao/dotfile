@@ -60,13 +60,27 @@ local insert_next_char = ya.sync(function(state, next_char)
 	end
 end)
 
-local check_is_match_ch_char = function(target_char, ch_char_initial)
-	for i = 1, #ch_char_initial do
-		if target_char == ch_char_initial[i] then
+local check_is_match_char = function(target_char, extend_char_list)
+	for i = 1, #extend_char_list do
+		if target_char == extend_char_list[i] then
 			return true
 		end
 	end
 	return false
+end
+
+local function utf8_char_byte_length(char)
+	local code = utf8.codepoint(char)
+
+	if code <= 0x007F then
+		return 1
+	elseif code <= 0x07FF then
+		return 2
+	elseif code <= 0xFFFF then
+		return 3
+	else
+		return 4
+	end
 end
 
 local function get_match_position(state, name, find_str)
@@ -76,10 +90,7 @@ local function get_match_position(state, name, find_str)
 
 	local startPos, endPos = {}, {}
 	local startp, endp
-	local convert_name = ""
 	name = string.lower(name)
-	local is_valid_ch_char = false
-	local is_ch_char = false
 	local is_match_char = false
 
 	-- input mode
@@ -89,11 +100,12 @@ local function get_match_position(state, name, find_str)
 		local real_start_pos = 0
 		local real_end_pos = 0
 		local real_index = 1
+		local char_wide = 1
 		find_str = string.lower(find_str)
 		local wide_char_name = {}
 		local wide_char_match_begin = 0
 		local index_wide_char
-		local ch_char_initial
+		local extend_char_list
 		for utf8_char in string.gmatch(name, "[%z\1-\127\194-\244][\128-\191]*") do
 			table.insert(wide_char_name, utf8_char)
 		end
@@ -102,13 +114,12 @@ local function get_match_position(state, name, find_str)
 		-- so the real_index should be added 3 (Chinese)
 		while j <= #wide_char_name do
 			index_wide_char = wide_char_name[j]
-			ch_char_initial = state.mapdata[index_wide_char]
+			extend_char_list = state.mapdata[index_wide_char]
 
-			is_ch_char = (index_wide_char:byte() > 127)
-			is_valid_ch_char = (is_ch_char and ch_char_initial)
+			char_wide = utf8_char_byte_length(index_wide_char)
 
-			if is_valid_ch_char then
-				is_match_char = check_is_match_ch_char(find_str:sub(i, i), ch_char_initial)
+			if extend_char_list then
+				is_match_char = check_is_match_char(find_str:sub(i, i), extend_char_list)
 			else
 				is_match_char = find_str:sub(i, i) == index_wide_char
 			end
@@ -122,7 +133,7 @@ local function get_match_position(state, name, find_str)
 			if real_start_pos ~= 0 and is_match_char then
 				-- match the end char
 				if i == #find_str then
-					real_end_pos = real_index + (is_ch_char and 2 or 0)
+					real_end_pos = real_index + (char_wide - 1)
 					table.insert(startPos, real_start_pos)
 					table.insert(endPos, real_end_pos)
 					insert_next_char(wide_char_name[j + 1])
@@ -135,7 +146,7 @@ local function get_match_position(state, name, find_str)
 				end
 				-- match failed, reset match begin index to the next char
 				-- of the first match char
-				real_index = real_index + (is_ch_char and 3 or 1)
+				real_index = real_index + char_wide
 			elseif real_start_pos ~= 0 and not is_match_char then
 				i = 1
 				j = wide_char_match_begin
@@ -143,7 +154,7 @@ local function get_match_position(state, name, find_str)
 				real_start_pos = 0
 				wide_char_match_begin = 0
 			else
-				real_index = real_index + (is_ch_char and 3 or 1)
+				real_index = real_index + char_wide
 			end
 
 			-- update real_index
@@ -376,7 +387,7 @@ end)
 
 local set_target_str = ya.sync(function(state, patterns, final_input_str)
 	local url = check_key_is_label(final_input_str)
-	if url then                                                         -- if the last str match is a label key, not a searchchar,toggle jump action
+	if url then                                                        -- if the last str match is a label key, not a searchchar,toggle jump action
 		if not state.args_autocd and state.match[url].pane == "current" then -- if target file in current pane, use `arrow` instead of`reveal` tosupport select mode
 			local folder = cx.active.current
 			ya.mgr_emit("arrow", { state.match[url].cursorPos - folder.cursor - 1 + folder.offset })
