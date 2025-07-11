@@ -3,7 +3,7 @@
 # : Manager {{{
 
 [mgr]
-cwd = { fg = "#cfc251" }
+cwd = { fg = "#D8A657" }
 
 # Hovered
 hovered         = { fg = "#000000", bg = "#ac9259" }
@@ -14,8 +14,8 @@ find_keyword  = { fg = "#b32121", italic = true }
 find_position = { fg = "#e6a0b3", bg = "#3d4a45", italic = true }
 
 # Marker
-marker_selected = { fg = "#cfc251",  bg = "#cfc251" }
-marker_copied   = { fg = "#8bca4b", bg = "#8bca4b" }
+marker_selected = { fg = "#D8A657",  bg = "#D8A657" }
+marker_copied   = { fg = "#A9B665", bg = "#A9B665" }
 marker_cut      = { fg = "#ea6962",    bg = "#ea6962" }
 marker_marked   = { fg = "#e6a0b3", bg = "#e6a0b3" }
 
@@ -57,7 +57,7 @@ select_main = { fg = "#000000", bg = "#d3869b", bold = true }
 select_alt  = { fg = "#A89984", bg = "#3c3937", bold = true }
 
 # Unset mode
-unset_main = { fg = "#000000", bg = "#8bca4b", bold = true }
+unset_main = { fg = "#000000", bg = "#A9B665", bold = true }
 unset_alt  = { fg = "#A89984", bg = "#3c3937", bold = true }
 
 # : Status {{{
@@ -74,19 +74,19 @@ progress_error  = { fg = "#ea6962", bg = "#000000" }
 
 # Permissions
 
-perm_sep   = { fg = "#8bca4b", bold = true }
+perm_sep   = { fg = "#A9B665", bold = true }
 perm_type  = { fg = "#ea6962", bold = true }
 perm_read  = { fg = "#eec173", bold = true }
-perm_write = { fg = "#8bca4b", bold = true }
+perm_write = { fg = "#A9B665", bold = true }
 perm_exec  = { fg = "#A89984", bold = true }
 
-path = { fg = "#8bca4b", bold = true }
+path = { fg = "#A9B665", bold = true }
 # Owner
 
 # : }}}
 [pick]
-border   = { fg = "#a2c45f" }
-active   = { fg = "#aed265", bold = true }
+border   = { fg = "#A9B665" }
+active   = { fg = "#A9B665", bold = true }
 inactive = {}
 
 
@@ -103,7 +103,7 @@ inactive = {}
 # : Input {{{
 
 [input]
-border   = { fg = "#8bca4b" }
+border   = { fg = "#A9B665" }
 title    = {}
 value    = {}
 selected = { reversed = true }
@@ -111,8 +111,8 @@ selected = { reversed = true }
 # : }}}
 
 [spot]
-border = { fg = "#a2c45f" }
-title  = { fg = "#aed265" }
+border = { fg = "#A9B665" }
+title  = { fg = "#A9B665" }
 
 [notify]
 title_info  = { fg = "#7daea3" }
@@ -128,7 +128,7 @@ icon_error = ""
 # : Completion {{{
 
 [cmp]
-border   = { fg = "#8bca4b" }
+border   = { fg = "#A9B665" }
 active   = { bg = "#3c3937" }
 inactive = {}
 
@@ -143,7 +143,7 @@ icon_command = ""
 # : Tasks {{{
 
 [tasks]
-border  = { fg = "#FFAA00" }
+border  = { fg = "#D8A657" }
 title   = {}
 hovered = { underline = true }
 
@@ -154,7 +154,7 @@ hovered = { underline = true }
 
 [which]
 # mask            = { bg = "#0F0D0A" }
-cand            = { fg = "#99ed6b" }
+cand            = { fg = "#A9B665" }
 rest            = { fg = "#3c3937" }
 desc            = { fg = "#d5af6d" }
 separator       = "  "
@@ -166,7 +166,7 @@ separator_style = { fg = "#d3d3ce" }
 # : Help {{{
 
 [help]
-on      = { fg = "#8bca4b" }
+on      = { fg = "#A9B665" }
 run    = { fg = "#e98d8d" }
 desc    = { fg = "#EC8C1F" }
 hovered = { bg = "#3c3937", bold = true }
