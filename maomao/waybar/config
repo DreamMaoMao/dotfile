@@ -1,7 +1,6 @@
 {
     "layer": "top",
     "position": "top",
-    "mode": "dock",
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
@@ -9,6 +8,7 @@
     "reload_style_on_change": true,
     "height": 45,
     "modules-left": [
+       // "ext/workspaces",
         "dwl/tags",
         "wlr/taskbar",
         "dwl/window"
@@ -24,6 +24,12 @@
         "custom/notification",
         "custom/power"
     ],
+    "ext/workspaces": {
+      "format": "{icon}",
+      "ignore-hidden": true,
+      "on-click": "activate",
+      "sort-by-number": true
+    },
     "dwl/tags": {
       "num-tags": 9,
       "hide-vacant": true,
@@ -162,7 +168,7 @@
     "custom/power": {
         "format": "",
         "tooltip": false,
-        "on-click": "wlogout -b 6 --protocol layer-shell",
+        "on-click": "wlogout -C ~/.config/maomao/wlogout/style.css -l  ~/.config/maomao/wlogout/layout  -b 6 --protocol layer-shell",
   		  "menu": "on-click-right",
   		  "menu-file": "~/.config/maomao/waybar/battery_menu.xml",
 		    "menu-actions": {

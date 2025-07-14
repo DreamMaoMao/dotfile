@@ -1,7 +1,7 @@
 * {
   border: none;
   font-family: Maple Mono NF CN;
-  font-weight: 800;
+  font-weight: 900;
   font-size: 18px;
   min-height: 0;
 }
@@ -27,6 +27,7 @@ tooltip {
 #window,
 #taskbar,
 #tags,
+#workspaces,
 #custom-playerctl,
 #clock,
 #battery,
@@ -47,6 +48,66 @@ tooltip {
   margin-top: 5px;
   margin-bottom: 0px;
 }
+
+#workspaces {
+  border-radius: 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #c9b890;
+  margin-left: 4px;
+  padding-left: 10px;
+  padding-right: 6px;
+  background: rgba(40, 40, 40, 0.76);
+
+}
+
+#workspaces button {
+  border: none;
+  background: none;
+  box-shadow: inherit;
+  text-shadow: inherit;
+  color: #ddca9e;
+  padding: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+#workspaces button.hidden {
+  color: #9e906f;
+
+  background-color: transparent;
+}
+
+#workspaces button.visible {
+  color: #ddca9e;
+}
+
+#workspaces button:hover {
+  color: #d79921;
+}
+
+#workspaces button.active {
+  background-color: #ddca9e;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  border-radius: 3px;
+}
+
+#workspaces button.urgent {
+  background-color: #ef5e5e;
+  color: #282828;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 1px;
+  padding-bottom: 0px;
+  border-radius: 3px;
+}
+
 
 
 #tags {
