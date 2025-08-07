@@ -9,7 +9,7 @@
 @define-color bg-selected #fabd2f;
  
 * {
-    font-family: "JetBrainsMono Nerd Font Bold";
+    font-family: "HYLeMiaoTiJ";
     font-weight: bold;
 	font-size: 20px
 }
@@ -104,10 +104,6 @@
  
 .floating-notifications {
     background: transparent
-}
- 
-.blank-window {
-    background: alpha(black, 0.1)
 }
  
 .widget-title {
