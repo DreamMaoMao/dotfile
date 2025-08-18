@@ -298,7 +298,7 @@ return {
 		
 	  		local i = 1
 	  		local mime
-	  		local output = command:arg(unmatch_ext_urls):output()
+	  		local output = command:args(unmatch_ext_urls):output()
 	  		for line in output.stdout:gmatch("[^\r\n]+") do
 				if i > #unmatch_ext_urls then
 				  break

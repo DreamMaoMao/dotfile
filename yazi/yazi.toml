@@ -1,4 +1,4 @@
-[mgr]
+[manager]
 layout         = [ 1, 4, 3 ]
 sort_by        = "natural"
 sort_sensitive = true
@@ -14,7 +14,7 @@ tab_size        = 2
 max_width       = 600
 max_height      = 900
 cache_dir       = ""
-image_delay     = 5
+image_delay     = 20
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
@@ -39,8 +39,6 @@ text = [
 	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
 	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
 	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
-	{ run = 'gedit "$@" ', block = true, orphan = true, desc = "gedit"  , for = "linux"},
-	{ run = 'zathura "$@"',orphan = true, desc = "zathura"  , for = "linux" },
 ]
 image = [
 	{ run = 'sxiv -a "$@"',  orphan = true, desc = "sxiv" , for = "linux"},
@@ -99,6 +97,28 @@ bizarre_retry = 5
 [log]
 enabled = false
 
+
+[plugin]
+prepend_previewers = [
+  { name = "*.md", run = "glow" },
+  { name = "*.html", run = "html" },
+  { mime = "text/html", run = "html" },
+  { mime = "application/epub+zip", run = "epub-preview" },
+  { mime= "application/octet-stream", run = "video"}
+]
+
+# prepend_preloaders= [
+# 	# { mime = "image/{avif,hei?,jxl,svg+xml}", run = "disable" },
+# 	{ mime = "image/*", run = "disable" },
+# 	# Video
+# 	{ mime = "video/*", run = "disable" },
+# 	# PDF
+# 	# { mime = "application/pdf", run = "disable" },
+# 	# Font
+# 	{ mime = "font/*", run = "disable" },
+# 	{ mime = "application/vnd.ms-opentype", run = "disable" },
+# ]
+
 [[plugin.prepend_fetchers]]
 id   = "mime"
 if   = "!(mime|dummy)"
@@ -126,29 +146,4 @@ run  = "current-size"
 id   = "current-size"
 name = "*/"
 run  = "current-size"
-
-
-[[plugin.prepend_previewers]]
-name = "*.md"
-run  = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'
-
-[[plugin.prepend_previewers]]
-name = "*.html"
-run  = 'piper -- w3m -I UTF-8 -T text/html "$1"'
-
-[[plugin.prepend_previewers]]
-mime = "text/html"
-run  = 'piper -- w3m -I UTF-8 -T text/html "$1"'
-
-[[plugin.prepend_previewers]]
-mime = "application/epub+zip"
-run  = "epub-preview"
-
-[[plugin.prepend_previewers]]
-mime = "application/octet-stream"
-run  = "video"
-
-[[plugin.prepend_previewers]]
-name = "*.csv"
-run  = 'piper -- bat -p --color=always "$1"'
 

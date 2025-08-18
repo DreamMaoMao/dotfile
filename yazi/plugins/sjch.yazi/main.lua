@@ -1,5 +1,8 @@
 local M = {}
 
+-- when you input key match one of the right list
+-- the left word will be match
+
 M.data = {
     ["㧟"] = {'k'},
     ["㩳"] = {'s'},
