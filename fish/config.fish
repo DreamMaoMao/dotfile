@@ -28,14 +28,10 @@ fish_add_path /home/wrq/.cargo/bin
 
 zoxide init fish --cmd j | source
 
-# 粘贴
-# ctrl + j 粘贴
-# bind \cj 'fish_clipboard_paste'
-# shift + down 删除前面一个单词
 bind shift-down 'backward-kill-word'
 
-set -x RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
-set -x RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
+# set -x RUSTUP_UPDATE_ROOT https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+# set -x RUSTUP_DIST_SERVER https://mirrors.tuna.tsinghua.edu.cn/rustup
 
 # fzf.fish
 

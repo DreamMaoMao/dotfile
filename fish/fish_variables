@@ -1,6 +1,13 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3800
+SETUVAR --export _fifc_extract_regex:
+SETUVAR _fisher_meaningful_2D_ooo_2F_sponge_files:\x7e/\x2econfig/fish/functions/_sponge_clear_state\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_exit\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_postexec\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_preexec\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_on_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/_sponge_remove_from_history\x2efish\x1e\x7e/\x2econfig/fish/functions/sponge_filter_failed\x2efish\x1e\x7e/\x2econfig/fish/functions/sponge_filter_matched\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/sponge\x2efish
+SETUVAR _fisher_patrickf1_2F_fzf_2E_fish_files:\x7e/\x2econfig/fish/functions/_fzf_configure_bindings_help\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_extract_var_info\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_changed_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_diff_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_file_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_directory\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_log\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_status\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_history\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_processes\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_variables\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_wrapper\x2efish\x1e\x7e/\x2econfig/fish/functions/fzf_configure_bindings\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/fzf\x2efish\x1e\x7e/\x2econfig/fish/completions/fzf_configure_bindings\x2efish
+SETUVAR _fisher_plugins:meaningful\x2dooo/sponge\x1epatrickf1/fzf\x2efish
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR fifc_keybinding:\x09
+SETUVAR fifc_open_keybinding:ctrl\x2do
 SETUVAR fish_color_autosuggestion:a79e67
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:D48E01
@@ -30,3 +37,9 @@ SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
 SETUVAR fish_user_paths:/home/wrq/\x2ecargo/bin\x1e/opt/go/bin\x1e/home/wrq/\x2envm/versions/node/v18\x2e14\x2e2/bin
+SETUVAR sponge_allow_previously_successful:true
+SETUVAR sponge_delay:2
+SETUVAR sponge_filters:sponge_filter_failed\x1esponge_filter_matched
+SETUVAR sponge_purge_only_on_exit:false
+SETUVAR sponge_regex_patterns:\x1d
+SETUVAR sponge_successful_exit_codes:0
