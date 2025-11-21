@@ -12,12 +12,11 @@ swaybg -i ~/Images/czd.png >/dev/null 2>&1 &
 #     output HDMI-A-1 position 1366,0
 #     output eDP-1 position 0,0
 #   }
-kanshi >/dev/null 2>&1 &
 
 wlsunset -T 3501 -t 3500 &
 
 # Launch a panel such as yambar or waybar.
-waybar -c ~/.config/labwc/waybar/config -s ~/.config/labwc/waybar/style.css 2>&1 &
+waybar -c ~/.config/labwc/waybar/config.jsonc -s ~/.config/labwc/waybar/style.css 2>&1 &
 
 # Enable notifications. Typically GNOME/KDE application notifications go
 # through the org.freedesktop.Notifications D-Bus API and require a client such

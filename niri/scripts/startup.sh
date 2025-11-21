@@ -2,11 +2,11 @@
 set +e
 
 # start xwayland
-/usr/sbin/xwayland-satellite &
+/usr/sbin/xwayland-satellite :12 &
 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
 waybar -c ~/.config/niri/waybar/config -s ~/.config/niri/waybar/style.css  &
-swaybg -i ~/Images/Fantasy-Medieval_Travern.png  &
+swaybg -i ~/Images/room.png &
 #init xdg portal
 pkill xdg
 pkill clash
@@ -21,7 +21,7 @@ cp ~/.config/eww/System-Menu/eww.yuck.hyprland  ~/.config/eww/System-Menu/eww.yu
 eww daemon &
 
 #clipboard
-wl-clip-persist --clipboard regular &
+wl-clip-persist --clipboard regular --reconnect-tries 0 &
 wl-paste --type text --watch cliphist store & 
 
 #anther tool

@@ -1,6 +1,7 @@
 ignore-empty-password
+hide-keyboard-layout
 disable-caps-lock-text
-image=$HOME/Images/dusk.jpeg
+image=$HOME/Images/snow.jpeg
 font=Maple Mono NF CN
 
 inside-color=00000000
@@ -9,11 +10,11 @@ inside-caps-lock-color=00000000
 inside-ver-color=00000000
 inside-wrong-color=00000000
 
-ring-color=9E815755
-ring-clear-color=9E815755
-ring-caps-lock-color=9E815755
-ring-ver-color=9E815755
-ring-wrong-color=9E815755
+ring-color=645D6F55
+ring-clear-color=645D6F55
+ring-caps-lock-color=645D6F55
+ring-ver-color=645D6F55
+ring-wrong-color=645D6F55
 
 line-color=00000000
 line-clear-color=00000000
@@ -21,7 +22,7 @@ line-caps-lock-color=00000000
 line-ver-color=00000000
 line-wrong-color=00000000
 
-text-color=452324
+text-color=cf8064ff
 text-clear-color=2f7b09D9
 text-ver-color=F9BB64ff
 text-wrong-color=e82020cf

@@ -22,13 +22,34 @@ vim.keymap.set({ "n", "v" }, "<S-k>", "5k", { silent = true })
 vim.keymap.set({ "n", "v" }, "<S-h>", "<A-b>", { silent = true })
 vim.keymap.set({ "n", "v" }, "<S-l>", "<A-e>", { silent = true })
 
--- telescope find setting
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "search file by name" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "search file by content" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "search buffer by name" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "find help by name" })
+-- find setting
+-- default is <leader>Space
+vim.keymap.set("n", "<leader>ff", function()
+  require("fzf-lua").files({ 
+    winopts = { width = 1.0, height = 1.0,preview = { layout = "vertical" }},
+    fzf_opts = { 
+      ["--ansi"]           = true,
+      ["--info"]           = "inline-right", -- fzf < v0.42 = "inline"
+      ["--height"]         = "100%",
+      ["--layout"]         = "reverse",
+      ["--border"]         = "none",
+      ["--highlight-line"] = true,    
+    },
+  })
+end, { desc = "Search files" })
 
+vim.keymap.set("n", "<leader>fs", function()
+  require("fzf-lua").live_grep({ winopts = { width = 1.0, height = 1.0,preview = { layout = "vertical" }},
+    fzf_opts = { 
+      ["--ansi"]           = true,
+      ["--info"]           = "inline-right", -- fzf < v0.42 = "inline"
+      ["--height"]         = "100%",
+      ["--layout"]         = "reverse",
+      ["--border"]         = "none",
+      ["--highlight-line"] = true,    
+    },
+})
+end, { desc = "Search content" })
 
 -- ccc color
 local opts = { noremap = true, silent = true }

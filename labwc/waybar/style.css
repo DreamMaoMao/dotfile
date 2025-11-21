@@ -73,7 +73,7 @@ tooltip {
   margin-right: 4px;
 }
 
-#workspaces button.empty {
+#workspaces button.hidden {
   color: #928374;
 }
 

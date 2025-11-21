@@ -1,8 +1,11 @@
 configuration {
-    // 通用配置
     font: "Maple Mono NF CN 20";
-    input-method: "fcitx";
+    modi: "drun";
+    // show-icons: true;
+    sort: true;
+    sorting-method:"fzf";
+    display-drun: " ";
 }
 
 // 主题设置
-@theme "~/.config/rofi/themes/fancy2.rasi"
+@theme "~/.config/rofi/themes/gruvbox-dark-hard.rasi"

@@ -1,5 +1,5 @@
 return  {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
         opts = {
           ensure_installed = {
             "autopep8",
@@ -17,7 +17,7 @@ return  {
             "shellcheck",
             "shfmt",
             "stylua",
-            "taplo"
+            "taplo",
           },
     }
 }

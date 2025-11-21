@@ -1,0 +1,141 @@
+##########################################
+## General
+##########################################
+lscolors_enabled = false
+# The image preview background color, only RGB colors are accepted.
+# preview_background = "#282828"
+
+# ##########################################
+# ## Menu
+# ##########################################
+[menu]
+fg = "#000000"
+bg = "#83a584"
+bold = true
+
+
+##########################################
+## Tabs
+##########################################
+
+[tabs]
+[tabs.styles]
+
+# Style of active tab & current directory
+[tabs.styles.active]
+bg = "#bb8e2d"
+fg = "#000000"
+bold = true
+
+# Style of inactive tabs
+[tabs.styles.inactive]
+bg = "#3c3836"
+fg = "#a89984"
+
+# Style of the left/front tab scroll tag (when tabs overflow)
+[tabs.styles.scroll_front]
+fg = "#fe8019"
+bold = true
+
+# Style of the right/back tab scroll tag (when tabs overflow)
+[tabs.styles.scroll_back]
+fg = "#fe8019"
+bold = true
+
+##########################################
+## File List - Selections
+##########################################
+
+# Selected files (standard selection)
+[selection]
+fg = "#050505"
+bg = "#bb8e2d"
+bold = true
+# prefix = "*"
+
+# Files selected in current visual mode
+[visual_mode_selection]
+fg = "#fb4934"
+bold = true
+# prefix = "v "
+
+##########################################
+## File List - System File Types
+##########################################
+
+# Basic style, used for regular files (and also device files and FIFOs)
+[regular]
+fg = "#ebdbb2"
+# bold = true
+
+# For directories
+[directory]
+fg = "#caaa75"
+# bold = true
+
+# For symbolic links
+[link]
+fg = "#83a584"
+# bold = true
+
+# For socket files
+[socket]
+fg = "#d3869b"
+# bold = true
+
+##########################################
+## File List - Exceptional Files
+##########################################
+
+# Files marked as executable
+[executable]
+fg = "#b8bb26"
+bold = true
+
+# Invalid symbolic links (pointing to non-existing target)
+[link_invalid]
+fg = "#fb4934"
+bold = true
+
+##########################################
+## File list - Override style by extension
+##########################################
+
+[ext]
+
+bmp.fg = "#ee892a"
+gif.fg = "#ee892a"
+heic.fg = "#ee892a"
+jpg.fg = "#ee892a"
+jpeg.fg = "#ee892a"
+pgm.fg = "#ee892a"
+png.fg = "#ee892a"
+ppm.fg = "#ee892a"
+svg.fg = "#ee892a"
+
+wav.fg = "#d3869b"
+flac.fg = "#d3869b"
+mp3.fg = "#d3869b"
+amr.fg = "#d3869b"
+
+avi.fg = "#d3869b"
+flv.fg = "#d3869b"
+m3u.fg = "#d3869b"
+m4a.fg = "#d3869b"
+m4v.fg = "#d3869b"
+mkv.fg = "#d3869b"
+mov.fg = "#d3869b"
+mp4.fg = "#d3869b"
+mpg.fg = "#d3869b"
+rmvb.fg = "#d3869b"
+webm.fg = "#d3869b"
+wmv.fg = "#d3869b"
+
+7z.fg = "#fb4934"
+bz2.fg = "#fb4934"
+gz.fg = "#fb4934"
+rar.fg = "#fb4934"
+tar.fg = "#fb4934"
+tgz.fg = "#fb4934"
+xz.fg = "#fb4934"
+zip.fg = "#fb4934"

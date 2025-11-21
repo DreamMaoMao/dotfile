@@ -50,7 +50,7 @@
         "title",
         "dnd",
         "mpris",
-        "notifications"
+        "notification"
     ],
     "widget-config": {
         "title": {

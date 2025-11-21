@@ -2,36 +2,15 @@
 
 keymap = [
   { keys = ["escape"], command = "escape" },
-  { keys = ["ctrl+t"], command = "new_tab" },
-  { keys = ["alt+t"], command = "new_tab --cursor" },
-  { keys = ["T"], command = "new_tab --current" },
-  { keys = ["W"], command = "close_tab" },
-  { keys = ["ctrl+w"], command = "close_tab" },
-  { keys = ["q"], command = "close_tab" },
-  { keys = ["ctrl+c"], command = "quit" },
-  { keys = ["Q"], command = "quit --output-current-directory" },
+  { keys = ["t"], command = "new_tab --current" },
+  { keys = ["ctrl+q"], command = "close_tab" },
+  { keys = ["q"], command = "quit" },
 
-  { keys = ["R"], command = "reload_dirlist" },
-  { keys = ["z", "h"], command = "toggle_hidden" },
-  { keys = ["ctrl+h"], command = "toggle_hidden" },
-  { keys = ["\t"], command = "tab_switch 1" },
-  { keys = ["backtab"], command = "tab_switch -1" },
+  { keys = ["ctrl+r"], command = "reload_dirlist" },
+  { keys = ["."], command = "toggle_hidden" },
+  { keys = ["alt+l"], command = "tab_switch 1" },
+  { keys = ["alt+h"], command = "tab_switch -1" },
 
-  { keys = ["alt+1"], command = "tab_switch_index 1" },
-  { keys = ["alt+2"], command = "tab_switch_index 2" },
-  { keys = ["alt+3"], command = "tab_switch_index 3" },
-  { keys = ["alt+4"], command = "tab_switch_index 4" },
-  { keys = ["alt+5"], command = "tab_switch_index 5" },
-
-  { keys = ["1"], command = "numbered_command 1" },
-  { keys = ["2"], command = "numbered_command 2" },
-  { keys = ["3"], command = "numbered_command 3" },
-  { keys = ["4"], command = "numbered_command 4" },
-  { keys = ["5"], command = "numbered_command 5" },
-  { keys = ["6"], command = "numbered_command 6" },
-  { keys = ["7"], command = "numbered_command 7" },
-  { keys = ["8"], command = "numbered_command 8" },
-  { keys = ["9"], command = "numbered_command 9" },
 
   # arrow keys
   { keys = ["arrow_up"], command = "cursor_move_up" },
@@ -39,14 +18,11 @@ keymap = [
   { keys = ["arrow_left"], command = "cd .." },
   { keys = ["arrow_right"], command = "open" },
   { keys = ["\n"], command = "open" },
-  { keys = ["home"], command = "cursor_move_home" },
-  { keys = ["end"], command = "cursor_move_end" },
+  { keys = ["b"], command = "cursor_move_home" },
+  { keys = ["e"], command = "cursor_move_end" },
   { keys = ["page_up"], command = "cursor_move_page_up" },
   { keys = ["page_down"], command = "cursor_move_page_down" },
-  { keys = ["ctrl+u"], command = "cursor_move_page_up 0.5" },
-  { keys = ["ctrl+d"], command = "cursor_move_page_down 0.5" },
-  { keys = ["ctrl+b"], command = "cursor_move_page_up" },
-  { keys = ["ctrl+f"], command = "cursor_move_page_down" },
+
 
   # vim-like keybindings
   { keys = ["j"], command = "cursor_move_down" },
@@ -55,45 +31,37 @@ keymap = [
   { keys = ["K"], command = "cursor_move_up 5" },
   { keys = ["h"], command = "cd .." },
   { keys = ["l"], command = "open" },
-  { keys = ["g", "g"], command = "cursor_move_home" },
-  { keys = ["G"], command = "cursor_move_end" },
-  { keys = ["r"], command = "open_with" },
+  { keys = ["o"], command = "open_with" },
 
-  { keys = ["H"], command = "cursor_move_page_home" },
-  { keys = ["L"], command = "cursor_move_page_middle" },
-  { keys = ["M"], command = "cursor_move_page_end" },
 
-  { keys = ["["], command = "parent_cursor_move_up" },
-  { keys = ["]"], command = "parent_cursor_move_down" },
+  { keys = ["alt+k"], command = "parent_cursor_move_up" },
+  { keys = ["alt+j"], command = "parent_cursor_move_down" },
 
-  { keys = ["c", "d"], command = ":cd " },
-  { keys = ["d", "d"], command = "cut_files" },
-  { keys = ["y", "y"], command = "copy_files" },
-  { keys = ["y", "n"], command = "copy_filename" },
-  { keys = ["y", "."], command = "copy_filename_without_extension" },
-  { keys = ["y", "p"], command = "copy_filepath" },
-  { keys = ["y", "d"], command = "copy_dirpath" },
+  { keys = ["g"," "], command = ":cd " },
+  { keys = ["x"], command = "cut_files" },
+  { keys = ["y"], command = "copy_files" },
+  { keys = ["c", "f"], command = "copy_filename" },
+  { keys = ["c", "n"], command = "copy_filename_without_extension" },
+  { keys = ["c", "c"], command = "copy_filepath" },
+  { keys = ["c", "d"], command = "copy_dirpath" },
 
-  { keys = ["p", "l"], command = "symlink_files --relative=false" },
-  { keys = ["p", "L"], command = "symlink_files --relative=true" },
+  { keys = ["d"], command = "delete_files" },
+  { keys = ["D"], command = "delete_files" },
 
-  { keys = ["delete"], command = "delete_files" },
-  { keys = ["d", "D"], command = "delete_files" },
+  { keys = ["p"], command = "paste_files" },
+  { keys = ["P"], command = "paste_files --overwrite=true" },
 
-  { keys = ["p", "p"], command = "paste_files" },
-  { keys = ["p", "o"], command = "paste_files --overwrite=true" },
+  { keys = ["r"], command = "rename_append" },
+  { keys = ["R"], command = "rename_prepend" },
 
-  { keys = ["a"], command = "rename_append" },
-  { keys = ["A"], command = "rename_prepend" },
-
-  { keys = ["f", "t"], command = ":touch " },
+  { keys = ["a"], command = ":touch " },
 
   { keys = [" "], command = "select --toggle=true" },
-  { keys = ["t"], command = "select --all=true --toggle=true" },
+  { keys = ["ctrl+a"], command = "select --all=true --toggle=true" },
   { keys = ["V"], command = "toggle_visual" },
 
   { keys = ["w"], command = "show_tasks --exit-key=w" },
-  { keys = ["b", "b"], command = "bulk_rename" },
+  { keys = ["u","r"], command = "bulk_rename" },
   { keys = ["="], command = "set_mode" },
 
   { keys = [":"], command = ":" },
@@ -103,11 +71,11 @@ keymap = [
   { keys = ["m", "k"], command = ":mkdir " },
   { keys = ["c", "w"], command = ":rename " },
 
-  { keys = ["/"], command = ":search " },
+  { keys = ["f","n"], command = ":search " },
   { keys = ["|"], command = ":search_inc " },
   { keys = ["\\"], command = ":search_glob " },
-  { keys = ["S"], command = "search_fzf" },
-  { keys = ["C"], command = "subdir_fzf" },
+  { keys = ["f","f"], command = "search_fzf" },
+  { keys = ["f","t"], command = "subdir_fzf" },
 
   { keys = ["n"], command = "search_next" },
   { keys = ["N"], command = "search_prev" },
@@ -121,14 +89,23 @@ keymap = [
 
   { keys = ["m", "s"], command = "linemode size" },
   { keys = ["m", "m"], command = "linemode mtime" },
-  { keys = ["m", "M"], command = "linemode sizemtime" },
+  { keys = ["m", "M"], command = "linemode size" },
 
   { keys = ["g", "r"], command = "cd /" },
   { keys = ["g", "c"], command = "cd ~/.config" },
   { keys = ["g", "d"], command = "cd ~/down/" },
-  { keys = ["g", "v"], command = "cd ~/video/" },
-  { keys = ["g", "e"], command = "cd /etc" },
+  { keys = ["g", "o"], command = "cd ~/video/" },
+  { keys = ["g", "i"], command = "cd ~/Images/" },
   { keys = ["g", "h"], command = "cd ~/" },
+  { keys = ["g", "k"], command = "cd ~/deskenv/master" },
+  { keys = ["g", "j"], command = "cd ~/deskenv/archieve" },
+
+  { keys = ["u", "a"], command = "add_bookmark" },
+  { keys = ["u", "g"], command = "cd_bookmark" },
+  { keys = ["u", "i"], command = "shell lazygit" },
+  { keys = ["u", "s"], command = "shell fish" },
+  { keys = ["u", "f"], command = "shell /home/wrq/tool/xqxdrag.sh %s" },
+  { keys = ["u", "w"], command = "shell /home/wrq/tool/wqxdrag.sh %s" },
   { keys = ["?"], command = "help" },
 ]
 
@@ -144,8 +121,8 @@ keymap = [
   # vim-like keybindings
   { keys = ["j"], command = "cursor_move_down" },
   { keys = ["k"], command = "cursor_move_up" },
-  { keys = ["g", "g"], command = "cursor_move_home" },
-  { keys = ["G"], command = "cursor_move_end" },
+  { keys = ["b"], command = "cursor_move_home" },
+  { keys = ["e"], command = "cursor_move_end" },
 
   { keys = ["w"], command = "show_tasks" },
   { keys = ["escape"], command = "show_tasks" },
@@ -163,8 +140,8 @@ keymap = [
   # vim-like keybindings
   { keys = ["j"], command = "cursor_move_down" },
   { keys = ["k"], command = "cursor_move_up" },
-  { keys = ["g", "g"], command = "cursor_move_home" },
-  { keys = ["G"], command = "cursor_move_end" },
+  { keys = ["b"], command = "cursor_move_home" },
+  { keys = ["e"], command = "cursor_move_end" },
 
   { keys = ["w"], command = "show_tasks" },
   { keys = ["escape"], command = "show_tasks" },

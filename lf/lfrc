@@ -1,0 +1,363 @@
+# lf doc: https://github.com/gokcehan/lf/blob/master/doc.md
+# lfrc example - https://github.com/gokcehan/lf/blob/master/etc/lfrc.example
+
+#
+# Options
+#
+
+set anchorfind
+set cleaner ~/.config/lf/cleaner
+set dircounts
+# set drawbox
+set findlen 1
+set hiddenfiles ".DS_Store:.git"
+set icons
+set ifs "\n"
+set ignorecase
+set incsearch
+set info size:custom
+set preview
+set previewer ~/.config/lf/previewer
+set scrolloff 10
+set shell bash
+set shellopts '-eu'
+set smartcase
+set tabstop 4
+
+setlocal ~/Downloads sortby "atime"
+setlocal ~/Downloads reverse
+
+#
+# Commands
+#
+
+# Override the default open for file opening (binded to 'l' by default)
+cmd open &{{
+    case $(file --mime-type "$(readlink -f $f)" -b) in
+        text/*|application/json|inode/x-empty|application/octet-stream) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do open $f > /dev/null 2> /dev/null & done;;
+    esac
+}}
+
+cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+
+# Create a directory with the selected items
+cmd new-folder-with-selection ${{
+    set -f
+    printf "Directory name: "
+    read newd
+    mkdir -- "$newd"
+    mv -- $fx "$newd"
+}}
+
+cmd chmod ${{
+    printf "\nMode Bits: "
+    read ans
+    for file in "$fx"
+    do
+        chmod $ans $file
+    done
+    lf -remote 'send reload'
+}}
+
+cmd extract ${{
+    set -f
+    case $f in
+        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
+        *.tar.gz|*.tgz) tar xzvf $f;;
+        *.tar.xz|*.txz) tar xJvf $f;;
+        *.tar) tar xvf $f;;
+        *.zip) unzip $f;;
+        *.rar) unrar x $f;;
+        *.7z) 7z x $f;;
+        *) echo "Unsupported format";;
+    esac
+}}
+
+cmd tar ${{
+        set -f
+        mkdir $1
+        cp -r $fx $1
+        tar czf $1.tar.gz $1
+        rm -rf $1
+}}
+
+cmd zip ${{
+        set -f
+        mkdir $1
+        cp -r $fx $1
+        zip -r $1.zip $1
+        rm -rf $1
+}}
+
+cmd delete ${{
+    set -f
+    printf "\n$fx\n"
+    printf "delete?[y/N]"
+    read ans
+    if [[ $ans == "y" ]]; then
+        rm -rf $fx
+    fi
+}}
+
+cmd trash !{{
+    set -f
+    printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]"
+    read ans
+    if [[ $ans == "y" ]]; then
+        trash -F $fx && echo "Trash complete!"
+    elif [[ $ans == "n" ]]; then
+        echo "Canceled!"
+    else
+        echo "Failed! Use y to trash."
+    fi
+}}
+
+cmd select-all :unselect; invert
+
+# Bulk rename on selected files or all the non-hidden files in the current directory if no selection
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+                continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
+# Copy the file names (including extension) of the selections separated by \n
+cmd copy-filename ${{
+    names="$(echo $fx | tr ' ' '\n' | xargs -I{} basename {})"
+    echo $names | tr ' ' '\n' | pbcopy
+}}
+
+# Copy the absolute paths of selections separated by \n
+cmd copy-absolute-path ${{
+    echo $fx | tr ' ' '\n' | pbcopy
+}}
+
+# Fzf to toggle the selections
+cmd fzf-toggle-select ${{
+    no_depth="/tmp/lf-fzf-toggle-select-no-depth"
+    rm -f $no_depth
+    fd_cmd="fd --max-depth 1 --hidden --follow $FD_EXCLUDE"
+    selections=$(eval "$fd_cmd" | fzf \
+        --multi \
+        --header ':: ENTER (toggle selections), CTRL-T (toggle no-depth/depth-1 traveral)' \
+        --prompt 'Files> ' \
+        --bind "ctrl-t:transform: \
+        [[ ! -e $no_depth ]] && { \
+            touch $no_depth; \
+            echo \"reload(fd --hidden --follow $FD_EXCLUDE)\"; \
+        } || { \
+            rm $no_depth; \
+            echo \"reload($fd_cmd)\"; \
+        }" \
+    ) || true
+    if [[ -n $selections ]]; then
+        # Escape white spaces and format multi-line string to a single line one
+        targets=$(echo "$selections" | sed 's/ /\\ /g' | tr '\n' ' ')
+        cnt=$(echo "$selections" | wc -l)
+        lf -remote "send $id toggle $targets"
+        lf -remote "send $id echo Toggle $cnt selections"
+    fi
+}}
+
+# Fzf: change the current file selection
+cmd fzf-file ${{
+    fd_cmd="fd --type f --type l --hidden --follow $FD_EXCLUDE"
+    select=$(eval "$fd_cmd" | fzf \
+        --no-multi \
+        --header ':: ALT-/ (toggle HOME/CWD)' \
+        --prompt 'Files [Current]> ' \
+        --bind "alt-/:transform: \
+        [[ ! \$FZF_PROMPT =~ HOME ]] && { \
+            echo \"reload($fd_cmd . $HOME | sed 's|^$HOME|~|')+change-prompt(Files [HOME]> )\"; \
+        } || { \
+            echo \"reload($fd_cmd)+change-prompt(Files [CWD]> )\"; \
+        }" \
+    ) || true
+    if [[ -n $select ]]; then
+        lf -remote "send $id select $select"
+    fi
+}}
+
+# Fzf: cd into the selected directory
+cmd fzf-cd ${{
+    fd_cmd="fd --type d --hidden --follow $FD_EXCLUDE"
+    select=$(eval "$fd_cmd" | fzf \
+        --no-multi \
+        --header ':: ALT-/ (toggle HOME/CWD)' \
+        --prompt 'Dirs [Current]> ' \
+        --bind "alt-/:transform: \
+        [[ ! \$FZF_PROMPT =~ HOME ]] && { \
+            echo \"reload($fd_cmd . $HOME | sed 's|^$HOME|~|')+change-prompt(Dirs [HOME]> )\"; \
+        } || { \
+            echo \"reload($fd_cmd)+change-prompt(Dirs [CWD]> )\"; \
+        }") || true
+    if [[ -n $select ]]; then
+        lf -remote "send $id cd $select"
+    fi
+}}
+
+# Zoxide
+cmd z %{{
+    result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id cd \"$result\""
+}}
+
+cmd zi ${{
+    result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    lf -remote "send $id cd \"$result\""
+}}
+
+# Git for dotfiles
+cmd dot ${{
+    git --git-dir=/Users/rockyzhang/dotfiles/ --work-tree=/Users/rockyzhang $@
+}}
+
+# Display git indicators in the info column
+# Ref: https://github.com/gokcehan/lf/blob/master/doc.md#loading-directory
+# on-load will be called automatically after loading a directory. The files inside the current
+# directory will be the arguments.
+cmd on-load &{{
+    cd "$(dirname "$1")" || exit 1
+    git_cmd="git"
+    if [[ $PWD == $HOME/.config || $PWD == $HOME/.config/* && $PWD != $HOME/.config/nvim/pack* ]]; then
+        # For the bare repo managing my dotfiles
+        git_cmd="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
+    fi
+    [ "$(eval $git_cmd rev-parse --is-inside-git-dir 2>/dev/null)" = false ] || exit 0
+
+    cmds=""
+
+    for file in "$@"; do
+        case "$file" in
+            */.git|*/.git/*) continue;;
+        esac
+
+        status=$(
+            eval "$git_cmd" -c color.status=always status -s -- "$file" |
+            cat -v |
+            sed -E 's/^(..[^[:space:]]*|[^[:space:]]*[[:space:]]?)[[:space:]]+(.*)$/\1/' |
+            sed 's/\^\[/\\033/g' |
+            head -n1
+        )
+
+        if [ -n "$status" ]; then
+            cmds="${cmds}addcustominfo \"${file}\" \"\\033[37m[\\033[0m$status\\033[37m]\\033[0m\"; "
+        else
+            cmds="${cmds}addcustominfo \"${file}\" ''; "
+        fi
+    done
+
+    if [ -n "$cmds" ]; then
+        lf -remote "send $id :$cmds"
+    fi
+}}
+
+# Toggle selection of the VISUAL selected files
+cmd visual-toggle &{{
+    while read -r file; do
+        lf -remote "send $id toggle \"$file\""
+    done <<< "$fv"
+    lf -remote "send $id visual-discard"
+}}
+
+#
+# Mappings
+#
+
+# Remove some defaults
+nmap gh
+nmap d
+nmap y
+nmap zh
+
+# <space> will be used as the leader key
+map <space>
+
+# enter to open
+nmap <enter> open
+
+nmap z. set hidden!
+nmap <tab> :toggle; down
+nmap <c-s> :toggle
+vmap <c-s> visual-toggle
+nmap yy copy
+nmap yn copy-filename
+nmap yP copy-absolute-path
+nmap d delete
+nmap T trash
+# list the size of each item in the current directory
+nmap U !printf "\n"; du -csh *
+nmap <c-t> fzf-toggle-select
+nmap <c-f> fzf-file
+nmap <c-j> fzf-cd
+# give a name and then make a directory
+nmap <c-n> push :mkdir<space>
+nmap <a-n> new-folder-with-selection
+nmap x cut
+# give a name and then open neovim to edit it
+nmap <space>v push :!nvim<space>
+
+# Navigate among the parent directories
+nmap [ push hkl
+nmap ] push hjl
+
+# Rename
+nmap r
+nmap A rename # at the very end
+nmap I push A<c-a> # at the very beginning
+nmap rn push A<c-u> # rename the filename
+nmap re push A<c-f><c-k> # rename the extension
+nmap <c-r> bulk-rename
+
+# compress (give a name like foo and it will compress the selected items to foo.zip)
+nmap <space>c push :zip<space>
+# extract
+nmap <space>x extract
+# Open the directory in Finder on macOS
+nmap <space>f &if [[ -d $f ]]; then open $f; fi
+
+cmap <tab> cmd-menu-complete
+cmap <backtab> cmd-menu-complete-back
+
+#
+# Utils
+#
+
+# Store the absolute path of the selected file(s) to a temp file.
+# For example, I can launch lf in Nvim's terminal, select files and open them in vsplit windows.
+# To implement this, after openning lf, I can execute a shell command `lf -remote "send $pid
+# util-store-filepath` to store the paths of the selected files to a temp file and then read the
+# content of this temp file to get the file paths. Alternatively, after binding this command to
+# a key, in Nvim I can use nvim_feedkeys to achieve the same goal.
+cmd util-store-filepath ${{
+    tempfile="$TMPDIR"/lf-filepath
+    echo $fx > $tempfile
+}}
+map <a-E> util-store-filepath
+
+# Save PWD to a temp file
+# In my nvim's lf (~/.config/nvim/lua/rockyz/lf.lua), I create a keymap to change nvim's cwd to the
+# current directory of lf.
+map <a-Q> ${{
+    tempfile="$TMPDIR"/lf-pwd
+    echo $PWD > $tempfile
+}}

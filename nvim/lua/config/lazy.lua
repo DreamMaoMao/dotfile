@@ -17,6 +17,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.go" },
     { import = "lazyvim.plugins.extras.lang.rust" },
+    { import = "lazyvim.plugins.extras.lang.json" },
     -- import any extras modules here
     -- { import = "lazyvim.plugins.extras.lang.typescript" },
     -- { import = "lazyvim.plugins.extras.lang.json" },
@@ -33,7 +34,13 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  news = {
+    -- When enabled, NEWS.md will be shown when changed.
+    -- This only contains big new features and breaking changes.
+    lazyvim = false,
+    -- Same but for Neovim's news.txt
+    neovim = false,
+  },
   checker = { enabled = false }, -- automatically check for plugin updates
   performance = {
     rtp = {

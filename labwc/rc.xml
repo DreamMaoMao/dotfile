@@ -9,7 +9,7 @@
 
   <core>
     <decoration>server</decoration>
-    <gap>8</gap>
+    <gap>0</gap>
     <adaptiveSync>no</adaptiveSync>
     <allowTearing>no</allowTearing>
     <autoEnableOutputs>yes</autoEnableOutputs>
@@ -23,7 +23,7 @@
     <raiseOnFocus>no</raiseOnFocus>
   </focus>
 
-  <windowSwitcher show="yes" preview="yes" outlines="yes" allWorkspaces="yes" />
+  <osd show="yes" preview="yes" outlines="yes" allWorkspaces="no" />
 
   <theme>
     <name>gruvbox-material-dark-blocks</name>
@@ -32,7 +32,7 @@
   </theme>
 
    <desktops>
-    <popupTime>1000</popupTime>
+    <popupTime>0</popupTime>
     <names>
       <name>1</name>
       <name>2</name>
@@ -98,14 +98,28 @@
     <!-- load default keybinds by uncommenting the following line -->
     <default />
 
+
+    <keybind key="W-r">
+        <action name="Reconfigure" />
+    </keybind>
+
     <!-- Use a different terminal emulator -->
     <keybind key="A-Return">
       <action name="Execute" command="st" />
     </keybind>
 
     <keybind key="A-space">
-      <action name="Execute" command="rofi -config ~/.config/labwc/rofi/config.rasi -show drun" />
+      <action name="Execute" command="rofi -show drun -config  ~/.config/rofi/menu.rasi" />
     </keybind>
+
+    <keybind key="A-left">
+      <action name="PreviousWindow"/>
+    </keybind>
+
+    <keybind key="A-right">
+      <action name="NextWindow"/>
+    </keybind>
+
 
     <keybind key="W-space">
       <action name="Execute" command="rofi -theme ~/.config/labwc/rofi/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.lua" />
@@ -186,16 +200,16 @@
       <action name="SendToDesktop" to="right" wrap="no" />
     </keybind>
 
-    <keybind key="A-right">
+    <keybind key="W-S-right">
       <action name="SnapToEdge" direction="right" />
     </keybind>
-    <keybind key="A-left">
+    <keybind key="W-S-left">
       <action name="SnapToEdge" direction="left" />
     </keybind>
-    <keybind key="A-up">
+    <keybind key="W-S-up">
       <action name="SnapToEdge" direction="up" />
     </keybind>
-    <keybind key="A-down">
+    <keybind key="W-S-down">
       <action name="SnapToEdge" direction="down" />
     </keybind>
 
@@ -308,6 +322,40 @@
 
     <keybind key="A-KP_9">
       <action name="SendToDesktop" to="9" wrap="no" />
+    </keybind>
+
+
+    <keybind key="S-A-Left">
+      <action name="FocusOutput" direction="left" />
+    </keybind>
+
+    <keybind key="S-A-Right">
+      <action name="FocusOutput" direction="right" />
+    </keybind>
+
+    <keybind key="S-A-Up">
+      <action name="FocusOutput" direction="up" />
+    </keybind>
+
+    <keybind key="S-A-Down">
+      <action name="FocusOutput" direction="down" />
+    </keybind>
+
+
+    <keybind key="W-A-Left">
+      <action name="MoveToOutput" direction="left" />
+    </keybind>
+
+    <keybind key="W-A-Right">
+      <action name="MoveToOutput" direction="right" />
+    </keybind>
+
+    <keybind key="W-A-Up">
+      <action name="MoveToOutput" direction="up" />
+    </keybind>
+
+    <keybind key="W-A-Down">
+      <action name="MoveToOutput" direction="down" />
     </keybind>
 
     <!--

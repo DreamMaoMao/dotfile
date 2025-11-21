@@ -4,16 +4,24 @@
 set +e
 
 # /usr/sbin/xwayland-satellite :11 &
-# sleep 0.5s echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 
 # obs
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots >/dev/null 2>&1
+
+# dms shell
+# dms run >/dev/null 2>&1 &
+
+# caelestia shell
+# qs -c caelestia >/dev/null 2>&1 &
+
+# noctalia shell
+# qs -c noctalia-shell >/dev/null 2>&1 &
 
 # notify
 swaync -c ~/.config/mango/swaync/config.json -s ~/.config/mango/swaync/style.css >/dev/null 2>&1 &
 
 # night light
-wlsunset -T 3501 -t 3500 >/dev/null 2>&1 &
+wlsunset -T 3001 -t 3000 >/dev/null 2>&1 &
 
 # wallpaper
 swaybg -i ~/.config/mango/wallpaper/snow.jpg >/dev/null 2>&1 &
@@ -22,9 +30,7 @@ swaybg -i ~/.config/mango/wallpaper/snow.jpg >/dev/null 2>&1 &
 waybar -c ~/.config/mango/waybar/config.jsonc -s ~/.config/mango/waybar/style.css >/dev/null 2>&1 &
 
 # dock
-# waydock > /dev//null 2>&1 &
 lavalauncher -c ~/.config/mango/lavalauncher/lavalauncher.conf >/dev/null 2>&1 &
-# lxqt-panel 2> /dev/null &
 
 # xwayland dpi scale
 # echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
@@ -47,6 +53,7 @@ nm-applet >/dev/null 2>&1 &
 
 # Permission authentication
 /usr/lib/xfce-polkit/xfce-polkit >/dev/null 2>&1 &
+# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 >/dev/null 2>&1 &
 
 # for private use not for you
 [ -e /dev/sda4 ] && udisksctl mount -t ext4 -b /dev/sda4 >/dev/null 2>&1

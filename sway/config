@@ -24,12 +24,12 @@ set $term st
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu wofi
+set $menu rofi -config ~/.config/mango/rofi/config.rasi -show drun
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output * bg /home/wrq/Images/caoyuan.jpg fill
+# output * bg /home/wrq/Images/czd.png fill
 #
 # Example configuration:
 #
@@ -37,21 +37,28 @@ output * bg /home/wrq/Images/caoyuan.jpg fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+# corner_radius 6
+# blur enable
+# shadows enable
+# shadow_blur_radius 6
+# shadow_color #000000
+# shadow_offset 0 0
+
 ### Misc
 # output * adaptive_sync on
-default_border pixel 5
+default_border pixel 4
 default_floating_border pixel 3
 gaps inner  5
 gaps outer  0
-
+# corner_radius 10
 smart_borders off
 smart_gaps off
 
 focus_follows_mouse yes
 
-client.focused          #ad741f #ad741f #ffffff #448329
-client.unfocused        #45475a #412406 #ffffff #448329
-client.urgent           #ad401f #ad401f #ffffff #448329
+client.focused          #c9b890 #c9b890 #ffffff #835529
+client.unfocused        #45475a #412406 #ffffff #835529
+client.urgent           #ad401f #ad401f #ffffff #835529
 
 # client.focused_inactive #2e3440 #1f222d #888888 
 # client.placeholder      #45475a #45475a #888888
@@ -85,7 +92,12 @@ input "2522:13593:PixArt_A4Tech_OpticalMouse_Keyboard" {
 } 
 input "1:1:AT_Translated_Set_2_keyboard" {
     xkb_numlock enable
+}
+
+input "1452:591:Keychron_Keychron_C2" {
+    xkb_numlock enable
 } 
+
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -100,7 +112,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     bindsym $mod+q kill
 
     # Start your launcher
-    bindsym $mod+space exec wofi --height 415 --width 700
+    bindsym $mod+space exec rofi -config ~/.config/mango/rofi/config.rasi -show drun
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -245,17 +257,18 @@ bindsym Alt+Mod4+u mode "resize"
 
 
 ## app bind
-bindsym Mod4+space exec /usr/bin/rofi -config ~/.config/rofi/themes/trans.rasi -show website
 bindsym Mod4+return exec google-chrome
 bindsym Ctrl+return exec bash ~/tool/clash.sh 
 bindsym Mod4+k exec bash ~/tool/wshowkey.sh 
 bindsym Ctrl+Mod4+return exec st -e yazi
-bindsym Ctrl+Alt+a exec grim -g "$(slurp)" - | swappy -f -
+bindsym Alt+Mod4+return exec mpv --player-operation-mode=pseudo-gui
+bindsym Ctrl+Alt+a exec grim -g "$(slurp)" - | satty -f -
 bindsym Ctrl+Alt+return exec konsole -e "~/tool/ter-multiplexer.sh"
 # bindsym Ctrl+Alt+return exec konsole -e "zellij -s temp --config /home/wrq/.config/zellij/tempconfigwayland.kdl"
 bindsym Mod4+h exec  bash ~/.config/sway/scripts/hide_waybar.sh
 bindsym Mod4+l exec swaylock -f -c 000000
-bindsym Mod4+c exec rofi -normal-window -theme  ~/.config/rofi/themes/fancy2.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py 
+bindsym Mod4+Space exec rofi -normal-window -theme  ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.py 
+bindsym Ctrl+Space exec rofi -normal-window -theme  ~/.config/rofi/themes/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/search.py 
 
 
 bindsym Ctrl+period exec ~/.config/hypr/scripts/brightness.sh up
@@ -291,6 +304,8 @@ exec pkill xdg
 exec systemctl --user unmask xdg-desktop-portal-hyprland
 exec systemctl --user mask xdg-desktop-portal-gnome
 
+# exec /usr/sbin/xwayland-satellite :11 &
+
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
 exec /usr/lib/xdg-desktop-portal-hyprland &
@@ -298,19 +313,21 @@ exec /usr/lib/xdg-desktop-portal-hyprland &
 exec wlsunset -T 3501 -t 3500 &
 exec echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 # 开启输入法
-exec fcitx5 &
+exec fcitx5 -r -d 2> /dev/null &
+
+exec swaybg -i /home/wrq/Images/czd.png
+
 
 exec swaync & # 开启通知server
 #dunst -config ~/.config/dunst/hypr_dunstrc &
 
-exec wl-clip-persist --clipboard regular &
+exec lavalauncher -c ~/.config/mango/lavalauncher/lavalauncher.conf &
+exec wl-clip-persist --clipboard regular --reconnect-tries 0 &
 exec wl-paste -t text --watch clipman store --no-persist &
 exec blueman-applet &
 exec nm-applet &
-exec /usr/local/libexec/polkit-gnome-authentication-agent-1 &
-exec eww daemon &
-
-exec waybar -c ~/.config/sway/waybar.conf -s ~/.config/sway/waybar.css &
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 >/dev/null 2>&1 &
+exec waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
 
 exec udisksctl mount -t ext4 -b /dev/sda4&
 

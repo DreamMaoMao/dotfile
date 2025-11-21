@@ -62,7 +62,7 @@ window#waybar {
 
 #workspaces button.empty {
     box-shadow: rgba(0, 0, 0, 0.5) 0 -3 5 5px;
-    background-color: #b5b32a ;
+    background-color: #5d5d5b ;
     padding-bottom: 1px;
     padding-top: 1px;
     margin-right: 8px;
@@ -70,9 +70,9 @@ window#waybar {
     padding-left: 7px;
     background-size: 300% 300%;
     font-weight: bolder;
-    color: 	rgb(246, 245, 247);
+    color: 	#d9baff ;
     border: none;
-    border-bottom: 6px solid #939224;
+    border-bottom: 6px solid #3d3c3c;
     border-radius: 15px;
 }
 

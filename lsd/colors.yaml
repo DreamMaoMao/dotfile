@@ -12,18 +12,18 @@ permission:
   acl: 37
   context: 235
 date:
-  hour-old: "#92d46e"
-  day-old: "#65be35"
-  older: "#3faf03"
+  hour-old: "#adde27"
+  day-old: "#c1c123"
+  older: "#c1c123"
 size:
   none: "#715f64"
   small: "#dc9dae"
-  medium: "#d3496e"
+  medium: "#e34f76"
   large: "#cb193d"
 inode:
   valid: 61
   invalid: 160
 links:
-  valid: "#64a83f"
+  valid: "#d5d525"
   invalid: 235
 tree-edge: 235

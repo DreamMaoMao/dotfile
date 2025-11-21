@@ -1,0 +1,167 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 42, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "river/tags",
+        "wlr/taskbar",
+        "river/window"
+    ],
+    "modules-center": [
+    ],
+    "modules-right": [
+        "tray",
+        "network",
+        "cpu",
+        "memory",
+        "temperature",
+        "pulseaudio",
+        "backlight",
+        // "battery",
+        "clock",
+        "custom/power"
+    ],
+    "dwl/window": {
+        "format": "[{layout}]{title}",
+        "on-click":"bash ~/.config/mango/scripts/screenshot.sh",
+        // "max-length": 50
+    },
+    "ext/workspaces": {
+      "format": "{icon}",
+      "ignore-hidden": true,
+      // "active-only":true,
+      "on-click": "activate",
+      "on-click-right": "deactivate",
+      "on-scroll-up":"mmsg -d viewtoleft_have_client",
+      "on-scroll-down":"mmsg -d viewtoright_have_client",
+      "sort-by-id": true,
+      // "format-icons": {
+      //   "1": "",
+      //   "2": "",
+      //   "3": "",
+      //   "4": "",
+      //   "5": "",
+      //   "urgent": "",
+      //   "active": "",
+      //   "default": ""
+      // },
+    },
+    "wlr/taskbar": {
+      "format": "{icon}",
+      "icon-size": 20,
+      "all-outputs": false,
+      "tooltip-format": "{title}",
+      "markup": true,
+      "on-click": "activate",
+      "on-click-right": "close",
+      "ignore-list": ["Rofi", "wofi"]
+    },
+    "network": {
+      "interval": 2,
+      "format-wifi": "{essid} ({signalStrength}%)\uf1eb",
+      "format-ethernet": "󰈀 {ifname}",
+      "format-linked": "\uf059 No IP ({ifname})",
+      "format-disconnected": "\uf071 Disconnected",
+      "tooltip-format": "{ifname} {ipaddr}/{cidr} via {gwaddr}",
+      "format-alt": "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}"
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+      "format": " {:%H:%M}",
+      "format-alt": " {:L%A, %b %d}",
+      "tooltip-format": "{:%Y}",
+    },
+    "cpu": {
+      "interval": 2,
+      "format": " {load}%"
+    },
+    "memory": {
+        "format": " {}%"
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 90,
+        // "format-critical": "{temperatureF}°F {icon}",
+        "format": "{icon} {temperatureC}°C",
+        "tooltip": true,
+        "tooltip-format": "{temperatureF}°F",
+        "format-icons": ["", "", ""]
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰖔", "󰖨"],
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "tooltip": false,
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 2",
+        "on-scroll-down": "pamixer -d 2",
+        "scroll-step": 5,
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        }
+    },
+    "custom/power": {
+        "format": "󰣇",
+        "tooltip": false,
+        "on-click": "wlogout -C ~/.config/mango/wlogout/style.css -l  ~/.config/mango/wlogout/layout  -b 6 --protocol layer-shell",
+        "on-click-right": "sleep 0.1s && swaync-client -t -sw",
+
+    },
+    "custom/notification": {
+      "tooltip": false,
+      "format": "{icon}",
+      "format-icons": {
+        "notification": "<span foreground='red'><sup></sup></span>",
+        "none": "  ",
+        "dnd-notification": "<span foreground='red'><sup></sup></span>",
+        "dnd-none": "",
+        "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+        "inhibited-none": "",
+        "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+        "dnd-inhibited-none": ""
+      },
+      "return-type": "json",
+      "exec-if": "which swaync-client",
+      "exec": "swaync-client -swb",
+      "on-click": "sleep 0.1s && swaync-client -t -sw",
+      "on-click-right": "swaync-client -d -sw",
+      "escape": true
+    },
+}

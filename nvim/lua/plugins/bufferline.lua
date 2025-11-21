@@ -66,25 +66,7 @@ local spec = {
     },
   },
   config = function()
-    local mocha = require("catppuccin.palettes").get_palette("mocha")
-    local latte = require("catppuccin.palettes").get_palette("latte")
     require("bufferline").setup({
-      highlights = require("catppuccin.groups.integrations.bufferline").get({
-        custom = {
-          mocha = {
-            buffer_selected = { fg = mocha.pink, bg = mocha.base, bold = true },
-            separator = { bg = mocha.base, fg = mocha.crust },
-            indicator_selected = { fg = mocha.pink, bg = mocha.base },
-            indicator_visible = { fg = mocha.pink, bg = mocha.base },
-          },
-          latte = {
-            buffer_selected = { fg = latte.pink, bg = latte.base, bold = true },
-            separator = { bg = latte.base, fg = latte.crust },
-            indicator_selected = { fg = latte.pink, bg = latte.base },
-            indicator_visible = { fg = latte.pink, bg = latte.base },
-          },
-        },
-      }),
       options = {
         -- diagnostics = "nvim_lsp",
         diagnostics = nil,

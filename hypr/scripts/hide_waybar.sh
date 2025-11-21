@@ -3,7 +3,7 @@
 startd=$(pgrep waybar)
 
 if [ -n "$startd" ]; then
-	sudo pkill waybar
+	pkill waybar
 else
-	~/.config/hypr/scripts/launch_waybar 
+	waybar -c ~/.config/hypr/waybar/config.jsonc -s ~/.config/hypr/waybar/style.css
 fi

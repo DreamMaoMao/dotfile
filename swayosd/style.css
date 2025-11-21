@@ -5,10 +5,6 @@ window#osd {
   border-bottom: 6px solid rgb(60, 37, 9);
   border-radius: 999px;
 
-  #container {
-    margin: 16px;
-  }
-
   image,
   label {
     color: #000000;

@@ -1,46 +1,12 @@
-local wezterm = require('wezterm')
 local custome_colors = require('colors.custom')
--- local fonts = require('config.fonts')
-local gpus = wezterm.gui.enumerate_gpus()
-
 
 
 return {
    term = 'xterm-256color',
-   animation_fps = 60,
-   max_fps = 60,
-   -- webgpu_preferred_adapter = gpus[1],
-   -- -- front_end = 'Software', -- WebGpu OpenGL
-   -- front_end = 'OpenGL', -- WebGpu OpenGL
-   -- webgpu_power_preference = 'HighPerformance',
-
-   -- color scheme
    colors = custome_colors,
-   -- color_scheme = 'Gruvbox dark, medium (base16)',
-
-   -- background
-   window_background_opacity = 0.7,
-   -- win32_system_backdrop = 'Acrylic',
-   --background = {
-   --   {
-   --      source = { File = wezterm.config_dir .. '/backdrops/space.jpg' },
-   --   },
-   --   {
-   --      source = { Color = colors.background },
-   --      height = '100%',
-   --      width = '100%',
-   --      opacity = 0.85,
-   --   },
-   --},
-
-   -- scrollbar
+   window_background_opacity = 0.8,
    enable_scroll_bar = true,
    min_scroll_bar_height = '3cell',
-   -- colors = {
-   --    scrollbar_thumb = '#454545',
-   -- },
-
-   -- tab bar
    enable_tab_bar = false,
    hide_tab_bar_if_only_one_tab = false,
    use_fancy_tab_bar = true,
@@ -48,22 +14,14 @@ return {
    show_tab_index_in_tab_bar = true,
    switch_to_last_active_tab_when_closing_tab = true,
 
-   -- cursor
-   -- default_cursor_style = 'BlinkingBlock',
    cursor_blink_ease_in = 'Constant',
    cursor_blink_ease_out = 'Constant',
    cursor_blink_rate = 700,
 
-   -- window
-   -- window_decorations = 'INTEGRATED_BUTTONS|RESIZE',
    window_decorations ='NONE',
    integrated_title_button_style = 'Windows',
    integrated_title_button_color = 'auto',
    integrated_title_button_alignment = 'Right',
-   -- initial_cols = 120,
-   -- initial_rows = 24,
-   -- initial_cols = 1,
-   -- initial_rows = 1,
    window_padding = {
       left = 5,
       right = 10,
@@ -73,8 +31,6 @@ return {
    window_close_confirmation = 'NeverPrompt',
    window_frame = {
       active_titlebar_bg = '#090909',
-      -- font = fonts.font,
-      -- font_size = fonts.font_size,
    },
    inactive_pane_hsb = { saturation = 1.0, brightness = 1.0 },
 }

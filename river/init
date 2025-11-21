@@ -1,0 +1,103 @@
+#!/usr/bin/bash
+
+set +e
+
+# Setup dbus
+systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlr
+systemctl --user restart xdg-desktop-portal
+
+# night light
+wlsunset -T 3001 -t 3000 >/dev/null 2>&1 &
+
+# wallpaper
+swaybg -i ~/.config/river/wallpaper/snow.jpg >/dev/null 2>&1 &
+
+# top bar
+waybar -c ~/.config/river/waybar/config.jsonc -s ~/.config/river/waybar/style.css >/dev/null 2>&1 &
+
+##############################################
+# Key bindings
+##############################################
+
+mod=Mod1
+mod2=Mod4
+
+# Application Launchers
+riverctl map normal $mod Return spawn 'foot'
+riverctl map normal $mod space spawn 'rofi -config ~/.config/river/rofi/config.rasi -show drun'
+riverctl map normal $mod2 Return spawn 'google-chrome-stable'
+riverctl map normal $mod2+Control Return spawn 'foot -e yazi'
+
+# Kill focused window
+riverctl map normal $mod q close
+
+# Exit River
+riverctl map normal $mod2 m exit
+
+
+# Layout stuff
+riverctl map normal $mod Left focus-view left
+riverctl map normal $mod Down focus-view next
+riverctl map normal $mod Up focus-view previous
+riverctl map normal $mod Right focus-view right
+
+riverctl map normal $mod2+Shift Left swap left
+riverctl map normal $mod2+Shift Down swap down
+riverctl map normal $mod2+Shift Up swap up
+riverctl map normal $mod2+Shift Right swap right
+
+# Workspaces
+
+for i in $(seq 1 9); do
+  tags=$((1 << (i - 1)))
+  riverctl map normal Control $i set-focused-tags $tags
+  riverctl map normal $mod+Shift $i spawn "riverctl set-view-tags $tags; riverctl set-focused-tags $tags"
+  riverctl map normal $mod+Control $i toggle-focused-tags $tags
+done
+
+all_tags_mask=$(((1 << 32) - 1))
+riverctl map normal $mod 0 set-focused-tags $all_tags_mask
+
+# Fullscreen mode
+riverctl map normal $mod f toggle-fullscreen
+riverctl map normal $mod backslash toggle-float
+
+
+##############################################
+# Input configuration
+##############################################
+
+# Keyboard configuration
+riverctl keyboard-layout "us"
+
+# Touchpad configuration
+for pad in $(riverctl list-inputs | grep -i touchpad); do
+  riverctl input $pad events enabled
+  riverctl input $pad tap enabled
+  riverctl input $pad disable-while-typing enabled
+  riverctl input $pad natural-scroll enabled
+  riverctl input $pad drag-lock enabled
+done
+
+##############################################
+# Behavoiur & Autostart
+##############################################
+
+# Super + Left Mouse Button to move views
+riverctl map-pointer normal $mod BTN_LEFT move-view
+
+# Super + Shift + Left Mouse Button to resize views
+riverctl map-pointer normal $mod+Control BTN_LEFT resize-view
+
+# Set cursor behavoiur
+riverctl set-cursor-warp on-focus-change
+riverctl focus-follows-cursor normal
+
+# Set some rules
+riverctl rule-add ssd
+riverctl rule-add -title "Open File" float
+riverctl rule-add -title "Open Folder" float
+riverctl rule-add -title "Qalculate!" float
+
+exit

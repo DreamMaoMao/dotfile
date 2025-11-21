@@ -1,41 +1,41 @@
 {
     "label" : "lock",
-    "action" : "/home/wrq/.config/wlogout/scripts/anction lock",
+    "action" : "swaylock -f -c 000000 &",
     "text" : "  Lock   ",
     "keybind" : "l"
 }
 
 {
     "label" : "logout",
-    "action" : "/home/wrq/.config/wlogout/scripts/anction logout",
+    "action" : "bash ~/.config/wlogout/scripts/anction logout",
     "text" : " Logout  ",
     "keybind" : "m"
 }
 
 {
     "label" : "shutdown",
-    "action" : "/home/wrq/.config/wlogout/scripts/anction shutdown",
+    "action" : "shutdown -h now",
     "text" : "Shutdown ",
     "keybind" : "d"
 }
 
 {
     "label" : "reboot",
-    "action" : "/home/wrq/.config/wlogout/scripts/anction reboot",
+    "action" : "reboot",
     "text" : " Reboot  ",
     "keybind" : "r"
 }
 
 {
     "label" : "suspend",
-    "action" : "/home/wrq/.config/wlogout/scripts/anction suspend",
+    "action" : "systemctl suspend",
     "text" : " Suspend ",
     "keybind" : "s"
 }
 
 {
     "label" : "hibernate",
-    "action" : "/home/wrq/.config/wlogout/scripts/anction hibernate",
+    "action" : "systemctl hibernate",
     "text" : "Hibernate",
     "keybind" : "h"
 }

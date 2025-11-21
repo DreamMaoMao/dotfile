@@ -9,7 +9,7 @@
     "reload_style_on_change": true,
     "height": 45,
     "modules-left": [
-        "wlr/workspaces",
+        "ext/workspaces",
         "wlr/taskbar",
     ],
     "modules-right": [
