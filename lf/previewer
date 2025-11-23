@@ -94,7 +94,7 @@ handle_mime() {
         # Video
         video/*)
             local thumbnail
-            thumbnail=$("$XDG_CONFIG_HOME"/lf/vidthumb "${FILE_PATH}")
+            thumbnail=$(~/.config/lf/vidthumb "${FILE_PATH}")
             image_previewer "$thumbnail"
             exit 1;;
         # Text

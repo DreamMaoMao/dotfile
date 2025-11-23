@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Generate the thumbnail for video (ffmpegthumbnailer is required)
-# Grabbed from https://raw.githubusercontent.com/duganchen/kitty-pistol-previewer/main/vidthumb
+# Generate the thumbnail for video (using ffmpeg)
+# High quality version with parameters from the Lua reference and secure cache management
 
 if ! [ -f "$1" ]; then
-	exit 1
+    exit 1
 fi
 
 cache="$HOME/.cache/vidthumb"
@@ -13,27 +13,162 @@ movie="$(realpath "$1")"
 
 mkdir -p "$cache"
 
+# 安全的缓存清理函数
+cleanup_old_cache() {
+    local cache_dir="$1"
+    local index_file="$2"
+    local max_entries=1000
+    local cleanup_count=300
+    
+    # 确保缓存目录存在且是目录
+    if [[ ! -d "$cache_dir" ]]; then
+        return 0
+    fi
+    
+    # 获取缓存目录的绝对路径用于安全检查
+    local cache_realpath
+    cache_realpath=$(realpath "$cache_dir")
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Cannot resolve cache directory path" >&2
+        return 1
+    fi
+    
+    # 检查当前缓存数量（只统计jpg文件）
+    local jpg_count=0
+    while IFS= read -r -d '' file; do
+        if [[ -f "$file" ]]; then
+            ((jpg_count++))
+        fi
+    done < <(find "$cache_dir" -maxdepth 1 -name "*.jpg" -type f -print0 2>/dev/null)
+    
+    if [[ "$jpg_count" -lt "$max_entries" ]]; then
+        return 0
+    fi
+    
+    echo "Cache cleanup: $jpg_count files found, removing $cleanup_count oldest" >&2
+    
+    # 安全地找到并删除最旧的文件
+    local files_removed=0
+    while IFS= read -r -d '' file; do
+        if [[ -z "$file" || ! -f "$file" ]]; then
+            continue
+        fi
+        
+        # 严格的安全检查：确保文件在缓存目录内
+        local file_realpath
+        file_realpath=$(realpath "$file")
+        if [[ $? -ne 0 || "$file_realpath" != "$cache_realpath"/* ]]; then
+            echo "Warning: Skipping file outside cache directory: $file" >&2
+            continue
+        fi
+        
+        # 只删除jpg文件
+        if [[ "$file" != *.jpg ]]; then
+            continue
+        fi
+        
+        # 从索引中移除
+        local filename=$(basename "$file")
+        if [[ -f "$index_file" ]]; then
+            local temp_index=$(mktemp)
+            if jq "del(.[] | select(. == \"$filename\"))" "$index_file" > "$temp_index" 2>/dev/null; then
+                mv "$temp_index" "$index_file"
+            else
+                rm -f "$temp_index"
+            fi
+        fi
+        
+        # 删除文件
+        if rm -f "$file"; then
+            ((files_removed++))
+        else
+            echo "Warning: Failed to remove $file" >&2
+        fi
+        
+        # 达到清理数量后停止
+        if [[ "$files_removed" -ge "$cleanup_count" ]]; then
+            break
+        fi
+        
+    done < <(find "$cache_dir" -maxdepth 1 -name "*.jpg" -type f -printf "%T@ %p\0" 2>/dev/null | sort -zn | cut -zf2-)
+    
+    echo "Cache cleanup: Removed $files_removed files" >&2
+}
+
+# 在生成新缩略图前先清理旧缓存
+cleanup_old_cache "$cache" "$index"
+
 if [ -f "$index" ]; then
-	thumbnail="$(jq -r ". \"$movie\"" <"$index")"
-	if [[ "$thumbnail" != "null" ]]; then
-		if [[ ! -f "$cache/$thumbnail" ]]; then
-			exit 1
-		fi
-		echo "$cache/$thumbnail"
-		exit 0
-	fi
+    thumbnail="$(jq -r ". \"$movie\"" <"$index")"
+    if [[ "$thumbnail" != "null" ]]; then
+        if [[ ! -f "$cache/$thumbnail" ]]; then
+            exit 1
+        fi
+        echo "$cache/$thumbnail"
+        exit 0
+    fi
 fi
 
 thumbnail="$(uuidgen).jpg"
 
-if ! ffmpegthumbnailer -i "$movie" -o "$cache/$thumbnail" -s 0 2>/dev/null; then
-	exit 1
+# 获取视频时长并计算中间时间点
+duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$movie" 2>/dev/null)
+
+# 高质量参数设置
+max_width=800
+max_height=600
+image_quality=85
+
+# 计算 q:v 值
+q_value=$((31 - image_quality * 30 / 100))
+
+if [[ -n "$duration" ]]; then
+    # 计算中间时间点（秒）
+    middle_time=$(echo "$duration / 2" | bc -l 2>/dev/null)
+    
+    # 使用 ffmpeg 高质量参数生成缩略图
+    if ! ffmpeg \
+        -v quiet \
+        -threads 1 \
+        -hwaccel auto \
+        -skip_frame nokey \
+        -ss "$middle_time" \
+        -i "$movie" \
+        -vframes 1 \
+        -an -sn -dn \
+        -q:v "$q_value" \
+        -vf "scale='min($max_width,iw)':'min($max_height,ih)':force_original_aspect_ratio=decrease:flags=lanczos" \
+        -f image2 \
+        -y "$cache/$thumbnail" 2>/dev/null; then
+        
+        # 如果中间点失败，回退到简单方法
+        if ! ffmpeg \
+            -ss "$middle_time" \
+            -i "$movie" \
+            -vframes 1 \
+            -q:v "$q_value" \
+            -vf "scale='min($max_width,iw)':'min($max_height,ih)':force_original_aspect_ratio=decrease:flags=lanczos" \
+            -y "$cache/$thumbnail" 2>/dev/null; then
+            exit 1
+        fi
+    fi
+else
+    # 如果无法获取时长，使用高质量参数从中间估计
+    if ! ffmpeg \
+        -i "$movie" \
+        -vframes 1 \
+        -q:v "$q_value" \
+        -vf "scale='min($max_width,iw)':'min($max_height,ih)':force_original_aspect_ratio=decrease:flags=lanczos" \
+        -y "$cache/$thumbnail" 2>/dev/null; then
+        exit 1
+    fi
 fi
 
 if [[ ! -f "$index" ]]; then
-	echo "{\"$movie\": \"$thumbnail\"}" >"$index"
+    echo "{\"$movie\": \"$thumbnail\"}" >"$index"
+else
+    json="$(jq -r --arg movie "$movie" --arg thumbnail "$thumbnail" '. + {($movie): $thumbnail}' <"$index")"
+    echo "$json" >"$index"
 fi
-json="$(jq -r --arg "$movie" "$thumbnail" ". + {\"$movie\": \"$thumbnail\"}" <"$index")"
-echo "$json" >"$index"
 
 echo "$cache/$thumbnail"

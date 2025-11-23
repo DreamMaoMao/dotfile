@@ -6,16 +6,14 @@
 #
 
 set anchorfind
-set cleaner ~/.config/lf/cleaner
 set dircounts
-# set drawbox
+set drawbox
 set findlen 1
-set hiddenfiles ".DS_Store:.git"
 set icons
 set ifs "\n"
 set ignorecase
 set incsearch
-set info size:custom
+# set info size:custom
 set preview
 set previewer ~/.config/lf/previewer
 set scrolloff 10
@@ -24,120 +22,226 @@ set shellopts '-eu'
 set smartcase
 set tabstop 4
 
-setlocal ~/Downloads sortby "atime"
-setlocal ~/Downloads reverse
+setlocal ~/deskenv/master sortby "mtime"
+# setlocal ~/deskenv/master reverse
 
 #
 # Commands
 #
 
 # Override the default open for file opening (binded to 'l' by default)
-cmd open &{{
-    case $(file --mime-type "$(readlink -f $f)" -b) in
-        text/*|application/json|inode/x-empty|application/octet-stream) lf -remote "send $id \$$EDITOR \$fx";;
-        *) for f in $fx; do open $f > /dev/null 2> /dev/null & done;;
-    esac
-}}
 
-cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
-
-# Create a directory with the selected items
-cmd new-folder-with-selection ${{
-    set -f
-    printf "Directory name: "
-    read newd
-    mkdir -- "$newd"
-    mv -- $fx "$newd"
-}}
-
-cmd chmod ${{
-    printf "\nMode Bits: "
-    read ans
-    for file in "$fx"
-    do
-        chmod $ans $file
-    done
-    lf -remote 'send reload'
-}}
-
-cmd extract ${{
-    set -f
-    case $f in
-        *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf $f;;
-        *.tar.gz|*.tgz) tar xzvf $f;;
-        *.tar.xz|*.txz) tar xJvf $f;;
-        *.tar) tar xvf $f;;
-        *.zip) unzip $f;;
-        *.rar) unrar x $f;;
-        *.7z) 7z x $f;;
-        *) echo "Unsupported format";;
-    esac
-}}
-
-cmd tar ${{
-        set -f
-        mkdir $1
-        cp -r $fx $1
-        tar czf $1.tar.gz $1
-        rm -rf $1
-}}
-
-cmd zip ${{
-        set -f
-        mkdir $1
-        cp -r $fx $1
-        zip -r $1.zip $1
-        rm -rf $1
-}}
-
-cmd delete ${{
-    set -f
-    printf "\n$fx\n"
-    printf "delete?[y/N]"
-    read ans
-    if [[ $ans == "y" ]]; then
-        rm -rf $fx
+cmd menu-open ${{
+    # 使用当前光标所在的文件
+    current_file="$f"
+    
+    if [ -z "$current_file" ]; then
+        lf -remote "send $id echo No file under cursor"
+        exit 1
     fi
+
+    # 判断文件类型
+    if [ -d "$current_file" ]; then
+        file_type="folder"
+    else
+        mime=$(file --mime-type "$(readlink -f "$current_file")" -b)
+        case $mime in
+            text/*|application/json|inode/x-empty|application/octet-stream)
+                file_type="text"
+                ;;
+            image/*)
+                file_type="image"
+                ;;
+            video/*|application/octet-stream)
+                file_type="video"
+                ;;
+            audio/*)
+                file_type="audio"
+                ;;
+            application/zip|application/gzip|application/x-bzip|application/x-bzip2|application/x-tar|application/x-7z-compressed|application/x-rar)
+                file_type="archive"
+                ;;
+            application/pdf|application/epub+zip|application/x-mobipocket-ebook)
+                file_type="document"
+                ;;
+            *)
+                file_type="fallback"
+                ;;
+        esac
+    fi
+
+    # 定义应用列表
+    case $file_type in
+        folder)
+            apps=("neovim" "vscode" "zed" "lazygit" "archive")
+            ;;
+        archive)
+            apps=("ouch decompress")
+            ;;
+        text)
+            apps=("neovim" "vscode" "zed")
+            ;;
+        image)
+            apps=("sxiv" "gthumb")
+            ;;
+        video)
+            apps=("mpv" "convert to gif")
+            ;;
+        audio)
+            apps=("mpv")
+            ;;
+        document)
+            apps=("xdg-open" "okular" "foliate")
+            ;;
+        *)
+            apps=("xdg-open")
+            ;;
+    esac
+
+    # 使用 fzf 选择应用
+    selected_app=$(printf "%s\n" "${apps[@]}" | fzf --prompt "Select app for $(basename "$current_file"): ")
+
+    if [ -z "$selected_app" ]; then
+        lf -remote "send $id echo No app selected"
+        exit 1
+    fi
+
+    # 根据选择的应用程序执行相应的命令
+    case $selected_app in
+        "neovim")
+            nvim "$current_file"
+            ;;
+        "vscode")
+            code "$current_file" >/dev/null 2>&1 &
+            ;;
+        "zed")
+            zeditor "$current_file" >/dev/null 2>&1 &
+            ;;
+        "lazygit")
+            fish -c "lazygit -p '$current_file'"
+            ;;
+        "archive")
+            tar --use-compress-program=pigz -cf ~/down/$(basename "$current_file").tar.gz "$current_file" >/dev/null 2>&1 &
+            ;;
+        "ouch decompress")
+            ouch decompress "$current_file" >/dev/null 2>&1 &
+            ;;
+        "sxiv")
+            sxiv -a "$current_file" >/dev/null 2>&1 &
+            ;;
+        "gthumb")
+            gthumb "$current_file" >/dev/null 2>&1 &
+            ;;
+        "mpv")
+            mpv "$current_file" >/dev/null 2>&1 &
+            ;;
+        "convert to gif")
+            ffmpeg -i "$current_file" -vf "fps=10" -loop 0 "$current_file.gif" >/dev/null 2>&1 &
+            ;;
+        "xdg-open")
+            xdg-open "$current_file" >/dev/null 2>&1 &
+            ;;
+        "okular")
+            okular "$current_file" >/dev/null 2>&1 &
+            ;;
+        "foliate")
+            GTK_IM_MODULE=fcitx5 foliate "$current_file" >/dev/null 2>&1 &
+            ;;
+    esac
+
+    lf -remote "send $id echo Opened $(basename "$current_file") with $selected_app"
+}}
+
+cmd open &{{
+    for f in $fx; do
+        if [ -d "$f" ]; then
+            # 如果是目录，进入目录（只对第一个目录生效）
+            lf -remote "send $id cd '$f'"
+            break
+        else
+            mime=$(file --mime-type "$(readlink -f "$f")" -b)
+            case $mime in
+                text/*|application/json|inode/x-empty|application/octet-stream)
+                    # 文本文件：使用neovim打开所有选中的文本文件
+                    lf -remote "send $id \$nvim \$fx"
+                    break
+                    ;;
+                image/*)
+                    # 图片：使用sxiv打开所有选中的图片
+                    sxiv -a $fx >/dev/null 2>&1 &
+                    break
+                    ;;
+                video/*|application/octet-stream)
+                    # 视频：使用mpv打开所有选中的视频
+                    mpv $fx >/dev/null 2>&1 &
+                    break
+                    ;;
+                audio/*)
+                    # 音频：使用mpv打开所有选中的音频
+                    mpv $fx >/dev/null 2>&1 &
+                    break
+                    ;;
+                application/zip|application/gzip|application/x-bzip|application/x-bzip2|application/x-tar|application/x-7z-compressed|application/x-rar)
+                    # 压缩文件：逐个解压
+                    ouch decompress "$f" >/dev/null 2>&1 &
+                    ;;
+                application/pdf|application/epub+zip|application/x-mobipocket-ebook)
+                    # 文档：逐个打开
+                    xdg-open "$f" >/dev/null 2>&1 &
+                    ;;
+                *)
+                    # 其他文件：逐个打开
+                    xdg-open "$f" >/dev/null 2>&1 &
+                    ;;
+            esac
+        fi
+    done
 }}
 
 cmd trash !{{
     set -f
-    printf "\nItems to be trashed:\n$fx\n\nTrash? [y/N]"
-    read ans
-    if [[ $ans == "y" ]]; then
-        trash -F $fx && echo "Trash complete!"
-    elif [[ $ans == "n" ]]; then
-        echo "Canceled!"
+    # 简单确认
+    printf "Trash $fx? [y/N] "
+    read -n 1 ans
+    echo
+    if [[ $ans == "y" || $ans == "Y" ]]; then
+        if command -v trash-put >/dev/null 2>&1; then
+            trash-put $fx
+            lf -remote "send $id echo Trashed $(echo $fx | wc -w) items"
+        elif command -v gio >/dev/null 2>&1; then
+            for file in $fx; do
+                gio trash "$file"
+            done
+            lf -remote "send $id echo Trashed $(echo $fx | wc -w) items"
+        else
+            lf -remote "send $id echo Error: No trash command found"
+        fi
     else
-        echo "Failed! Use y to trash."
+        lf -remote "send $id echo Canceled"
     fi
 }}
 
 cmd select-all :unselect; invert
+cmd unselect-all :unselect
 
-# Bulk rename on selected files or all the non-hidden files in the current directory if no selection
 cmd bulk-rename ${{
-    old="$(mktemp)"
-    new="$(mktemp)"
-    if [ -n "$fs" ]; then
-        fs="$(basename $fs)"
-    else
-        fs="$(ls)"
-    fi
-    printf '%s\n' "$fs" >"$old"
-    printf '%s\n' "$fs" >"$new"
-    $EDITOR "$new"
-    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
-    paste "$old" "$new" | while IFS= read -r names; do
-        src="$(printf '%s' "$names" | cut -f1)"
-        dst="$(printf '%s' "$names" | cut -f2)"
-        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
-                continue
+    # 获取选中的文件数量
+    if [ -n "$fx" ]; then
+        file_count=$(echo "$fx" | wc -w)
+        
+        if [ "$file_count" -eq 1 ]; then
+            # 单个文件：调用 lf 内部的 rename 命令
+            lf -remote "send $id rename"
+        else
+            # 多个文件：使用 vidir
+            printf '%s\n' $fx | vidir -
+            lf -remote "send $id reload"
         fi
-        mv -- "$src" "$dst"
-    done
-    rm -- "$old" "$new"
-    lf -remote "send $id unselect"
+    else
+        # 无选中文件：使用当前目录所有文件
+        vidir .
+        lf -remote "send $id reload"
+    fi
 }}
 
 # Copy the file names (including extension) of the selections separated by \n
@@ -151,125 +255,49 @@ cmd copy-absolute-path ${{
     echo $fx | tr ' ' '\n' | pbcopy
 }}
 
-# Fzf to toggle the selections
-cmd fzf-toggle-select ${{
-    no_depth="/tmp/lf-fzf-toggle-select-no-depth"
-    rm -f $no_depth
-    fd_cmd="fd --max-depth 1 --hidden --follow $FD_EXCLUDE"
-    selections=$(eval "$fd_cmd" | fzf \
-        --multi \
-        --header ':: ENTER (toggle selections), CTRL-T (toggle no-depth/depth-1 traveral)' \
-        --prompt 'Files> ' \
-        --bind "ctrl-t:transform: \
-        [[ ! -e $no_depth ]] && { \
-            touch $no_depth; \
-            echo \"reload(fd --hidden --follow $FD_EXCLUDE)\"; \
-        } || { \
-            rm $no_depth; \
-            echo \"reload($fd_cmd)\"; \
-        }" \
-    ) || true
-    if [[ -n $selections ]]; then
-        # Escape white spaces and format multi-line string to a single line one
-        targets=$(echo "$selections" | sed 's/ /\\ /g' | tr '\n' ' ')
-        cnt=$(echo "$selections" | wc -l)
-        lf -remote "send $id toggle $targets"
-        lf -remote "send $id echo Toggle $cnt selections"
+cmd sxiv-select ${{
+    current_dir="$PWD"
+    sxiv_output=$(sxiv -a -t "$current_dir"/* 2>/dev/null)
+    
+    if [[ -n "$sxiv_output" ]]; then
+        # 逐行处理
+        echo "$sxiv_output" | while IFS= read -r line; do
+            if [[ "$line" =~ ^jump###(.*) ]]; then
+                # 跳转模式
+                file_path="${BASH_REMATCH[1]}"
+                dir=$(dirname "$file_path")
+                base=$(basename "$file_path")
+                # 改变目录并选择文件
+                lf -remote "send $id cd \"$dir\""
+                lf -remote "send $id select \"$base\""
+            elif [[ "$line" =~ ^select###(.*) ]]; then
+                # 选择模式
+                file_path="${BASH_REMATCH[1]}"
+                lf -remote "send $id toggle \"$file_path\""
+                lf -remote "send $id select \"$file_path\""
+            fi
+        done
+    else
+        lf -remote "send $id echo No output from sxiv"
     fi
 }}
 
-# Fzf: change the current file selection
-cmd fzf-file ${{
-    fd_cmd="fd --type f --type l --hidden --follow $FD_EXCLUDE"
-    select=$(eval "$fd_cmd" | fzf \
-        --no-multi \
-        --header ':: ALT-/ (toggle HOME/CWD)' \
-        --prompt 'Files [Current]> ' \
-        --bind "alt-/:transform: \
-        [[ ! \$FZF_PROMPT =~ HOME ]] && { \
-            echo \"reload($fd_cmd . $HOME | sed 's|^$HOME|~|')+change-prompt(Files [HOME]> )\"; \
-        } || { \
-            echo \"reload($fd_cmd)+change-prompt(Files [CWD]> )\"; \
-        }" \
-    ) || true
-    if [[ -n $select ]]; then
-        lf -remote "send $id select $select"
-    fi
+cmd lazygit ${{
+    lazygit
 }}
 
-# Fzf: cd into the selected directory
-cmd fzf-cd ${{
-    fd_cmd="fd --type d --hidden --follow $FD_EXCLUDE"
-    select=$(eval "$fd_cmd" | fzf \
-        --no-multi \
-        --header ':: ALT-/ (toggle HOME/CWD)' \
-        --prompt 'Dirs [Current]> ' \
-        --bind "alt-/:transform: \
-        [[ ! \$FZF_PROMPT =~ HOME ]] && { \
-            echo \"reload($fd_cmd . $HOME | sed 's|^$HOME|~|')+change-prompt(Dirs [HOME]> )\"; \
-        } || { \
-            echo \"reload($fd_cmd)+change-prompt(Dirs [CWD]> )\"; \
-        }") || true
-    if [[ -n $select ]]; then
-        lf -remote "send $id cd $select"
-    fi
+cmd fish ${{
+    fish
 }}
+
 
 # Zoxide
-cmd z %{{
-    result="$(zoxide query --exclude $PWD $@ | sed 's/\\/\\\\/g;s/"/\\"/g')"
-    lf -remote "send $id cd \"$result\""
-}}
 
 cmd zi ${{
     result="$(zoxide query -i | sed 's/\\/\\\\/g;s/"/\\"/g')"
     lf -remote "send $id cd \"$result\""
 }}
 
-# Git for dotfiles
-cmd dot ${{
-    git --git-dir=/Users/rockyzhang/dotfiles/ --work-tree=/Users/rockyzhang $@
-}}
-
-# Display git indicators in the info column
-# Ref: https://github.com/gokcehan/lf/blob/master/doc.md#loading-directory
-# on-load will be called automatically after loading a directory. The files inside the current
-# directory will be the arguments.
-cmd on-load &{{
-    cd "$(dirname "$1")" || exit 1
-    git_cmd="git"
-    if [[ $PWD == $HOME/.config || $PWD == $HOME/.config/* && $PWD != $HOME/.config/nvim/pack* ]]; then
-        # For the bare repo managing my dotfiles
-        git_cmd="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
-    fi
-    [ "$(eval $git_cmd rev-parse --is-inside-git-dir 2>/dev/null)" = false ] || exit 0
-
-    cmds=""
-
-    for file in "$@"; do
-        case "$file" in
-            */.git|*/.git/*) continue;;
-        esac
-
-        status=$(
-            eval "$git_cmd" -c color.status=always status -s -- "$file" |
-            cat -v |
-            sed -E 's/^(..[^[:space:]]*|[^[:space:]]*[[:space:]]?)[[:space:]]+(.*)$/\1/' |
-            sed 's/\^\[/\\033/g' |
-            head -n1
-        )
-
-        if [ -n "$status" ]; then
-            cmds="${cmds}addcustominfo \"${file}\" \"\\033[37m[\\033[0m$status\\033[37m]\\033[0m\"; "
-        else
-            cmds="${cmds}addcustominfo \"${file}\" ''; "
-        fi
-    done
-
-    if [ -n "$cmds" ]; then
-        lf -remote "send $id :$cmds"
-    fi
-}}
 
 # Toggle selection of the VISUAL selected files
 cmd visual-toggle &{{
@@ -279,66 +307,136 @@ cmd visual-toggle &{{
     lf -remote "send $id visual-discard"
 }}
 
+cmd fzf-jump ${{
+    # 使用 fzf 选择单个文件
+    selected_file=$(fd --type f --hidden --follow --exclude .git . | fzf --prompt 'Jump to file> ')
+    
+    if [[ -n "$selected_file" ]]; then
+        # 跳转到选中的文件
+        dir=$(dirname "$selected_file")
+        base=$(basename "$selected_file")
+        lf -remote "send $id cd \"$dir\""
+        lf -remote "send $id select \"$base\""
+        lf -remote "send $id echo Jumped to $base"
+    else
+        lf -remote "send $id echo No file selected"
+    fi
+}}
+
+cmd fzf-rg-jump-with-action ${{
+    # 使用 rg 搜索文件内容，然后用 fzf 选择
+    selected=$(rg --color=always --line-number --no-heading --smart-case . | \
+        fzf --ansi \
+            --delimiter : \
+            --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
+            --preview-window 'right:60%:wrap' \
+            --prompt 'Search content> ')
+
+    if [[ -n "$selected" ]]; then
+        # 提取文件路径和行号
+        file_path=$(echo "$selected" | cut -d: -f1)
+        line_number=$(echo "$selected" | cut -d: -f2)
+
+        # 选择操作
+        action=$(echo -e "nvim\nhelix\njump" | fzf --prompt 'Action> ')
+
+        case "$action" in
+            "nvim")
+                nvim +$line_number "$file_path"
+                ;;
+            "helix")
+                hx +$line_number "$file_path"
+                ;;
+            "jump"|*)
+                # 跳转到文件所在目录并选中文件
+                dir=$(dirname "$file_path")
+                base=$(basename "$file_path")
+                lf -remote "send $id cd \"$dir\""
+                lf -remote "send $id select \"$base\""
+                lf -remote "send $id echo Jumped to $base"
+                ;;
+        esac
+    else
+        lf -remote "send $id echo No file selected"
+    fi
+}}
+
+cmd dragx ${{ 
+    QT_QPA_PLATFORM=xcb ~/deskenv/archieve/qxdrag/qxdrag.py -x -e -b -p "$f"
+}}
+
+cmd dragw ${{ 
+    QT_QPA_PLATFORM=wayland ~/deskenv/archieve/qxdrag/qxdrag.py -x -e -b -p "$f"
+}}
+
+cmd create ${{
+    # 读取用户输入
+    printf "Enter name (end with / for directory): "
+    read name
+    
+    if [ -z "$name" ]; then
+        lf -remote "send $id echo Creation canceled"
+        exit 1
+    fi
+    
+    # 判断是否以 / 结尾
+    if [[ "$name" == */ ]]; then
+        # 创建目录
+        mkdir -p "$name"
+        lf -remote "send $id echo Created directory: $name"
+    else
+        # 创建文件
+        touch "$name"
+        lf -remote "send $id echo Created file: $name"
+    fi
+}}
+
 #
 # Mappings
 #
 
-# Remove some defaults
-nmap gh
-nmap d
-nmap y
-nmap zh
+nmap gi cd ~/Images
+nmap gd cd ~/down
+nmap gh cd ~/
+nmap gu cd /media/UUI
+nmap gk cd ~/deskenv/master/
+nmap gj cd ~/deskenv/archieve
+nmap gc cd ~/.config
 
-# <space> will be used as the leader key
-map <space>
+nmap u
+nmap uu sxiv-select
+nmap ui lazygit
+nmap us fish
+nmap uf dragx
+nmap uw dragw
+nmap f
+nmap fz zi
+nmap fn search
+nmap ff fzf-jump
+nmap fg fzf-rg-jump-with-action
+
+nmap b top
+nmap e bottom
+nmap a create
+nmap <c-a> select-all
 
 # enter to open
+nmap o menu-open
 nmap <enter> open
+nmap <esc> unselect-all
 
-nmap z. set hidden!
-nmap <tab> :toggle; down
-nmap <c-s> :toggle
-vmap <c-s> visual-toggle
-nmap yy copy
-nmap yn copy-filename
-nmap yP copy-absolute-path
-nmap d delete
-nmap T trash
-# list the size of each item in the current directory
-nmap U !printf "\n"; du -csh *
-nmap <c-t> fzf-toggle-select
-nmap <c-f> fzf-file
-nmap <c-j> fzf-cd
-# give a name and then make a directory
-nmap <c-n> push :mkdir<space>
-nmap <a-n> new-folder-with-selection
-nmap x cut
-# give a name and then open neovim to edit it
-nmap <space>v push :!nvim<space>
+nmap v visual
 
-# Navigate among the parent directories
-nmap [ push hkl
-nmap ] push hjl
+nmap . set hidden!
+nmap y copy
+# nmap D delete
+nmap d trash
 
-# Rename
-nmap r
-nmap A rename # at the very end
-nmap I push A<c-a> # at the very beginning
-nmap rn push A<c-u> # rename the filename
-nmap re push A<c-f><c-k> # rename the extension
-nmap <c-r> bulk-rename
+nmap r bulk-rename # at the very end
 
-# compress (give a name like foo and it will compress the selected items to foo.zip)
-nmap <space>c push :zip<space>
-# extract
-nmap <space>x extract
-# Open the directory in Finder on macOS
-nmap <space>f &if [[ -d $f ]]; then open $f; fi
+# sort
+# s 
 
-cmap <tab> cmd-menu-complete
-cmap <backtab> cmd-menu-complete-back
-
-#
 # Utils
 #
 
