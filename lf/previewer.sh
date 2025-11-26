@@ -1,0 +1,120 @@
+#!/usr/bin/env bash
+
+FILE_PATH="${1}"
+FILE_EXTENSION="${FILE_PATH##*.}"
+FILE_EXTENSION_LOWER="$(printf "%s" "${FILE_EXTENSION}" | tr '[:upper:]' '[:lower:]')"
+
+PV_WIDTH="${2}"
+PV_HEIGHT="${3}"
+HORIZONTAL_POS="${4}"
+VERTICAL_POS="${5}"
+
+bat() {
+    command bat \
+        --color=always --paging=never \
+        --style=plain \
+        --wrap=character \
+        --line-range :"${PV_HEIGHT}" \
+        --terminal-width="${PV_WIDTH}" "$@"
+}
+
+image_previewer() {
+    # kitty's icat doesn't work well in tmux: images can be displayed but not be cleared, see
+    # https://github.com/kovidgoyal/kitty/commit/6347ea0210ac9dd913bfc540f5f46489fbc27a77.
+    # In neovim's builtin terminal, I cannot find an approach to preview images.
+    if [[ ! $TERM =~ "tmux" && -z $NVIM ]]; then
+        if [[ "$TERM" == "st-256color" || "$TERM" == "foot" ]]; then
+            chafa -f sixels -s "${PV_WIDTH}x${PV_HEIGHT}" --animate off --polite on "$1"
+        elif [[ $KITTY_WINDOW_ID || $GHOSTTY_BIN_DIR ]]; then
+            local place="${PV_WIDTH}x${PV_HEIGHT}@${HORIZONTAL_POS}x${VERTICAL_POS}"
+            kitty icat --clear --transfer-mode memory --stdin no --align left --place "$place" "$1" < /dev/null > /dev/tty
+        elif [[ $WEZTERM_PANE || $ALACRITTY_WINDOW_ID ]]; then
+            chafa -s "${PV_WIDTH}x${PV_HEIGHT}" --animate off --polite on "$1"
+        else
+            printf "Image preview is not supported"
+        fi
+    else
+        printf "Image preview is not supported"
+    fi
+}
+
+handle_extension() {
+    case "${FILE_EXTENSION_LOWER}" in
+        # Markdown
+        md)
+            glow -s dark --width "${PV_WIDTH}" -- "${FILE_PATH}" && exit 1;;
+        # Archive
+        bz2|gz|lz|tar|xz|zip)
+            atool --list -- "${FILE_PATH}" && exit 1;;
+        rar)
+            unrar lt -p- -- "${FILE_PATH}" && exit 1;;
+        7z)
+            7z l -p -- "${FILE_PATH}" && exit 1;;
+        # PDF
+        pdf)
+            pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - | fmt -w "${PV_WIDTH}" && exit 1;;
+        # OpenDocument
+        odt|sxw|ods|odp)
+            odt2txt "${FILE_PATH}" && exit 1;;
+        # XLSX
+        xlsx)
+            xlsx2csv -- "${FILE_PATH}" | head -n 500 && exit 1;;
+        # JSON
+        json)
+            jq --color-output . "${FILE_PATH}" && exit1 ;;
+        # BitTorrent
+        torrent)
+            transmission-show -- "${FILE_PATH}" && exit 1;;
+        # Dmg
+        dmg)
+            hdiutil imageinfo "${FILE_PATH}" | bat -l yaml && exit 1;;
+        # CSV and TSV
+        csv|tsv)
+            mlr --icsv --opprint -C --key-color darkcyan --value-color grey70 head -n 500 "${FILE_PATH}" && exit 1;;
+        # Sqlite3 and sqlite
+        sqlite3 | sqlite)
+            sqlite3 "${FILE_PATH}" .schema | sed "s/;/;\n/g" | bat -l sql && exit 1;;
+        # so and dylib
+        so|dylib)
+            nm "${FILE_PATH}" && exit 1
+            nm -D "${FILE_PATH}" && exit 1
+    esac
+}
+
+handle_mime() {
+    local mimetype="${1}"
+    case "${mimetype}" in
+        # DOCX, ePub, FB2
+        *wordprocessingml.document|*/epub+zip|*/x-fictionbook+xml)
+            pandoc -s -t markdown -- "${FILE_PATH}" | glow -s dark --width "${PV_WIDTH}" && exit 1;;
+        # Image
+        image/*)
+            image_previewer "${FILE_PATH}"
+            exit 1;;
+        # Video
+        video/*)
+            local thumbnail
+            thumbnail=$(~/.config/lf/vidthumb "${FILE_PATH}")
+            image_previewer "$thumbnail"
+            exit 1;;
+        # Text
+        text/* | */xml)
+            (bat --style=numbers,changes -- "${FILE_PATH}" \
+            || highlight --out-format truecolor --style darkplus --force \
+                    --line-numbers --line-range=1-"${PV_HEIGHT}" -- "${FILE_PATH}" \
+            || cat -- "${FILE_PATH}") && exit 1;;
+    esac
+}
+
+handle_fallback() {
+    # Use file command as the fallback. It outputs the file properties, separated by comma, in a
+    # single lone line. In order to fit the width of the preview window, replace each comma with a
+    # line break, but leave the commas inside square brackets unchanged.
+    file --dereference --brief -- "${FILE_PATH}" | gsed -r ':a; s/(\[[^][]*),([^][]*\])/\1TTEEMMPP\2/g; ta; s/, /\n/g; s/TTEEMMPP/,/g' && exit 1
+    exit 1
+}
+
+MIMETYPE="$( file --dereference --brief --mime-type -- "${FILE_PATH}" )"
+handle_extension
+handle_mime "${MIMETYPE}"
+handle_fallback
