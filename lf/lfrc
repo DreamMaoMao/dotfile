@@ -48,13 +48,18 @@ source ~/.config/lf/custom-commands.sh
 nmap gi cd ~/Images
 nmap gd cd ~/down
 nmap gh cd ~/
+nmap gt cd ~/tool
 nmap gu cd /media/UUI
 nmap gk cd ~/deskenv/master/
 nmap gj cd ~/deskenv/archieve
 nmap gc cd ~/.config
 nmap ugt cd ~/test
 nmap ugr cd ~/refer
-
+nmap ugm cd ~/.config/mango
+nmap ugu cd ~/deskenv/aur
+nmap ugt cd ~/test
+nmap ugc select ~/.local/share/fcitx5/pinyin/customphrase
+nmap ugo cd ~/mynote/xs2/
 
 # Enhanced scrolling
 nmap J half-down

@@ -72,7 +72,7 @@ cmd menu-open ${{
         --height 30% \
         --layout=reverse \
         --border rounded \
-        --prompt "Select app for $(basename "$current_file"): " \
+        --prompt "Open with: " \
         --info=inline \
         --pointer=">" \
         --marker=">")
@@ -311,7 +311,7 @@ cmd visual-toggle &{{
 
 # Fuzzy finding commands
 cmd fzf-jump ${{
-    selected_file=$(fd --type f --hidden --follow --exclude .git . | fzf --prompt 'Jump to file> ')
+    selected_file=$(fd --type f --hidden --follow --exclude .git . | fzf --prompt '> ')
     
     if [[ -n "$selected_file" ]]; then
         dir=$(dirname "$selected_file")
@@ -330,7 +330,7 @@ cmd fzf-rg-jump-with-action ${{
             --delimiter : \
             --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
             --preview-window 'top:60%:+{2}-6' \
-            --prompt 'Search content> ')
+            --prompt '> ')
 
     if [[ -n "$selected" ]]; then
         file_path=$(echo "$selected" | cut -d: -f1)
@@ -343,7 +343,7 @@ cmd fzf-rg-jump-with-action ${{
             --info=inline \
             --pointer="➤" \
             --marker="✓" \
-            --prompt 'Action> ')
+            --prompt 'Action: ')
 
         case "$action" in
             "nvim")
