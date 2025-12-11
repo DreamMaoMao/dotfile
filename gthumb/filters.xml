@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<filters version="1.0">
+  <test display="none" id="file::type::is_file"/>
+  <test display="none" id="file::type::is_image"/>
+  <test display="none" id="file::type::is_jpeg"/>
+  <test display="none" id="file::type::is_raw"/>
+  <test display="none" id="file::type::is_video"/>
+  <test display="none" id="file::type::is_audio"/>
+  <test display="none" id="file::type::is_media"/>
+  <test display="none" id="file::type::is_text"/>
+  <test display="none" id="file::name" op="none"/>
+  <test display="none" id="file::size" op="none"/>
+  <test display="none" id="file::mtime" op="none"/>
+  <test display="none" id="Embedded::Photo::DateTimeOriginal" op="none"/>
+  <test display="none" id="general::title" op="none"/>
+  <test display="none" id="general::description" op="none"/>
+  <test display="none" id="general::rating" op="none"/>
+  <test display="none" id="general::tags" op="none"/>
+  <test display="none" id="frame::aspect-ratio" op="equal" value="1.000000"/>
+  <test display="none" id="comment::note" op="none"/>
+  <test display="none" id="comment::place" op="none"/>
+  <test display="none" id="comment::category" op="none"/>
+</filters>

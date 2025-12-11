@@ -24,15 +24,15 @@ return {
 		files = table.concat(urls, [[","]])
 		args = string.format([[Add-Type -AssemblyName System.Windows.Forms; $data = New-Object System.Collections.Specialized.StringCollection; $data.AddRange(@("%s")); [System.Windows.Forms.Clipboard]::SetFileDropList($data)]], files)
 		shell = "powershell"
-		child, _ = Command("powershell"):arg({"-Command",args}):spawn()
+		child, _ = Command("powershell"):args({"-Command",args}):spawn()
 	elseif ya.target_family() == "unix" and os.getenv("XDG_SESSION_TYPE") == "x11" then
 		files = table.concat(urls, [[" "]])
 		args = string.format([[for path in "%s"; do  echo -en "file://${path}\n"; done |  xclip -i -selection clipboard -rmlastnl -t text/uri-list]], files)
-		child, _ = Command("bash"):arg({"-c",args}):spawn()
+		child, _ = Command("bash"):args({"-c",args}):spawn()
 	elseif ya.target_family() == "unix" and os.getenv("XDG_SESSION_TYPE") == "wayland" then
 		files = table.concat(urls, [[" "]])
 		args = string.format([[for path in "%s"; do echo -en "file://${path}\n"; done | wl-copy -t text/uri-list;]], files)
-		child, _ = Command("bash"):arg({"-c",args}):spawn()
+		child, _ = Command("bash"):args({"-c",args}):spawn()
   else
 			ya.notify({
 				title = "System Clipboard",

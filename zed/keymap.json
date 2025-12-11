@@ -1,0 +1,85 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j j": "vim::NormalBefore"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-i": "workspace::ToggleVimMode"
+    }
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "shift-h": "vim::PreviousWordStart"
+    }
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "shift-l": "vim::NextWordEnd"
+    }
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "shift-k": "vim::ScrollUp"
+    }
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "shift-j": "vim::ScrollDown"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-l": "tab_switcher::Toggle"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-h": [
+        "tab_switcher::Toggle",
+        {
+          "select_last": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "(Workspace || vim_mode == insert || vim_mode == normal)",
+    "bindings": {
+      "ctrl-s": "workspace::Save"
+    }
+  },
+  {
+    "context": "(vim_mode == normal)",
+    "bindings": {
+      "space a": "workspace::Save"
+    }
+  },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "g o": "pane::GoBack"
+    }
+  }
+]

@@ -8,8 +8,8 @@
     "reload_style_on_change": true,
     "height": 45,
     "modules-left": [
-        "ext/workspaces",
-        // "dwl/tags",
+        // "ext/workspaces",
+        "dwl/tags",
         "wlr/taskbar",
         "dwl/window"
     ],

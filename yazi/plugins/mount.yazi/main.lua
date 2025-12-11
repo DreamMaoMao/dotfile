@@ -328,14 +328,14 @@ function M.operate(type)
 
 	local output, err
 	if ya.target_os() == "macos" then
-		output, err = Command("diskutil"):arg({ type, active.src }):output()
+		output, err = Command("diskutil"):args({ type, active.src }):output()
 	end
 	if ya.target_os() == "linux" then
 		if type == "eject" then
-			Command("udisksctl"):arg({ "unmount", "-b", active.src }):status()
-			output, err = Command("udisksctl"):arg({ "power-off", "-b", active.src }):output()
+			Command("udisksctl"):args({ "unmount", "-b", active.src }):status()
+			output, err = Command("udisksctl"):args({ "power-off", "-b", active.src }):output()
 		else
-			output, err = Command("udisksctl"):arg({ type, "-b", active.src }):output()
+			output, err = Command("udisksctl"):args({ type, "-b", active.src }):output()
 		end
 	end
 

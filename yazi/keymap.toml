@@ -1,4 +1,4 @@
-[mgr]
+[manager]
 
 keymap = [
 
@@ -23,7 +23,7 @@ keymap = [
 	{ on = [ "u","l"], run = "plugin lastopen -- jump",         desc = "jump to last open file" },
 	{ on = [ "u","n"], run = "plugin mount",         desc = "mount manager" },
 
-	{ on = [ "I" ], run = "plugin keyjump -- global", desc = "keyjump" },
+	{ on = [ "I" ], run = "plugin keyjump -- global once", desc = "keyjump" },
 	{ on = [ "i" ], run = "plugin easyjump", desc = "easyjump" },
 	{ on = [ "s" ], run = "plugin searchjump", desc = "searchjump" },
 
@@ -38,8 +38,6 @@ keymap = [
 	{ on = [ "u","i" ],     run = "plugin cmd -- lazygit",              desc = "lazygit" },
 	{ on = [ "u","f" ], run = '''shell ' QT_QPA_PLATFORM=xcb ~/deskenv/archieve/qxdrag/qxdrag.py -x -e -b -p "$1"' --confirm''',desc="dragon x11" },
 	{ on = [ "u","w" ], run = '''shell ' QT_QPA_PLATFORM=wayland ~/deskenv/archieve/qxdrag/qxdrag.py -x -e -b -p "$1"' --confirm''',desc="dragon wayland" },
-	# { on = [ "u","w" ], run = '''shell ' GDK_BACKEND=wayland dragon -x -i -T "$1"' --confirm''',desc="dragon wayland" },
-	# { on = [ "u","r" ], run = '''shell ' GDK_BACKEND=x11 dragon -x -i -T "$1"' --confirm''',desc="dragon wayland" },
 
 	{ on = [ "<Esc>" ], run = "escape", desc = "Exit visual mode, clear selected, or cancel search" },
 	{ on = [ "q" ],     run = "quit",   desc = "Exit the process" },
@@ -105,7 +103,6 @@ keymap = [
 
 	# Filter & file
 	{ on = [ "f","t" ], 	run = "filter --smart", 			 desc = "Filter the files" },
-	# { on = [ "f","d" ],     run = "search fd",              desc = "Search files by name using fd" },
 	{ on = [ "f","g" ],     run = "plugin fg -- rg",  desc = "find file by content (ripgrep match)" },
 	{ on = [ "f","G" ],     run = "plugin fg",              desc = "find file by content (fuzzy match)" },
 	{ on = [ "f","e" ],     run = "search none",            desc = "Cancel the ongoing search" },
@@ -115,6 +112,7 @@ keymap = [
 	{ on = [ "f","p" ], 	run = "find --previous --smart", 		 desc = "Find previous file" },
 	{ on = [ "n" ], 		run = "find_arrow",              		 desc = "Go to next found file" },
 	{ on = [ "N" ], 		run = "find_arrow --previous",   		 desc = "Go to previous found file" },
+	{ on = [ "f","i" ], 	run = "plugin findch", 		 desc = "Find chinese by pinyin" },
 
 
 	# Copy
@@ -315,30 +313,15 @@ keymap = [
 ]
 
 
-[[mgr.prepend_keymap]]
+[[manager.prepend_keymap]]
 on  = [ "c","l" ]
 run = [ "plugin clipboard" ]
 desc = "clip to clipboard"
 
 
-[[mgr.prepend_keymap]]
+[[manager.prepend_keymap]]
 on   = ["u", "u"]
 run  = "plugin sxiv-easymotion"
 desc = "Preview images in sxiv"
-
-# [[manager.prepend_keymap]]
-# on  = [ "c","l" ]
-# run = ['''
-# 	shell --confirm 'for path in "$@"; do echo -en "file://${path}\n"; done | wl-copy -t text/uri-list; wl-paste | xclip -i -selection clipboard -rmlastnl -t text/uri-list'
-# ''' ]
-# desc = "clip to wayland clipboard"
-
-# [[manager.prepend_keymap]]
-# on  = [ "c","o" ]
-# run = ['''
-# 	shell --confirm 'for path in "$@"; do  echo -en "file://${path}\n"; done |  xclip -i -selection clipboard -rmlastnl -t text/uri-list'
-# ''' ]
-# desc = "clip to x11 clipboard"
-
 
 

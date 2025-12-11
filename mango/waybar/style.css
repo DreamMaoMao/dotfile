@@ -20,7 +20,7 @@
 @define-color color-widget-audio-hover-fg               #1b1a1a;
 @define-color color-widget-audio-muted-bg               #e3ac2b;
 @define-color color-widget-audio-muted-fg               #1b1a1a;
-@define-color color-widget-clock-bg                     #d5c4a1;
+@define-color color-widget-clock-bg                     #c4b595;
 @define-color color-widget-clock-fg                     #1b1a1a;
 @define-color color-widget-battery-bg                   #b8bb26;
 @define-color color-widget-battery-fg                   #1b1a1a;
@@ -36,7 +36,7 @@
 @define-color color-widget-temperature-critical-fg      #1b1a1a;
 @define-color color-widget-memory-bg                    #83a598;
 @define-color color-widget-memory-fg                    #1b1a1a;
-@define-color color-widget-cpu-bg                       #d5c4a1;
+@define-color color-widget-cpu-bg                       #c4b595;
 @define-color color-widget-cpu-fg                       #1b1a1a;
 @define-color color-widget-power-profile-balanced-bg    #d3869b;
 @define-color color-widget-power-profile-balanced-fg    #1b1a1a;

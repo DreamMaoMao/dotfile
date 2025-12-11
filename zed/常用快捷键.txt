@@ -1,0 +1,21 @@
+ctrl i 切换vim模式
+
+alt h/l 切换tab
+
+shift h/l 单词向左/向右移动
+
+shift j/k 行向上/下移动
+
+ctrl p 搜索文件
+
+ctrl shift f 搜索内容
+
+ctrl shift p 选择命令
+
+g d 跳转到定义
+
+g o/ctrl o 跳转返回
+
+j j 返回normal模式
+
+sapce a/ctrl s 保存

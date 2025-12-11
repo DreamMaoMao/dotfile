@@ -2,7 +2,7 @@
 set +e
 
 # start xwayland
-/usr/sbin/xwayland-satellite :12 &
+/usr/sbin/xwayland-satellite -hidpi &
 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
 waybar -c ~/.config/niri/waybar/config -s ~/.config/niri/waybar/style.css  &
@@ -48,3 +48,5 @@ swayosd-server &
 sleep 1s 
 echo "Xft.dpi: 140" | xrdb -merge && xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 1
 fcitx5 --replace -d  &
+
+python /home/wrq/.config/niri/scripts/autotile.py &

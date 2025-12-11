@@ -1,6 +1,6 @@
 configuration {
     font: "Maple Mono NF CN 20";
-    modi: "drun";
+    modi: "drun,window";
     // show-icons: true;
     sort: true;
     sorting-method:"fzf";

@@ -1,0 +1,20 @@
+[2025-12-04 17:45:27.207]: Error: [CUDA @ 0x55f0932621c0] Cannot load libcuda.so.1
+[2025-12-04 17:45:27.208]: Error: [CUDA @ 0x55f0932621c0] Could not dynamically load CUDA
+[2025-12-04 17:45:27.208]: Error: Failed to create a CUDA device: Operation not permitted
+[2025-12-04 17:45:27.208]: Error: [CUDA @ 0x55f093262200] Cannot load libcuda.so.1
+[2025-12-04 17:45:27.208]: Error: [CUDA @ 0x55f093262200] Could not dynamically load CUDA
+[2025-12-04 17:45:27.208]: Error: Failed to create a CUDA device: Operation not permitted
+[2025-12-04 17:45:27.396]: Error: [av1_vaapi @ 0x7f6550009d80] No usable encoding profile found.
+[2025-12-04 17:45:27.397]: Error: Could not open codec [av1_vaapi]: Function not implemented
+[2025-12-04 17:45:27.423]: Error: [hevc_vaapi @ 0x7f6550009d80] No usable encoding entrypoint found for profile VAProfileHEVCMain10 (18).
+[2025-12-04 17:45:27.423]: Error: Could not open codec [hevc_vaapi]: Function not implemented
+[2025-12-04 17:45:27.431]: Error: Failed to create client: Daemon 不在运行
+[2025-12-04 17:45:35.650]: Error: [CUDA @ 0x7f6528042840] Cannot load libcuda.so.1
+[2025-12-04 17:45:35.650]: Error: [CUDA @ 0x7f6528042840] Could not dynamically load CUDA
+[2025-12-04 17:45:35.650]: Error: Failed to create a CUDA device: 不允许的操作
+[2025-12-04 17:45:35.816]: Error: [av1_vaapi @ 0x7f6528f45c40] No usable encoding profile found.
+[2025-12-04 17:45:35.816]: Error: Could not open codec [av1_vaapi]: 函数未实现
+[2025-12-04 17:45:35.841]: Error: [hevc_vaapi @ 0x7f6528f07f00] No usable encoding entrypoint found for profile VAProfileHEVCMain10 (18).
+[2025-12-04 17:45:35.842]: Error: Could not open codec [hevc_vaapi]: 函数未实现
+[2025-12-04 17:46:26.390]: Error: Frame capture failed
+[2025-12-04 17:46:26.414]: Error: Couldn't accept incoming connections: 操作已取消

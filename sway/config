@@ -114,6 +114,8 @@ input "1452:591:Keychron_Keychron_C2" {
     # Start your launcher
     bindsym $mod+space exec rofi -config ~/.config/mango/rofi/config.rasi -show drun
 
+    bindsym $mod+Tab exec bash ~/.config/sway/scripts/circle_window.sh
+
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
@@ -310,7 +312,7 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 
 exec /usr/lib/xdg-desktop-portal-hyprland &
 
-exec wlsunset -T 3501 -t 3500 &
+exec wlsunset -T 3001 -t 3000 &
 exec echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
 # 开启输入法
 exec fcitx5 -r -d 2> /dev/null &

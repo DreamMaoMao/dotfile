@@ -45,7 +45,7 @@ input {
 }
  output "eDP-1" {
      background-color "#201b14"
-     scale 1.20000
+     scale 1.00000
      transform "normal"
      position x=0 y=0
      mode "1920x1080@60.000000"
@@ -70,7 +70,7 @@ layout {
         inactive-gradient angle=45 from="#585b70" relative-to="workspace-view" to="#585b70"
     }
     insert-hint { color "rgba(127 200 255 50%)"; }
-    default-column-width { proportion 1.0; }
+    default-column-width { proportion 0.5; }
     preset-column-widths {
         proportion 0.500000
         proportion 1.000000
@@ -83,7 +83,7 @@ cursor {
 hotkey-overlay { skip-at-startup; }
 environment {
     "CLUTTER_BACKEND" "wayland"
-    DISPLAY ":12"
+    DISPLAY ":0"
     "GDK_BACKEND" "wayland,x11"
     "MOZ_ENABLE_WAYLAND" "1"
     "NIXOS_OZONE_WL" "1"
@@ -124,7 +124,7 @@ binds {
     Mod+Return { spawn "google-chrome"; }
     Alt+Return { spawn "st"; }
     Alt+Q { close-window; }
-    Alt+Tab {toggle-overview;}
+    Mod+Tab {toggle-overview;}
     Alt+Space { spawn "sh" "-c" "rofi -config  ~/.config/rofi/menu.rasi -show drun"; }
     Alt+f { fullscreen-window; }
     Alt+Left { focus-column-left; }

@@ -109,7 +109,7 @@ local M = {
 
 		local args = job.args
 		local folder_size = ""
-		output = Command("du"):arg({"-sh",args[1].."/"}):output()
+		output = Command("du"):args({"-sh",args[1].."/"}):output()
 
 		if output then
 			local split_output = string_split(output.stdout,"\t")

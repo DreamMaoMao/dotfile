@@ -2,8 +2,8 @@
 
 # : Manager {{{
 
-[mgr]
-cwd = { fg = "#cfc251" }
+[manager]
+cwd = { fg = "#dfa92a", bold = true,italic = true }
 
 # Hovered
 hovered         = { fg = "#000000", bg = "#ac9259" }
@@ -38,15 +38,6 @@ syntect_theme = "~/.config/yazi/bat-theme/Gruvbox-N.tmTheme"
 # syntect_theme = "~/.config/yazi/bat-theme/Catppuccin-macchiato.tmTheme"
 
 # : }}}
-#
-
-[tabs]
-active   = { bg = "#AC9259",fg="#000000" }
-inactive = { fg = "#CAAA75", bg = "#201B14" }
-sep_inner = { open = "", close = "" }
-sep_outer = { open = "", close = "" }
-#
-
 [mode]
 
 normal_main = { fg = "#000000", bg = "#A89984", bold = true }
@@ -85,9 +76,9 @@ path = { fg = "#8bca4b", bold = true }
 
 # : }}}
 [pick]
-border   = { fg = "#a2c45f" }
-active   = { fg = "#aed265", bold = true }
-inactive = {}
+border   = { fg = "#85c21e", bold = true }
+active   = { fg = "#000000",bg = "#A89984", bold = true }
+inactive = {fg = "#dfccb3"}
 
 
 # : Select {{{
@@ -120,7 +111,7 @@ title_warn  = { fg = "#d3869b" }
 title_error = { fg = "#ea6962" }
 
 # Icons
-icon_info  = ""
+icon_info  = ""
 icon_warn  = ""
 icon_error = ""
 
@@ -224,18 +215,7 @@ rules = [
 
 globs = []
 dirs  = [
-	{ name = ".config", text = "" },
-	{ name = ".git", text = "" },
-	{ name = "Desktop", text = "" },
-	{ name = "Development", text = "" },
-	{ name = "Documents", text = "" },
-	{ name = "Downloads", text = "" },
-	{ name = "Library", text = "" },
-	{ name = "Movies", text = "" },
-	{ name = "Music", text = "" },
-	{ name = "Pictures", text = "" },
-	{ name = "Public", text = "" },
-	{ name = "Videos", text = "" },
+
 ]
 files = [
 	{ name = ".babelrc", text = "", fg = "#cbcb41" },
@@ -422,7 +402,7 @@ exts = [
 	{ name = "asc", text = "󰦝", fg = "#576d7f" },
 	{ name = "ass", text = "󰨖", fg = "#ffb713" },
 	{ name = "astro", text = "", fg = "#e23f67" },
-	{ name = "awk", text = "", fg = "#4d5a5e" },
+	{ name = "awk", text = "", fg = "#96B1A0" },
 	{ name = "azcli", text = "", fg = "#0078d4" },
 	{ name = "bak", text = "󰁯", fg = "#6d8086" },
 	{ name = "bash", text = "", fg = "#89e051" },
@@ -532,7 +512,7 @@ exts = [
 	{ name = "fctb", text = "", fg = "#cb333b" },
 	{ name = "fctl", text = "", fg = "#cb333b" },
 	{ name = "fdmdownload", text = "", fg = "#44cda8" },
-	{ name = "fish", text = "", fg = "#4d5a5e" },
+	{ name = "fish", text = "", fg = "#96B1A0" },
 	{ name = "flac", text = "", fg = "#0075aa" },
 	{ name = "flc", text = "", fg = "#ececec" },
 	{ name = "flf", text = "", fg = "#ececec" },
@@ -619,7 +599,7 @@ exts = [
 	{ name = "kpp", text = "", fg = "#f245fb" },
 	{ name = "kra", text = "", fg = "#f245fb" },
 	{ name = "krz", text = "", fg = "#f245fb" },
-	{ name = "ksh", text = "", fg = "#4d5a5e" },
+	{ name = "ksh", text = "", fg = "#96B1A0" },
 	{ name = "kt", text = "", fg = "#7f52ff" },
 	{ name = "kts", text = "", fg = "#7f52ff" },
 	{ name = "lck", text = "", fg = "#bbbbbb" },
@@ -734,7 +714,7 @@ exts = [
 	{ name = "scala", text = "", fg = "#cc3e44" },
 	{ name = "scm", text = "󰘧", fg = "#eeeeee" },
 	{ name = "scss", text = "", fg = "#f55385" },
-	{ name = "sh", text = "", fg = "#4d5a5e" },
+	{ name = "sh", text = "", fg = "#96B1A0" },
 	{ name = "sha1", text = "󰕥", fg = "#8c86af" },
 	{ name = "sha224", text = "󰕥", fg = "#8c86af" },
 	{ name = "sha256", text = "󰕥", fg = "#8c86af" },
@@ -855,7 +835,7 @@ conds = [
 	{ if = "sticky", text = "" },
 
 	# Fallback
-	{ if = "dir", text = "󰝰" ,fg_dark = "#F7C030",fg_light = "#F7C030"},
-	{ if = "exec", text = "" ,fg_dark = "#a2c5d1", fg_light = "#3a4446"},
-	{ if = "!dir", text = "" },
+	{ if = "dir", text = "󰝰" ,fg = "#e5b12d"},
+	{ if = "exec", text = "" ,fg = "#a2c5d1"},
+	{ if = "!dir", text = "",fg ="#C7B998" },
 ]

@@ -3,7 +3,7 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 /usr/lib/xdg-desktop-portal-wlr &
 
 # Set background color.
-swaybg -i ~/Images/czd.png >/dev/null 2>&1 &
+swaybg -i ~/Images/tk.jpeg >/dev/null 2>&1 &
 
 # Configure output directives such as mode, position, scale and transform.
 # Use wlr-randr to get your output names
@@ -13,7 +13,7 @@ swaybg -i ~/Images/czd.png >/dev/null 2>&1 &
 #     output eDP-1 position 0,0
 #   }
 
-wlsunset -T 3501 -t 3500 &
+wlsunset -T 3001 -t 3000 &
 
 # Launch a panel such as yambar or waybar.
 waybar -c ~/.config/labwc/waybar/config.jsonc -s ~/.config/labwc/waybar/style.css 2>&1 &

@@ -84,99 +84,114 @@ local function utf8_char_byte_length(char)
 end
 
 local function get_match_position(state, name, find_str)
-	if find_str == "" or find_str == nil then
-		return nil, nil
-	end
+    -- 空字符串检查
+    if find_str == nil or find_str == "" then
+        return nil, nil
+    end
 
-	local startPos, endPos = {}, {}
-	local startp, endp
-	name = string.lower(name)
-	local is_match_char = false
+    local start_positions = {}
+    local end_positions = {}
+    local name_lower = string.lower(name)
+    local is_regex_mode = get_re_match_state()
 
-	-- input mode
-	if not get_re_match_state() then
-		local i = 1
-		local j = 1
-		local real_start_pos = 0
-		local real_end_pos = 0
-		local real_index = 1
-		local char_wide = 1
-		find_str = string.lower(find_str)
-		local wide_char_name = {}
-		local wide_char_match_begin = 0
-		local index_wide_char
-		local extend_char_list
-		for utf8_char in string.gmatch(name, "[%z\1-\127\194-\244][\128-\191]*") do
-			table.insert(wide_char_name, utf8_char)
-		end
-		-- wide_char_name is the array of the multi-width character
-		-- after combining the elements of the array
-		-- so the real_index should be added 3 (Chinese)
-		while j <= #wide_char_name do
-			index_wide_char = wide_char_name[j]
-			extend_char_list = state.mapdata[index_wide_char]
-
-			char_wide = utf8_char_byte_length(index_wide_char)
-
-			if extend_char_list then
-				is_match_char = check_is_match_char(find_str:sub(i, i), extend_char_list)
-			else
-				is_match_char = find_str:sub(i, i) == index_wide_char
-			end
-
-			-- match the first char
-			if real_start_pos == 0 and is_match_char then
-				real_start_pos = real_index
-				wide_char_match_begin = j
-			end
-
-			if real_start_pos ~= 0 and is_match_char then
-				-- match the end char
-				if i == #find_str then
-					real_end_pos = real_index + (char_wide - 1)
-					table.insert(startPos, real_start_pos)
-					table.insert(endPos, real_end_pos)
-					insert_next_char(wide_char_name[j + 1])
-					i = 1
-					wide_char_match_begin = 0
-					real_end_pos = 0
-					real_start_pos = 0
-				else
-					i = i + 1
-				end
-				-- match failed, reset match begin index to the next char
-				-- of the first match char
-				real_index = real_index + char_wide
-			elseif real_start_pos ~= 0 and not is_match_char then
-				i = 1
-				j = wide_char_match_begin
-				real_index = real_start_pos + (wide_char_name[wide_char_match_begin]:byte() > 127 and 3 or 1)
-				real_start_pos = 0
-				wide_char_match_begin = 0
-			else
-				real_index = real_index + char_wide
-			end
-
-			-- update real_index
-			j = j + 1
-		end
-	else -- re match mode
-		endp = 0
-		while true do
-			startp, endp = string.find(name, find_str, endp + 1)
-			if not startp then
-				break
-			end
-			table.insert(startPos, startp)
-			table.insert(endPos, endp)
-		end
-	end
-
-	if #startPos > 0 then
-		return startPos, endPos
-	else
-		return nil, nil
-	end
+    -- 普通匹配模式
+    if not is_regex_mode then
+        find_str = string.lower(find_str)
+        
+        -- 将字符串拆分为UTF-8字符数组
+        local utf8_chars = {}
+        for utf8_char in string.gmatch(name_lower, "[%z\1-\127\194-\244][\128-\191]*") do
+            table.insert(utf8_chars, utf8_char)
+        end
+        
+        local search_index = 1
+        local utf8_index = 1
+        local match_start_position = 0
+        local match_start_utf8_index = 0
+        local current_position = 1
+        
+        while utf8_index <= #utf8_chars do
+            local current_char = utf8_chars[utf8_index]
+            local char_width = utf8_char_byte_length(current_char)
+            local extend_chars = state.mapdata[current_char]
+            local is_char_match
+            
+            -- 检查字符是否匹配
+            if extend_chars then
+                local search_char = find_str:sub(search_index, search_index)
+                is_char_match = check_is_match_char(search_char, extend_chars)
+            else
+                is_char_match = find_str:sub(search_index, search_index) == current_char
+            end
+            
+            -- 处理匹配开始
+            if match_start_position == 0 and is_char_match then
+                match_start_position = current_position
+                match_start_utf8_index = utf8_index
+            end
+            
+            -- 处理进行中的匹配
+            if match_start_position ~= 0 and is_char_match then
+                -- 完成匹配
+                if search_index == #find_str then
+                    local match_end_position = current_position + (char_width - 1)
+                    
+                    table.insert(start_positions, match_start_position)
+                    table.insert(end_positions, match_end_position)
+                    
+                    insert_next_char(utf8_chars[utf8_index + 1])
+                    
+                    -- 重置匹配状态
+                    search_index = 1
+                    match_start_utf8_index = 0
+                    match_start_position = 0
+                    match_end_position = 0
+                else
+                    search_index = search_index + 1
+                end
+                
+                current_position = current_position + char_width
+                
+            -- 匹配失败，重置到匹配开始的下一个字符
+            elseif match_start_position ~= 0 and not is_char_match then
+                search_index = 1
+                utf8_index = match_start_utf8_index
+                local reset_char_width = utf8_chars[match_start_utf8_index]:byte() > 127 and 3 or 1
+                current_position = match_start_position + reset_char_width
+                match_start_position = 0
+                match_start_utf8_index = 0
+                
+            -- 正常遍历字符
+            else
+                current_position = current_position + char_width
+            end
+            
+            utf8_index = utf8_index + 1
+        end
+        
+    -- 正则表达式匹配模式
+    else
+        local search_end = 0
+        
+        while true do
+            local match_start, match_end = string.find(name_lower, find_str, search_end + 1)
+            
+            if not match_start then
+                break
+            end
+            
+            table.insert(start_positions, match_start)
+            table.insert(end_positions, match_end)
+            search_end = match_end
+        end
+    end
+    
+    -- 返回结果
+    if #start_positions > 0 then
+        return start_positions, end_positions
+    else
+        return nil, nil
+    end
 end
 
 local get_first_match_label = ya.sync(function(state)

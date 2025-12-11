@@ -1,1 +1,1 @@
-yay -S moreutils fzf fd fg zoxide sxiv-mao-git
+yay -S moreutils fzf ripgrep zoxide sxiv-mao-git

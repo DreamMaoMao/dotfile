@@ -32,7 +32,7 @@ set shell bash
 set shellopts '-eu'
 
 # Directory-specific settings
-setlocal ~/deskenv/master sortby "mtime"  # Sort by modification time
+setlocal ~/deskenv/master sortby "atime"  # Sort by modification time
 # setlocal ~/deskenv/master reverse       # Reverse sort order (commented out)
 
 #

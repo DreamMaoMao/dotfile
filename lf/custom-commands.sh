@@ -88,40 +88,40 @@ cmd menu-open ${{
             nvim "$current_file"
             ;;
         "vscode")
-            code "$current_file" >/dev/null 2>&1 &
+            setsid code "$current_file" >/dev/null 2>&1 &
             ;;
         "zed")
-            zeditor "$current_file" >/dev/null 2>&1 &
+            setsid zeditor "$current_file" >/dev/null 2>&1 &
             ;;
         "lazygit")
             fish -c "lazygit -p '$current_file'"
             ;;
         "archive")
-            tar --use-compress-program=pigz -cf ~/down/$(basename "$current_file").tar.gz "$current_file" >/dev/null 2>&1 &
+            setsid tar --use-compress-program=pigz -cf ~/down/$(basename "$current_file").tar.gz "$current_file" >/dev/null 2>&1 &
             ;;
         "ouch decompress")
-            ouch decompress "$current_file" >/dev/null 2>&1 &
+            setsid ouch decompress "$current_file" >/dev/null 2>&1 &
             ;;
         "sxiv")
-            sxiv -a "$current_file" >/dev/null 2>&1 &
+            setsid sxiv -a "$current_file" >/dev/null 2>&1 &
             ;;
         "gthumb")
-            gthumb "$current_file" >/dev/null 2>&1 &
+            setsid gthumb "$current_file" >/dev/null 2>&1 &
             ;;
         "mpv")
-            mpv "$current_file" >/dev/null 2>&1 &
+            setsid mpv "$current_file" >/dev/null 2>&1 &
             ;;
         "convert to gif")
-            ffmpeg -i "$current_file" -vf "fps=10" -loop 0 "$current_file.gif" >/dev/null 2>&1 &
+            setsid ffmpeg -i "$current_file" -vf "fps=10" -loop 0 "$current_file.gif" >/dev/null 2>&1 &
             ;;
         "xdg-open")
-            xdg-open "$current_file" >/dev/null 2>&1 &
+            setsid xdg-open "$current_file" >/dev/null 2>&1 &
             ;;
         "okular")
-            okular "$current_file" >/dev/null 2>&1 &
+            setsid okular "$current_file" >/dev/null 2>&1 &
             ;;
         "foliate")
-            GTK_IM_MODULE=fcitx5 foliate "$current_file" >/dev/null 2>&1 &
+            GTK_IM_MODULE=fcitx5 setsid foliate "$current_file" >/dev/null 2>&1 &
             ;;
     esac
 
@@ -311,7 +311,7 @@ cmd visual-toggle &{{
 
 # Fuzzy finding commands
 cmd fzf-jump ${{
-    selected_file=$(fd --type f --hidden --follow --exclude .git . | fzf --prompt '> ')
+    selected_file=$(fzf --preview="bat --color=always {}" --prompt '> ')
     
     if [[ -n "$selected_file" ]]; then
         dir=$(dirname "$selected_file")

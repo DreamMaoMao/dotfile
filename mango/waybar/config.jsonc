@@ -27,7 +27,9 @@
     ],
     "dwl/window": {
         "format": "[{layout}]{title}",
+        // "icon": true,
         "on-click":"bash ~/.config/mango/scripts/screenshot.sh",
+        "on-click-right":"bash ~/tool/shotTranslate.sh shot",
         // "max-length": 50
     },
     "ext/workspaces": {
@@ -57,16 +59,17 @@
       "tooltip-format": "{title}",
       "markup": true,
       "on-click": "activate",
+      "on-click-middle": "minimize",
       "on-click-right": "close",
       "ignore-list": ["Rofi", "wofi"]
     },
     "network": {
       "interval": 2,
-      "format-wifi": "{essid} ({signalStrength}%)\uf1eb",
+      "format-wifi": "\uf1eb {essid} ({signalStrength}%)",
       "format-ethernet": "󰈀 {ifname}",
       "format-linked": "\uf059 No IP ({ifname})",
       "format-disconnected": "\uf071 Disconnected",
-      "tooltip-format": "{ifname} {ipaddr}/{cidr} via {gwaddr}",
+      "tooltip-format": "{ipaddr}/{cidr} via {gwaddr}",
       "format-alt": "↓{bandwidthDownBytes} ↑{bandwidthUpBytes}"
     },
 
@@ -100,6 +103,9 @@
         // "device": "acpi_video1",
         "format": "{icon} {percent}%",
         "format-icons": ["󰖔", "󰖨"],
+        "on-scroll-up": "bash ~/.config/mango/scripts/brightness.sh bup",
+        "on-scroll-down": "bash ~/.config/mango/scripts/brightness.sh bdown",
+        "on-click": "brightnessctl set 1%"
     },
     "battery": {
         "states": {

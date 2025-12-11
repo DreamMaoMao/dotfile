@@ -117,66 +117,73 @@ function M:entry(job)
 	local shell_value = ya.target_family() == "windows" and "nu" or os.getenv("SHELL"):match(".*/(.*)")
 	local cmd_args = ""
 
-	local preview_cmd = [===[line={2} && begin=$( if [[ $line -lt 7 ]]; then echo $((line-1)); else echo 6; fi ) && bat --highlight-line={2} --color=always --line-range $((line-begin)):$((line+10)) {1}]===]
+	-- 修改预览命令，让高亮行出现在中间
+	local preview_cmd = [[bat --style=numbers --color=always --highlight-line {2} {1}]]
+	local preview_window = [[--preview-window 'top:60%:+{2}-6']]
+	
 	if ya.target_family() == "windows" then
-		preview_cmd = [[bat --highlight-line={2} --color=always --line-range {2}: {1}]]
+		preview_cmd = [[bat --style=numbers --color=always --highlight-line {2} {1}]]
+		preview_window = [[--preview-window "top:60%:+{2}-6"]]
 	elseif shell_value == "fish" then
-		preview_cmd = [[set line {2} && set begin ( test $line -lt 7  &&  echo (math "$line-1") || echo  6 ) && bat --highlight-line={2} --color=always --line-range (math "$line-$begin"):(math "$line+10") {1}]]
+		preview_cmd = [[bat --style=numbers --color=always --highlight-line {2} {1}]]
+		preview_window = [[--preview-window 'top:60%:+{2}-6']]
 	elseif shell_value == "nu" then
-		preview_cmd = [[let line = ({2} | into int); let begin = if $line < 7 { $line - 1 } else { 6 }; bat --highlight-line={2} --color=always --line-range $'($line - $begin):($line + 10)' {1}]]
+		preview_cmd = [[bat --style=numbers --color=always --highlight-line {2} {1}]]
+		preview_window = [[--preview-window 'top:60%:+{2}-6']]
 	end
+	
   	if ya.target_family() == "windows" and args[1] == "fzf" then
 		cmd_args = [[fzf --preview="bat --color=always {}"]]
 	elseif ya.target_family() == "windows" and args[1] == "rg" then
-		local rg_prefix = [[rg --colors "path:fg:blue" --colors "line:fg:red" --colors "column:fg:yellow" --column --line-number --no-heading --color=always --smart-case ]]
+		local rg_prefix = [[rg  --column --line-number --no-heading --color=always --smart-case ]]
 		cmd_args = [[fzf --ansi --disabled --bind "start:reload:]]
 			.. rg_prefix
 			.. [[{q}" --bind "change:reload:]]
 			.. rg_prefix
 			.. [[{q}" --delimiter ":" --preview "]]
 			.. preview_cmd
-			.. [[" --preview-window "up,60%" --nth "3.."]]
+			.. [[" ]] .. preview_window .. [[ --nth "3.."]]
   	elseif ya.target_family() == "windows" then
-		cmd_args = [[rg --color=always --line-number --no-heading --smart-case "" | fzf --ansi --preview="]] .. preview_cmd .. [[" --delimiter=":" --preview-window="up:60%" --nth="3.."]]
+		cmd_args = [[rg --color=always --line-number --no-heading --smart-case "" | fzf --ansi --preview="]] .. preview_cmd .. [[" --delimiter=":" ]] .. preview_window .. [[ --nth="3.."]]
 	elseif args[1] == "fzf" then
 		cmd_args = [[fzf --preview="bat --color=always {}"]]
 	elseif args[1] == "rg" and shell_value == "fish" then
 		cmd_args = [[
-			RG_PREFIX="rg --colors 'path:fg:blue' --colors 'line:fg:red' --colors 'column:fg:yellow' --column --line-number --no-heading --color=always --smart-case " \
+			RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case " \
 			fzf --ansi --disabled \
 				--bind "start:reload:$RG_PREFIX {q}" \
 				--bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
 				--delimiter : \
 				--preview ']] .. preview_cmd .. [[' \
-				--preview-window 'up,60%' \
+				]] .. preview_window .. [[ \
 				--nth '3..'
 		]]
 	elseif args[1] == "rg" and (shell_value == "bash" or shell_value == "zsh")  then
 		cmd_args = [[
-			RG_PREFIX="rg --colors 'path:fg:blue' --colors 'line:fg:red' --colors 'column:fg:yellow' --column --line-number --no-heading --color=always --smart-case "
+			RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
 			fzf --ansi --disabled \
 				--bind "start:reload:$RG_PREFIX {q}" \
 				--bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
 				--delimiter : \
 				--preview ']] .. preview_cmd .. [[' \
-				--preview-window 'up,60%' \
+				]] .. preview_window .. [[ \
 				--nth '3..'
 		]]
 	elseif args[1] == "rg" and shell_value == "nu" then
-		local rg_prefix = "rg --colors 'path:fg:blue' --colors 'line:fg:red' --colors 'column:fg:yellow' --column --line-number --no-heading --color=always --smart-case "
+		local rg_prefix = "rg --column --line-number --no-heading --color=always --smart-case "
 		cmd_args = [[fzf --ansi --disabled --bind "start:reload:]]
 			.. rg_prefix
 			.. [[{q}" --bind "change:reload:sleep 100ms; try { ]]
 			.. rg_prefix
 			.. [[{q} }" --delimiter : --preview ']]
 			.. preview_cmd
-			.. [[' --preview-window 'up,60%' --nth '3..']]
+			.. [[' ]] .. preview_window .. [[ --nth '3..']]
 	else
-		cmd_args = [[rg --color=always --line-number --no-heading --smart-case '' | fzf --ansi --preview=']] .. preview_cmd .. [[' --delimiter=':' --preview-window='up:60%' --nth='3..']]
+		cmd_args = [[rg --color=always --line-number --no-heading --smart-case '' | fzf --ansi --preview=']] .. preview_cmd .. [[' --delimiter=':' ]] .. preview_window .. [[ --nth='3..']]
 	end
 
 	local child, err =
-		Command(shell_value):arg({"-c", cmd_args}):cwd(cwd):stdin(Command.INHERIT):stdout(Command.PIPED):stderr(Command.INHERIT):spawn()
+		Command(shell_value):args({"-c", cmd_args}):cwd(cwd):stdin(Command.INHERIT):stdout(Command.PIPED):stderr(Command.INHERIT):spawn()
 
 	if not child then
 		return fail("Spawn `rfzf` failed with error code %s. Do you have it installed?", err)
