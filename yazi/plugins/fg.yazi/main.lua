@@ -5,16 +5,16 @@ local toggle_ui = ya.sync(function(self)
 	else
 		self.children = Modal:children_add(self, 10)
 	end
-	ya.render()
+	ui.render()
 end)
 
 local init_ui_data = ya.sync(function(self,file_url)
-	self.opt = {"nvim", "helix", "jump"}
+	self.opt = {"nvim", "jump"}
 	self.title = "fg"
 	self.title_color = "#82ab3a"
 	self.cursor = 0
 	self.file_url = file_url and file_url or ""
-	ya.render()
+	ui.render()
 end)
 
 local set_option = ya.sync(function(self,enable)
@@ -37,7 +37,7 @@ local update_cursor = ya.sync(function(self, cursor)
 	-- if add opt, need to add change 3th arg.
 	-- forexample, 2 mean 3 opt. circle 0 to 2.
 	self.cursor = ya.clamp(0, self.cursor + cursor,  2)
-	ya.render()
+	ui.render()
 end)
 
 local M = {
@@ -112,7 +112,7 @@ local function fail(s, ...) ya.notify { title = "Fzf", content = string.format(s
 
 function M:entry(job)
 	local args = job.args
-	local _permit = ya.hide()
+	local _permit = ui.hide()
 	local cwd = state()
 	local shell_value = ya.target_family() == "windows" and "nu" or os.getenv("SHELL"):match(".*/(.*)")
 	local cmd_args = ""
@@ -146,7 +146,18 @@ function M:entry(job)
   	elseif ya.target_family() == "windows" then
 		cmd_args = [[rg --color=always --line-number --no-heading --smart-case "" | fzf --ansi --preview="]] .. preview_cmd .. [[" --delimiter=":" ]] .. preview_window .. [[ --nth="3.."]]
 	elseif args[1] == "fzf" then
-		cmd_args = [[fzf --preview="bat --color=always {}"]]
+		if shell_value == "fish" then
+		    -- Fish 使用 (math ...) 进行运算
+		    cmd_args = [[fzf --preview='file -b --mime-type {} | grep -q "^image/"; and begin; echo {}; echo; chafa -f sixels --size "$FZF_PREVIEW_COLUMNS"x(math $FZF_PREVIEW_LINES - 2) {} 2>/dev/null; end; or bat --color=always {}']]       
+		
+		elseif shell_value == "nu" then
+		    -- Nushell 使用 ($env.VAR | into int) 进行运算
+		    -- 注意：Nu 的预览命令需要确保 fzf 调用的是 nu
+		    cmd_args = [[fzf --preview='if (file -b --mime-type {} | str contains "image/") { echo {}; echo ""; let lines = (($env.FZF_PREVIEW_LINES | into int) - 2); chafa -f sixels --size $"($env.FZF_PREVIEW_COLUMNS)x($lines)" {} } else { bat --color=always {} }']]
+		
+		else
+		    -- Bash / Zsh 使用 $((...)) 进行运算
+			cmd_args = [[fzf --preview='if file -b --mime-type {} | grep -q "^image/"; then echo {}; echo; chafa -f sixels --size "${FZF_PREVIEW_COLUMNS}x$(($FZF_PREVIEW_LINES - 2))" {} 2>/dev/null; else bat --color=always {}; fi']]		end
 	elseif args[1] == "rg" and shell_value == "fish" then
 		cmd_args = [[
 			RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case " \
@@ -183,7 +194,7 @@ function M:entry(job)
 	end
 
 	local child, err =
-		Command(shell_value):args({"-c", cmd_args}):cwd(cwd):stdin(Command.INHERIT):stdout(Command.PIPED):stderr(Command.INHERIT):spawn()
+		Command(shell_value):arg({"-c", cmd_args}):cwd(cwd):stdin(Command.INHERIT):stdout(Command.PIPED):stderr(Command.INHERIT):spawn()
 
 	if not child then
 		return fail("Spawn `rfzf` failed with error code %s. Do you have it installed?", err)
@@ -229,15 +240,13 @@ function M:entry(job)
 				end
 			end
 		end
-		_permit = ya.hide()
+		_permit = ui.hide()
 	end
 
 	if (default_action == "nvim" or get_option() == "nvim" ) and args[1] ~= "fzf" then
 		os.execute("nvim +"..line_number.." -n "..file_url)
-	elseif (default_action == "helix" or get_option() == "helix" ) and args[1] ~= "fzf" then
-		os.execute("helix +"..line_number.." "..file_url)
 	elseif (default_action == "jump" or get_option() == "jump" or args[1] == "fzf") and file_url ~= ""  then
-		ya.mgr_emit(file_url:match("[/\\]$") and "cd" or "reveal", { file_url })
+		ya.emit(file_url:match("[/\\]$") and "cd" or "reveal", { file_url })
 	else
 		return
 	end
@@ -250,15 +259,14 @@ function M:redraw()
 	local rows = {}
 
 	rows[1] = ui.Row { "open with nvim" }
-	rows[2] = ui.Row { "open with helix" }
-	rows[3] = ui.Row { "reach at yazi" }
+	rows[2] = ui.Row { "reach at yazi" }
 	return {
 		ui.Clear(self._area),
-		ui.Border(ui.Border.ALL)
+		ui.Border(ui.Edge.ALL)
 			:area(self._area)
 			:type(ui.Border.ROUNDED)
 			:style(ui.Style():fg("#82ab3a"))
-			:title(ui.Line(self.title):align(ui.Line.CENTER):fg(self.title_color)),
+			:title(ui.Line(self.title):align(ui.Align.CENTER):fg(self.title_color)),
 		ui.Table(rows)
 			:area(self._area:pad(ui.Pad(1, 2, 1, 2)))
 			:header(ui.Row({ "Action for:"..self.file_url }):style(ui.Style():bold():fg("#e73c80")))
@@ -269,7 +277,7 @@ end
 
 
 function M.fail(s, ...)
-	ya.mgr_emit("plugin", {"mount", "refresh" })
+	ya.emit("plugin", {"mount", "refresh" })
 	ya.notify { title = "fg", content = string.format(s, ...), timeout = 10, level = "error" }
 end
 

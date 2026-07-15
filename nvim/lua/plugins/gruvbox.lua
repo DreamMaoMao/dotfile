@@ -36,7 +36,7 @@ return {
 				dark0_hard = "#201b14",
 			},
 			overrides = {
-				-- Normal = {bg = "None"}, -- transparent background
+				Normal = {bg = "#201b13"}, -- transparent background
 				SignColumn = {bg = "#221516"},
 				Pmenu = {bg = "#221516"},
 				-- flash.nvim

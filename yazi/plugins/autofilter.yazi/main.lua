@@ -104,10 +104,10 @@ local save_autofilter = ya.sync(function(state,word)
 		timeout = 2,
 		level = "info",
 	}
-	ya.mgr_emit("filter_do", { word, smart = true })
+	ya.emit("filter_do", { word, smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.mgr_emit("plugin",{"autofilter","resave"})
+	ya.emit("plugin",{"autofilter","resave"})
 end)
 
 local delete_autofilter = ya.sync(function(state)
@@ -125,10 +125,10 @@ local delete_autofilter = ya.sync(function(state)
 		level = "info",
 	}
 	state.autofilter[key] = nil
-	ya.mgr_emit("filter_do", { "", smart = true })
+	ya.emit("filter_do", { "", smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.mgr_emit("plugin",{"autofilter","resave"})
+	ya.emit("plugin",{"autofilter","resave"})
 end)
 
 local delete_all_autofilter = ya.sync(function(state)
@@ -139,7 +139,7 @@ local delete_all_autofilter = ya.sync(function(state)
 		level = "info",
 	}
 	state.autofilter = nil
-	ya.mgr_emit("filter_do", { "", smart = true })
+	ya.emit("filter_do", { "", smart = true })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
 	delete_lines_by_content(state.cache_path,".*")
@@ -178,12 +178,12 @@ local flush_mime_by_ext = ya.sync(function(state)
 
 
 	if #mimes then
-		ya.mgr_emit("update_mimes", { updates = mimes })
-		ya.mgr_emit("update_mimetype", { updates = mimes })
+		ya.emit("update_mimes", { updates = mimes })
+		ya.emit("update_mimetype", { updates = mimes })
 	end
 	
 	if #state.unmatch_ext_urls then
-		ya.mgr_emit("plugin",{"autofilter","flush_mime_by_file_cmd"})
+		ya.emit("plugin",{"autofilter","flush_mime_by_file_cmd"})
 	end
 
 end)
@@ -211,7 +211,7 @@ return {
 				st.cwd = cwd
 				if st.autofilter and st.autofilter[tostring(cwd)] then
 					st.is_auto_filter_cwd = true
-					ya.mgr_emit("filter_do", { st.autofilter[tostring(cwd)].word, smart = true })
+					ya.emit("filter_do", { st.autofilter[tostring(cwd)].word, smart = true })
 					st.need_flush_mime = true
 					st.url =  tostring(cx.active.current.hovered.url)
 				else
@@ -228,7 +228,7 @@ return {
 			local url = cx.active.current.hovered and tostring(cx.active.current.hovered.url) or ""
 			if (st.need_flush_mime and url ~= st.url and window and #window > 0) or st.force_fluse_mime then
 				st.force_fluse_mime = false
-				ya.mgr_emit("plugin",{"autofilter","flush_mime_by_ext"})
+				ya.emit("plugin",{"autofilter","flush_mime_by_ext"})
 				st.need_flush_mime = false
 				st.url = url
 			end
@@ -239,7 +239,7 @@ return {
 		Status:children_add(Status_mime,100000,Status.LEFT)
 
 		-- Async load data, avoid block yazi start
-		ya.mgr_emit("plugin",{"autofilter","init"})
+		ya.emit("plugin",{"autofilter","init"})
 	end,
 
 	entry = function(_,job)
@@ -260,8 +260,8 @@ return {
 			local file = io.open(cache_path, "r")
 			if file then 
 		
-				for line in file:lines() do
-					line = line:gsub("[\r\n]", "")
+				for line_item in file:lines() do
+					local line = line_item:gsub("[\r\n]", "")
 					local autofilter = string_split(line,"###")
 					if autofilter == nil or #autofilter < 2 then
 						goto nextline
@@ -298,7 +298,7 @@ return {
 		
 	  		local i = 1
 	  		local mime
-	  		local output = command:args(unmatch_ext_urls):output()
+	  		local output = command:arg(unmatch_ext_urls):output()
 	  		for line in output.stdout:gmatch("[^\r\n]+") do
 				if i > #unmatch_ext_urls then
 				  break
@@ -316,8 +316,8 @@ return {
 	  		end
 
 			if #mimes then
-				ya.mgr_emit("update_mimes", { updates = mimes })
-				ya.mgr_emit("update_mimetype", { updates = mimes })
+				ya.emit("update_mimes", { updates = mimes })
+				ya.emit("update_mimetype", { updates = mimes })
 			end
 		
 		end
@@ -326,7 +326,7 @@ return {
 			local value, event = ya.input({
 				realtime = false,
 				title = "set autofilter word:",
-				position = { "top-center", y = 3, w = 40 },
+				pos = { "top-center", y = 3, w = 40 },
 			})
 			if event == 1 then
 				save_autofilter(value)

@@ -1,5 +1,5 @@
 source ~/.config/zsh/env.zsh
-source ~/.config/zsh/nvm.zsh
+# source ~/.config/zsh/nvm.zsh
 # source ~/.config/zsh/p10k.zsh
 # source ~/.config/zsh/omp.zsh
 source ~/.config/zsh/starship.zsh

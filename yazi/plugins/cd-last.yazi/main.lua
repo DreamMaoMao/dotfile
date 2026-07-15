@@ -9,7 +9,7 @@ local M = {
 
 local cd_last = ya.sync(function (st)
 	if st.last then
-		ya.mgr_emit("cd", { st.last })
+		ya.emit("cd", { st.last })
 	end
 end)
 

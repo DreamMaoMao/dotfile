@@ -5,12 +5,12 @@ local toggle_ui = ya.sync(function(self)
 	else
 		self.children = Modal:children_add(self, 10)
 	end
-	ya.render()
+	ui.render()
 end)
 
 local subscribe = ya.sync(function(self)
 	ps.unsub("mount")
-	ps.sub("mount", function() ya.mgr_emit("plugin", { self._id, "refresh" }) end)
+	ps.sub("mount", function() ya.emit("plugin", { self._id, "refresh" }) end)
 end)
 
 local update_partitions = ya.sync(function(self, partitions)
@@ -18,13 +18,13 @@ local update_partitions = ya.sync(function(self, partitions)
 	self.title = "Mount"
 	self.title_color = "#82ab3a"
 	self.cursor = math.max(0, math.min(self.cursor or 0, #self.partitions - 1))
-	ya.render()
+	ui.render()
 end)
 
 local set_pending_status = ya.sync(function(self)
 	self.title_color = "#d9734b"
 	self.title = "Pending..."
-	ya.render()
+	ui.render()
 end)
 
 local active_partition = ya.sync(function(self) return self.partitions[self.cursor + 1] end)
@@ -35,7 +35,7 @@ local update_cursor = ya.sync(function(self, cursor)
 	else
 		self.cursor = ya.clamp(0, self.cursor + cursor, #self.partitions - 1)
 	end
-	ya.render()
+	ui.render()
 end)
 
 local M = {
@@ -124,7 +124,7 @@ function M:entry(job)
 			elseif run == "cd_quit" then
 				local active = active_partition()
 				if active and active.dist then
-					ya.mgr_emit("cd", { active.dist })
+					ya.emit("cd", { active.dist })
 				end
 				tx2:send(run)
 				toggle_ui()
@@ -140,10 +140,10 @@ function M:entry(job)
 			elseif run == "right" then
 				local active = active_partition()
 				if active and active.dist then
-					ya.mgr_emit("cd", { active.dist })
+					ya.emit("cd", { active.dist })
 				end
 			elseif run == "left" then
-				ya.mgr_emit("leave", {})
+				ya.emit("leave", {})
 			else
 				tx2:send(run)
 			end
@@ -193,13 +193,18 @@ function M:redraw()
 		end
 	end
 
+	if not self.title then
+		self.title = "Mount"
+		self.title_color = "#82ab3a"
+	end
+
 	return {
 		ui.Clear(self._area),
-		ui.Border(ui.Border.ALL)
+		ui.Border(ui.Edge.ALL)
 			:area(self._area)
 			:type(ui.Border.ROUNDED)
 			:style(ui.Style():fg("#82ab3a"))
-			:title(ui.Line(self.title):align(ui.Line.CENTER):fg(self.title_color)),
+			:title(ui.Line(self.title):align(ui.Align.CENTER):fg(self.title_color and self.title_color or "#82ab3a")),
 		ui.Table(rows)
 			:area(self._area:pad(ui.Pad(1, 2, 1, 2)))
 			:header(ui.Row({ "Src", "Label", "Dist", "FSType" }):style(ui.Style():bold()))
@@ -322,20 +327,20 @@ function M.operate(type)
 	if not active then
 		return
 	elseif active.sub == "" then
-		ya.mgr_emit("plugin", {"mount", "refresh" })
+		ya.emit("plugin", {"mount", "refresh" })
 		return -- TODO: mount/unmount main disk
 	end
 
 	local output, err
 	if ya.target_os() == "macos" then
-		output, err = Command("diskutil"):args({ type, active.src }):output()
+		output, err = Command("diskutil"):arg({ type, active.src }):output()
 	end
 	if ya.target_os() == "linux" then
 		if type == "eject" then
-			Command("udisksctl"):args({ "unmount", "-b", active.src }):status()
-			output, err = Command("udisksctl"):args({ "power-off", "-b", active.src }):output()
+			Command("udisksctl"):arg({ "unmount", "-b", active.src }):status()
+			output, err = Command("udisksctl"):arg({ "power-off", "-b", active.src }):output()
 		else
-			output, err = Command("udisksctl"):args({ type, "-b", active.src }):output()
+			output, err = Command("udisksctl"):arg({ type, "-b", active.src }):output()
 		end
 	end
 
@@ -347,7 +352,7 @@ function M.operate(type)
 end
 
 function M.fail(s, ...) 
-	ya.mgr_emit("plugin", {"mount", "refresh" })
+	ya.emit("plugin", {"mount", "refresh" })
 	ya.notify { title = "Mount", content = string.format(s, ...), timeout = 10, level = "error" } 
 end
 

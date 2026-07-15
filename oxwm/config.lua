@@ -47,6 +47,8 @@ local colors = {
 local tags = { "1", "2", "3", "4", "5", "6", "7", "8", "9" }
 -- local tags = { "", "󰊯", "", "", "󰙯", "󱇤", "", "󱘶", "󰧮" } -- Example of nerd font icon tags
 
+oxwm.bar.set_hide_vacant_tags(true);
+
 -- Font for the status bar (use "fc-list" to see available fonts)
 local bar_font = "monospace:style=Bold:size=10"
 
@@ -112,6 +114,7 @@ oxwm.set_tags(tags)
 oxwm.set_layout_symbol("tiling", "[T]")
 oxwm.set_layout_symbol("normie", "[F]")
 oxwm.set_layout_symbol("tabbed", "[=]")
+-- oxwm.set_layout_symbol("scrolling", "[S]")
 
 -------------------------------------------------------------------------------
 -- Appearance
@@ -199,14 +202,18 @@ oxwm.key.bind({ modkey, "Shift" }, "Slash", oxwm.show_keybinds())
 
 -- Window state toggles
 oxwm.key.bind({ modkey}, "F", oxwm.client.toggle_fullscreen())
-oxwm.key.bind({ modkey}, "Backslash", oxwm.client.toggle_floating())
+oxwm.key.bind({ modkey}, "backslash", oxwm.client.toggle_floating())
 
 -- Layout management
 oxwm.key.bind({ "Mod4" }, "F", oxwm.layout.set("normie"))
 oxwm.key.bind({ "Mod4" }, "C", oxwm.layout.set("tiling"))
+-- oxwm.key.bind({ "Mod4" }, "G", oxwm.layout.set("scrolling"))
 -- Cycle through layouts
 oxwm.key.bind({ "Mod4" }, "N", oxwm.layout.cycle())
 
+
+-- oxwm.key.bind({ modkey }, "Left", oxwm.layout.scroll_left())
+-- oxwm.key.bind({ modkey }, "Right", oxwm.layout.scroll_right())
 -- Master area controls (tiling layout)
 
 -- Decrease/Increase master area width
@@ -238,6 +245,11 @@ oxwm.key.bind({ modkey, "Shift" }, "Period", oxwm.monitor.tag(1))
 
 -- Workspace (tag) navigation
 -- Switch to workspace N (tags are 0-indexed, so tag "1" is index 0)
+oxwm.key.bind({ "Mod4" }, "Right", oxwm.tag.view_next())
+oxwm.key.bind({ "Mod4" }, "Left", oxwm.tag.view_previous())
+oxwm.key.bind({ "Control" }, "Right", oxwm.tag.view_next_nonempty())
+oxwm.key.bind({ "Control" }, "Left", oxwm.tag.view_previous_nonempty())
+
 oxwm.key.bind({ "Control" }, "1", oxwm.tag.view(0))
 oxwm.key.bind({ "Control" }, "2", oxwm.tag.view(1))
 oxwm.key.bind({ "Control" }, "3", oxwm.tag.view(2))
@@ -302,4 +314,5 @@ oxwm.key.bind({ modkey, "Control", "Shift" }, "9", oxwm.tag.toggletag(8))
 oxwm.autostart("picom")                                  
 oxwm.autostart("feh --bg-scale ~/Images/jaj.jpg") 
 oxwm.autostart("redshift")
+oxwm.autostart("numlockx on")
 -- oxwm.autostart("nm-applet")

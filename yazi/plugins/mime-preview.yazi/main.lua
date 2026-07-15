@@ -1127,6 +1127,7 @@ local ext_mime_map = {
 	["vpm"] = "multipart/voice-message",
 	["appcache"] = "text/cache-manifest",
 	["manifest"] = "text/cache-manifest",
+	["srt"] = "text/srt",
 	["ics"] = "text/calendar",
 	["ifb"] = "text/calendar",
 	["CQL"] = "text/cql",
@@ -1416,14 +1417,14 @@ local function match_mimetype(s)
 end
 
 local flush = ya.sync(function (state,mimes)
-	ya.mgr_emit("update_mimes", { updates = mimes })
-	ya.mgr_emit("update_mimetype", { updates = mimes }) -- TODO: remove this
-	ya.mgr_emit("peek", { force = true })
+	ya.emit("update_mimes", { updates = mimes })
+	ya.emit("update_mimetype", { updates = mimes }) -- TODO: remove this
+	ya.emit("peek", { force = true })
 end)
 
 local get_data = ya.sync(function (state)
 	local mimes = {}
-	local unmatch_ext_urls = {}
+	local bool match = false;
 
 	local folder = cx.active.preview.folder
 	if not folder then
@@ -1440,14 +1441,14 @@ local get_data = ya.sync(function (state)
 		local ext_mime = ext_mime_map[ext]
 		if ext_mime then
 		  mimes[url] = ext_mime
+		  match = true;
 		  goto continue
 		end
 	  end
-	  unmatch_ext_urls[#unmatch_ext_urls + 1] = url
 	  ::continue::
 	end
 
-	return mimes
+	return mimes, match
 
 end)
 
@@ -1458,7 +1459,7 @@ local M = {
 		local function Status_mime(self)
 			local url = cx.active.current.hovered and tostring(cx.active.current.hovered.url) or ""
 			if cx.active.preview.folder and #cx.active.preview.folder.window > 0 and st.task and st.task == url then
-				ya.mgr_emit("plugin", { "mime-preview", ya.quote(tostring(""))})	
+				ya.emit("plugin", { "mime-preview", ya.quote(tostring(""))})	
 				st.task =  nil
 			end
 			if st.url ~= url then
@@ -1475,9 +1476,9 @@ local M = {
 }
 
 function M:entry()
-	local mimes =  get_data()
+	local mimes, match =  get_data()
 
-	if #mimes then
+	if match then
 		flush(mimes)
 	end
 end

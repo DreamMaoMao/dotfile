@@ -9,7 +9,7 @@
 #	timeout 3600 'systemctl suspend'
 
 swayidle \
-	timeout 1800 'wlr-dpms off' \
-	resume 'wlr-dpms on && ~/.config/mango/scripts/restart_wlsunset.sh' \
+	timeout 1800 'mmsg dispatch sleep_monitor' \
+	resume 'mmsg dispatch wakeup_monitor' \
 	timeout 300 'dimland -a 0.3' \
 	resume 'bash ~/.config/mango/scripts/exitdim.sh'

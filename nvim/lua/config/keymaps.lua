@@ -61,11 +61,7 @@ vim.o.inccommand = "split"
 -- flash jump
 vim.keymap.set("n", "<leader>j", "<cmd>lua require('flash').jump()<cr>", { desc = "flash jump" })
 
--- lsp hover
--- vim.keymap.set("n", "<c-x>", vim.lsp.buf.hover, { desc = "lsp hover" })
-
 -- spectre
-
 vim.keymap.set("n", "<leader>rt", '<cmd>lua require("spectre").toggle()<CR>', {
   desc = "Toggle search panel in global",
 })
@@ -98,10 +94,20 @@ vim.keymap.set("n", "<leader>ms", '<cmd>lua require("bookmarks.list").show_desc(
   desc = "show bookmark desc",
 })
 
-
--- lspsaga
+-- lsp
+-- 跳转返回
 vim.keymap.set({ "n"}, "<leader>ig", "<C-t>", { desc = "go back from definition jump" })
-
-
+-- 跳转到定义
+vim.keymap.set("n", "<leader>id", vim.lsp.buf.definition,  { buffer = buffer, remap = false,desc = "go to definition" })
+-- 显示hover
+vim.keymap.set("n", "<leader>ih", vim.lsp.buf.hover,  { buffer = buffer, remap = false,desc = "show hover" })
+-- 显示引用
+vim.keymap.set("n", "<leader>if", vim.lsp.buf.references,  { buffer = buffer, remap = false,desc = "show references" })
+-- 显示定义
+vim.keymap.set("n", "<leader>ii", vim.lsp.buf.implementation,  { buffer = buffer, remap = false,desc = "show implementation" })
+-- 显示符号表
+vim.keymap.set("n", "<leader>is", vim.lsp.buf.document_symbol,  { buffer = buffer, remap = false,desc = "show document symbol" })
+-- 显示文件符号表
+vim.keymap.set("n", "<leader>ia", vim.lsp.buf.workspace_symbol,  { buffer = buffer, remap = false,desc = "show workspace symbol" })
 
 

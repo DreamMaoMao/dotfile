@@ -8,7 +8,7 @@ local function setup(state,config)
     		return ui.Line {}
     	end
 
-		local style_mtime = ui:Style()
+		local style_mtime = ui.Style()
 		style_mtime:fg(color)
 		style_mtime:bold(true)
 		local time = (h.cha.mtime or 0) // 1

@@ -20,7 +20,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term st
+set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -51,10 +51,12 @@ default_floating_border pixel 3
 gaps inner  5
 gaps outer  0
 # corner_radius 10
+animation_duration_ms 250
 smart_borders off
 smart_gaps off
 
 focus_follows_mouse yes
+focus_on_window_activation focus
 
 client.focused          #c9b890 #c9b890 #ffffff #835529
 client.unfocused        #45475a #412406 #ffffff #835529
@@ -113,8 +115,6 @@ input "1452:591:Keychron_Keychron_C2" {
 
     # Start your launcher
     bindsym $mod+space exec rofi -config ~/.config/mango/rofi/config.rasi -show drun
-
-    bindsym $mod+Tab exec bash ~/.config/sway/scripts/circle_window.sh
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -199,6 +199,7 @@ input "1452:591:Keychron_Keychron_C2" {
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
+    bindsym Alt+Shift+Return split toggle
     bindsym Alt+Shift+Right splith
     bindsym Alt+Shift+Down splitv
 
@@ -262,7 +263,7 @@ bindsym Alt+Mod4+u mode "resize"
 bindsym Mod4+return exec google-chrome
 bindsym Ctrl+return exec bash ~/tool/clash.sh 
 bindsym Mod4+k exec bash ~/tool/wshowkey.sh 
-bindsym Ctrl+Mod4+return exec st -e yazi
+bindsym Ctrl+Mod4+return exec foot -e yazi
 bindsym Alt+Mod4+return exec mpv --player-operation-mode=pseudo-gui
 bindsym Ctrl+Alt+a exec grim -g "$(slurp)" - | satty -f -
 bindsym Ctrl+Alt+return exec konsole -e "~/tool/ter-multiplexer.sh"
@@ -278,7 +279,9 @@ bindsym Ctrl+comma exec ~/.config/hypr/scripts/brightness.sh down
 
 bindsym Alt+period exec ~/.config/hypr/scripts/volume.sh up
 bindsym Alt+comma exec ~/.config/hypr/scripts/volume.sh down
+bindsym Mod4+p exec ~/.config/mango/scripts/monitor.sh
 
+bindsym Mod4+tab exec wswitch next
 
 #
 # Status Bar:
@@ -286,18 +289,18 @@ bindsym Alt+comma exec ~/.config/hypr/scripts/volume.sh down
 # Read `man 5 sway-bar` for more information about this section.
 # bar {
 #     position top
-
+#
 #     # When the status_command prints a new line to stdout, swaybar updates.
 #     # The default just shows the current date and time.
 #     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
+#
 #     colors {
 #         statusline #ffffff
 #         background #323232
 #         inactive_workspace #32323200 #32323200 #5c5c5c
 #     }
 # }
-
+#
 include @sysconfdir@/sway/config.d/*
 
 
@@ -313,7 +316,9 @@ exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DE
 exec /usr/lib/xdg-desktop-portal-hyprland &
 
 exec wlsunset -T 3001 -t 3000 &
-exec echo "Xft.dpi: 140" | xrdb -merge #dpi缩放
+exec xrdb merge ~/.Xresources >/dev/null 2>&1
+
+
 # 开启输入法
 exec fcitx5 -r -d 2> /dev/null &
 
@@ -334,3 +339,7 @@ exec waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css &
 exec udisksctl mount -t ext4 -b /dev/sda4&
 
 exec swayosd-server &
+
+exec wswitch --daemon &
+
+exec alacritty --daemon &

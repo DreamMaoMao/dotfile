@@ -15,7 +15,7 @@ end)
 return {
 	entry = function()
 		local cwd = get_cwd();
-		local out, err = Command("sxiv"):args({"-a","-t",cwd}):output()
+		local out, err = Command("sxiv"):arg({"-a","-t",cwd}):output()
 		if out.status.success == false or err ~= nil then
 			ya.dbg(err, out.stdout)
 			return
@@ -32,13 +32,13 @@ return {
 		for _, value in ipairs(selected) do
 			line_seq = string_split(value,"###")
 			if line_seq[1] == "jump" then
-				ya.mgr_emit("reveal", { line_seq[2] })
+				ya.emit("reveal", { line_seq[2] })
 				return
 			elseif line_seq[1] == "select" then
 				-- this is a test, can't to select multi files
-				ya.mgr_emit("toggle", { Url(line_seq[2]), state = "on" })
+				ya.emit("toggle", { Url(line_seq[2]), state = "on" })
 			end			
 		end
-		ya.mgr_emit("reveal", { line_seq[2] })
+		ya.emit("reveal", { line_seq[2] })
 	end,
 }

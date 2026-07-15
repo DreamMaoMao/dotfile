@@ -1,4 +1,4 @@
-#!/usr/bin/env lua
+#!/usr/bin/env lua5.4
 
 local sqlite3 = require("lsqlite3")
 local json = require("dkjson")

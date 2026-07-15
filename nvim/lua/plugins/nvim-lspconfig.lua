@@ -1,10 +1,16 @@
-  -- change lsp keymaps
-  return {
-    {
-      "neovim/nvim-lspconfig",
-      init = function()
-        local keys = require("lazyvim.plugins.lsp.keymaps").get()
-        keys[#keys + 1] = { "K", false }
-      end,
-    },
-  }
+return {
+  {
+    "neovim/nvim-lspconfig",
+    opts = function(_, opts)
+      -- 确保 servers 表存在
+      opts.servers = opts.servers or {}
+      
+      -- 确保所有服务器都禁用 K 键
+      opts.servers["*"] = {
+        keys = {
+          { "K", false }, -- 禁用 hover
+        },
+      }
+    end,
+  },
+}

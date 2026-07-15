@@ -133,10 +133,10 @@ local save_autosort = ya.sync(function(state,word,reverse,dir_first)
 	if dir_first == "dir_first" then
 		set_dir_first = true
 	end
-	ya.mgr_emit("sort", { word, reverse = set_reverse, dir_first = set_dir_first })
+	ya.emit("sort", { word, reverse = set_reverse, dir_first = set_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.mgr_emit("plugin",{"autosort","resave"})
+	ya.emit("plugin",{"autosort","resave"})
 end)
 
 local delete_autosort = ya.sync(function(state)
@@ -154,10 +154,10 @@ local delete_autosort = ya.sync(function(state)
 		level = "info",
 	}
 	state.autosort[key] = nil
-	ya.mgr_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
+	ya.emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
-	ya.mgr_emit("plugin",{"autosort","resave"})
+	ya.emit("plugin",{"autosort","resave"})
 end)
 
 local delete_all_autosort = ya.sync(function(state)
@@ -168,7 +168,7 @@ local delete_all_autosort = ya.sync(function(state)
 		level = "info",
 	}
 	state.autosort = nil
-	ya.mgr_emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
+	ya.emit("sort", { state.sort_by, reverse = state.sort_reverse, dir_first = state.sort_dir_first })
 	state.force_fluse_header = true
 	state.force_fluse_mime = true
 	delete_lines_by_content(state.cache_path,".*")
@@ -215,7 +215,7 @@ return {
 					if st.autosort[tostring(cwd)].dir_first == "dir_first" then
 						set_dir_first = true
 					end
-					ya.mgr_emit("sort", { st.autosort[tostring(cwd)].word, reverse = set_reverse, dir_first = set_dir_first })
+					ya.emit("sort", { st.autosort[tostring(cwd)].word, reverse = set_reverse, dir_first = set_dir_first })
 					st.need_flush_mime = true
 					st.url =  cx.active.current.hovered and tostring(cx.active.current.hovered.url) or ""
 				else
@@ -228,7 +228,7 @@ return {
 				return ui.Line{}
 			else
 				st.has_exit_autosort_folder = true
-				ya.mgr_emit("sort", { st.sort_by, reverse = st.sort_reverse, dir_first = st.sort_dir_first })
+				ya.emit("sort", { st.sort_by, reverse = st.sort_reverse, dir_first = st.sort_dir_first })
 				return ui.Line{}
 			end
 		end
@@ -237,7 +237,7 @@ return {
 
 
 		-- Async load data, avoid block yazi start
-		ya.mgr_emit("plugin",{"autosort","init"})
+		ya.emit("plugin",{"autosort","init"})
 	end,
 
 	entry = function(_,job)
@@ -263,8 +263,8 @@ return {
 
 			local file = io.open(cache_path, "r")
 			if file then 
-				for line in file:lines() do
-					line = line:gsub("[\r\n]", "")
+				for line_item in file:lines() do
+					local line = line_item:gsub("[\r\n]", "")
 					local autosort = string_split(line,"###")
 					if autosort == nil or #autosort < 4 then
 						goto nextline

@@ -1,0 +1,4 @@
+--colors=path:fg:blue
+--colors=path:style:bold
+--colors=line:fg:green
+--colors=column:fg:white

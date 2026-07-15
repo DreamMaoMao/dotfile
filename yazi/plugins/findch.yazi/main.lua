@@ -76,9 +76,10 @@ local function get_match_position(state, name, find_str)
     local match_start_byte = 0
     local match_start_char_index = 0
     local match_end_byte = 0
+	local char_index = 1
     
     -- 遍历所有UTF-8字符
-    for char_index = 1, #utf8_chars do
+    while char_index <= #utf8_chars do
         local current_char = utf8_chars[char_index]
         local char_byte_length = utf8_char_byte_length(current_char)
         local char_maps = state.mapdata[current_char]
@@ -137,6 +138,7 @@ local function get_match_position(state, name, find_str)
             -- 没有在进行中的匹配，正常前进
             byte_index = byte_index + char_byte_length
         end
+		char_index = char_index + 1
     end
     
     -- 返回结果
@@ -275,7 +277,7 @@ local record_match_file = ya.sync(function(state, patterns)
 		update_match_table("current", cx.active.current, pattern)
 	end
 
-	ya.render()
+	ui.render()
 
 	return exist_match
 end)
@@ -284,7 +286,7 @@ local toggle_ui = ya.sync(function(st)
 	if st.highlights or st.header_fc_id then
 		Header:children_remove(st.header_fc_id)
 		Entity.highlights, st.highlights, st.header_fc_id = st.highlights, nil, nil
-		ya.render()
+		ui.render()
 		return
 	end
 
@@ -333,7 +335,7 @@ local set_target_str = ya.sync(function(state, patterns)
 	local exist_match = record_match_file(patterns)
 
 	-- apply match data to render
-	ya.render()
+	ui.render()
 end)
 
 local clear_state_str = ya.sync(function(state)
@@ -342,13 +344,13 @@ local clear_state_str = ya.sync(function(state)
 	state.match_total = nil
 	state.match_index = nil
 	state.sort_match = nil
-	ya.render()
+	ui.render()
 end)
 
 
 local flush_input_key_in_headerbar = ya.sync(function(state, input_str)
 	state.match_pattern = input_str
-	ya.render()
+	ui.render()
 end)
 
 return {
@@ -368,8 +370,8 @@ return {
 		local isinputing = true
 
 		local popupinput = ya.input {
-			title = "find str",
-			position = { "top-center", y = 3, w = 40 },
+			title = "输入拼音首字母:",
+			pos = { "top-center", y = 3, w = 40 },
 			realtime = true,
 		}
 
@@ -402,21 +404,21 @@ return {
 				if INPUT_KEY[cand] == "<Enter>" then
 					local ok, _ = pcall(require, "lastopen")
 					if ok then
-						ya.mgr_emit("plugin", { "lastopen", ya.quote("open")})
+						ya.emit("plugin", { "lastopen", ya.quote("open")})
 					else
-						ya.mgr_emit("open", {})
+						ya.emit("open", {})
 					end
 					break
 				elseif INPUT_KEY[cand] == "n" then
 					url = get_next_match_file()
 					if url then
-						ya.mgr_emit("reveal", { url })
+						ya.emit("reveal", { url })
 					end
 					goto continue
 				elseif INPUT_KEY[cand] == "N" then
 					url = get_prev_match_file()
 					if url then
-						ya.mgr_emit("reveal", { url })
+						ya.emit("reveal", { url })
 					end
 					goto continue
 				elseif INPUT_KEY[cand] == "f" then
@@ -438,7 +440,7 @@ return {
 
 			url = get_first_match_file()
 			if url then
-				ya.mgr_emit("reveal", { url })
+				ya.emit("reveal", { url })
 			end
 
 			::continue::

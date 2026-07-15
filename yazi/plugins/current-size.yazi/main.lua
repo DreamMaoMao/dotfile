@@ -11,20 +11,20 @@ end
 local save = ya.sync(function(st, cwd,folder_size)
 	if cx.active.current.cwd == Url(cwd) then
 		st.folder_size = folder_size
-		ya.render()
+		ui.render()
 	end
 end)
 
 local clear_state = ya.sync(function(st)
 	st.folder_size = ""
-	ya.render()
+	ui.render()
 end)
 
 local flush_empty_folder_status = ya.sync(function(st)
 	local cwd = cx.active.current.cwd
 	local folder = cx.active.current
 	if #folder.window == 0 then
-		ya.mgr_emit("plugin", { "current-size", ya.quote(tostring(cwd))})	
+		ya.emit("plugin", { "current-size", ya.quote(tostring(cwd))})	
 	end
 end)
 
@@ -67,7 +67,7 @@ local update_current_size = ya.sync(function(st)
 		return
 	end
 
-	ya.mgr_emit("plugin", { "current-size", ya.quote(tostring(cwd))})	
+	ya.emit("plugin", { "current-size", ya.quote(tostring(cwd))})	
 end)
 
 local M = {
@@ -91,7 +91,7 @@ local M = {
 				ignore_caculate_size = is_ignore_folder(cwd)
 				clear_state()
 				if not ignore_caculate_size then
-					ya.mgr_emit("plugin", { "current-size", ya.quote(tostring(cwd))})			
+					ya.emit("plugin", { "current-size", ya.quote(tostring(cwd))})			
 				end
 			end
 			local folder_size_span = (st.folder_size ~= nil and st.folder_size ~= "") and ui.Span(" [".. st.folder_size  .."]"):fg("#ced333")  or ui.Line{}
@@ -109,7 +109,7 @@ local M = {
 
 		local args = job.args
 		local folder_size = ""
-		output = Command("du"):args({"-sh",args[1].."/"}):output()
+		output = Command("du"):arg({"-sh",args[1].."/"}):output()
 
 		if output then
 			local split_output = string_split(output.stdout,"\t")

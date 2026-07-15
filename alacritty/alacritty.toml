@@ -1,0 +1,175 @@
+# 🎨 Theme
+[colors.primary]
+background = "#201B14"           # Hard background
+foreground = "#d0b78d"           # Light0
+dim_foreground = "#a89984"       # Gray
+bright_foreground = "#fbf1c7"    # Light0
+
+[colors.cursor]
+text = "#1d2021"                 # Background
+cursor = "#d0b78d"               # Light0
+
+[colors.vi_mode_cursor]
+text = "#1d2021"
+cursor = "#d5c4a1"               # Light2
+
+[colors.search.matches]
+foreground = "#1d2021"
+background = "#ea8087"           # Green
+
+[colors.search.focused_match]
+foreground = "#1d2021"
+background = "#fabd2f"           # Yellow
+
+[colors.hints.start]
+foreground = "#ffffff"
+background = "#c52014"
+
+[colors.hints.end]
+foreground = "#EADFC8"
+background = "#a23910"
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+[colors.footer_bar]
+foreground = "#1d2021"
+background = "#a89984"
+
+
+[colors.normal]
+black   = "#282828"              # Bg0
+red     = "#cc241d"              # Red
+green   = "#85C21E"              # Green
+yellow  = "#d79921"              # Yellow
+blue    = "#C98A27"              # Blue
+magenta = "#b16286"              # Purple
+cyan    = "#85C21E"              # Aqua
+white   = "#a89984"              # Gray
+
+[colors.bright]
+black   = "#928374"              # Gray
+red     = "#fb4934"              # Bright Red
+green   = "#86d32d"              # Bright Green
+yellow  = "#fabd2f"              # Bright Yellow
+blue    = "#C98A27"              # Bright Blue
+magenta = "#d3869b"              # Bright Purple
+cyan    = "#89df27"              # Bright Aqua
+white   = "#ebdbb2"              # Light1
+
+[colors.dim]
+black   = "#32302f"
+red     = "#9d0006"
+green   = "#79740e"
+yellow  = "#b57614"
+blue    = "#783c07"
+magenta = "#8f3f71"
+cyan    = "#427b58"
+white   = "#928374"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#fe8019"                # Orange (Bright)
+
+[[colors.indexed_colors]]
+index = 17
+color = "#d65d0e"                # Orange (Neutral)
+# 🔤 Font settings
+[font]
+builtin_box_drawing = true
+size = 20.0
+
+[font.normal]
+family = "Maple Mono NF CN"
+style = "Medium"
+
+[font.bold]
+style = "Bold"
+
+[font.bold_italic]
+style = "Bold Italic"
+
+[font.italic]
+style = "Medium Italic"
+
+# ➕ Terminal environment
+[env]
+TERM = "alacritty"
+
+# 🖱 Mouse behavior
+[mouse]
+hide_when_typing = true
+bindings = [
+  { mouse = "Right", action = "Paste" },
+]
+
+# 🖋 Cursor style
+[cursor]
+unfocused_hollow = false
+
+[cursor.style]
+blinking = "Never"
+shape = "Block"
+
+# 📜 Scrolling
+[scrolling]
+history = 100000
+multiplier = 6
+
+# 🔍 Text selection
+[selection]
+save_to_clipboard = true
+semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
+
+# 🖥️ Window behavior
+[window]
+dynamic_title = true
+opacity = 0.7
+title = "Alacritty"
+
+[window.dimensions]
+columns = 100
+lines = 25
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
+# 🌈 Color options
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[hints]
+alphabet = "gklsdfjheiunaowcmpbqrtvxyz"
+
+
+# 🔗 URL hints
+[[hints.enabled]]
+command = "xdg-open"
+hyperlinks = true
+mouse.enabled = true
+binding = { key = "U", mods = "Control" }
+post_processing = true
+persist = false
+regex = "(https?://[^\"]+)"
+
+
+[[hints.enabled]]
+command = "wl-copy"
+hyperlinks = true
+mouse.enabled = true
+binding = { key = "O", mods = "Control" }
+post_processing = true
+persist = false
+regex = "(https?://[^\"]+)|((~?/([^/\\s\\x00]+/)+)[^\\^\\s]+)|(ghp_[0-9a-zA-Z]{36})|([0-9a-f]{40,40})|(core-.*-[0-9A-Za-z]+)|(0x[0-9a-fA-F]+)|([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})|([A-f0-9:]+:+[A-f0-9:]+[A-f0-9]+)|([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,})"
+
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "Escape"
+mode = "Vi"
+
+# 🐚 Default shell
+[terminal.shell]
+program = "/usr/bin/fish"

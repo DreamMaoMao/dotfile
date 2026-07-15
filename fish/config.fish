@@ -18,8 +18,9 @@ alias z='zeditor'
 alias lg='lazygit'
 alias e='exit'
 alias FontsFamilyName="fc-query -f '%{family[0]}\n'"
+alias rm='trash-put'
 
-export PATH=:/home/wrq/.cargo/bin:/home/wrq/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/wrq/.local/bin:
+export PATH=:/home/wrq/bin:/home/wrq/.cargo/bin:/home/wrq/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/wrq/.local/bin:
 
 # add extra PATH
 fish_add_path /home/wrq/.nvm/versions/node/v18.14.2/bin

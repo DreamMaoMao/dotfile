@@ -1,73 +1,81 @@
-[manager]
-ratio          = [ 1, 4, 3 ]
+[mgr]
+layout         = [ 1, 4, 3 ]
 sort_by        = "natural"
-sort_sensitive = false
+sort_sensitive = true
 sort_reverse   = false
 sort_dir_first = true
 linemode       = "none"
 show_hidden    = false
 show_symlink   = true
 scrolloff      = 0
-mouse_events   = [ "click", "scroll" ]
+mouse_events   = [ "click", "scroll", "drag" ]
 
 [preview]
-wrap            = "no"
 tab_size        = 2
 max_width       = 600
 max_height      = 900
 cache_dir       = ""
 image_delay     = 20
-image_filter    = "triangle"
-image_quality   = 75
-sixel_fraction  = 15
+image_bound      = [ 0, 0 ] 
 ueberzug_scale  = 1
 ueberzug_offset = [ 0, 0, 0, 0 ]
 
 [opener]
 folder = [
-	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
-	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
-	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
-	{ run = '''fish -c "lazygit -p "$1""''', block = true,desc = "lazygit", for = "linux" },
-	{ run = 'basename "$@" | xargs -I {} tar --use-compress-program=pigz -cf ~/down/{}.tar.gz {}',orphan = true, desc = "archive" , for = "linux"  },
+	{ run = 'nvim %s1', block = true,desc = "neovim", for = "linux" },
+	{ run = 'code  %s1',orphan = true, desc = "vscode" , for = "linux" },
+	{ run = '''fish -c "lazygit -p %s1"''', block = true,desc = "lazygit", for = "linux" },
+	{ run = 'basename %s1 | xargs -I {} tar --use-compress-program=pigz -cf ~/down/{}.tar.gz {}',orphan = true, desc = "archive" , for = "linux"  },
 
 ]
 archive = [
-	{ run = 'ouch decompress "$1" ', orphan = true, desc = "ouch decompress" , for = "linux" },
-	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "linux" },
+	# { run = 'basename %s1 | xargs tar xf ', orphan = true, desc = "tar xf" , for = "linux" },
+	# { run = 'basename %s1 | xargs tar xzf ', orphan = true, desc = "tar xzf" , for = "linux" },
+	# { run = 'unzip %s1', orphan = true, desc = "unzip" , for = "linux" },
+	# { run = 'unar %s1', orphan = true, desc = "unrar" , for = "linux" },
+	{ run = 'ouch decompress %s1 ', orphan = true, desc = "ouch decompress" , for = "linux" },
+]
+
+zip = [
+	# { run = 'basename %s1 | xargs tar xf ', orphan = true, desc = "tar xf" , for = "linux" },
+	# { run = 'basename %s1 | xargs tar xzf ', orphan = true, desc = "tar xzf" , for = "linux" },
+	{ run = 'unzip %s1', orphan = true, desc = "unzip" , for = "linux" },
+	# { run = 'unar %s1', orphan = true, desc = "unrar" , for = "linux" },
 ]
 
 text = [
-	{ run = 'nvim "$1"', block = true,desc = "neovim", for = "linux" },
-	{ run = 'code  "$@"',orphan = true, desc = "vscode" , for = "linux" },
-	{ run = 'zeditor  "$@"',orphan = true, desc = "zed" , for = "linux" },
+	{ run = 'nvim %s1', block = true,desc = "neovim", for = "linux" },
+	{ run = 'code  %s1',orphan = true, desc = "vscode" , for = "linux" },
 ]
 image = [
-	{ run = 'sxiv -a "$@"',  orphan = true, desc = "sxiv" , for = "linux"},
-	{ run = 'gthumb  "$@"',  orphan = true, desc = "gthumb" , for = "linux"},
+	{ run = 'imv %s1',  orphan = true, desc = "imv" , for = "linux"},
+	{ run = 'gthumb %s1',  orphan = true, desc = "gthumb" , for = "linux"},
 ]
 video = [
-	{ run = 'mpv "$@" ', orphan = true, desc = "mpv" , for = "linux" },
-	{ run = 'ffmpeg -i "$@" -vf "fps=10" -loop 0 "$@".gif', orphan = true, desc = "change to gif"  , for = "linux" },	
+	{ run = 'mpv %s1 ', orphan = true, desc = "mpv" , for = "linux" },
+	{ run = 'ffmpeg -i %s1 -vf "fps=10" -loop 0 %s1.gif', orphan = true, desc = "change to gif"  , for = "linux" },	
 
 ]
 audio = [
-	{ run = 'mpv "$@" ' , orphan = true, desc = "mpv" , for = "linux"},
+	{ run = 'mpv %s1 ' , orphan = true, desc = "mpv" , for = "linux"},
 ]
 
 document = [
-	{ run = 'xdg-open "$@"', orphan = true, desc = "xdg-open" , for = "linux" },
-	{ run = 'okular "$@" ' , orphan = true, desc = "okular" , for = "linux"},
-	{ run = 'GTK_IM_MODULE=fcitx5 foliate "$@" ' , orphan = true, desc = "foliate" , for = "linux"},
+	{ run = 'xdg-open %s1', orphan = true, desc = "xdg-open" , for = "linux" },
+	{ run = 'thorium %s1 ' , orphan = true, desc = "thorium" , for = "linux"},
+	{ run = 'okular %s1 ' , orphan = true, desc = "okular" , for = "linux"},
+	# { run = 'foliate %s1 ' , orphan = true, desc = "foliate" , for = "linux"},
 ]
 
 fallback = [
-	{ run = 'xdg-open "$@"', orphan = true, desc = "xdg-open" , for = "linux" },
+	{ run = 'xdg-open %s1', orphan = true, desc = "xdg-open" , for = "linux" },
+	{ run = 'nvim %s1', block = true,desc = "neovim", for = "linux" },
+	{ run = 'nemo %s1', block = true,desc = "nemo", for = "linux" },
 ]
 
 [open]
 rules = [
-	{ name = "*/", use = ["folder"] },
+	{ url = "*/", use = ["folder"] },
 
 	{ mime = "text/*", use = ["text"] },
 	{ mime = "image/*", use = ["image"] },
@@ -77,7 +85,7 @@ rules = [
 	{ mime = "inode/empty", use = ["text"] },
 	{ mime = "application/json", use = ["text"] },
 
-	{ mime = "application/zip", use = ["archive"] },
+	{ mime = "application/zip", use = ["zip"] },
 	{ mime = "application/gzip", use = ["archive"] },
 	{ mime = "application/x-bzip", use = ["archive"] },
 	{ mime = "application/x-bzip2", use = ["archive"] },
@@ -92,136 +100,81 @@ rules = [
 ]
 
 [tasks]
-micro_workers    = 10
-macro_workers    = 10
-bizarre_retry    = 3
-image_alloc      = 536870912  # 512MB
-image_bound      = [ 0, 0 ]
-suppress_preload = false
-
-[input]
-cursor_blink = false
-
-# cd
-cd_title  = "Change directory:"
-cd_origin = "top-center"
-cd_offset = [ 0, 2, 50, 3 ]
-
-# create
-create_title  = [ "Create:", "Create (dir):" ]
-create_origin = "top-center"
-create_offset = [ 0, 2, 50, 3 ]
-
-# rename
-rename_title  = "Rename:"
-rename_origin = "hovered"
-rename_offset = [ 0, 1, 50, 3 ]
-
-# filter
-filter_title  = "Filter:"
-filter_origin = "top-center"
-filter_offset = [ 0, 2, 50, 3 ]
-
-# find
-find_title  = [ "Find next:", "Find previous:" ]
-find_origin = "top-center"
-find_offset = [ 0, 2, 50, 3 ]
-
-# search
-search_title  = "Search via {n}:"
-search_origin = "top-center"
-search_offset = [ 0, 2, 50, 3 ]
-
-# shell
-shell_title  = [ "Shell:", "Shell (block):" ]
-shell_origin = "top-center"
-shell_offset = [ 0, 2, 50, 3 ]
-
-[confirm]
-# trash
-trash_title 	= "Trash {n} selected file{s}?"
-trash_origin	= "center"
-trash_offset	= [ 0, 0, 70, 20 ]
-
-# delete
-delete_title 	= "Permanently delete {n} selected file{s}?"
-delete_origin	= "center"
-delete_offset	= [ 0, 0, 70, 20 ]
-
-# overwrite
-overwrite_title   = "Overwrite file?"
-overwrite_content = "Will overwrite the following file:"
-overwrite_origin  = "center"
-overwrite_offset  = [ 0, 0, 50, 15 ]
-
-# quit
-quit_title   = "Quit?"
-quit_content = "The following tasks are still running, are you sure you want to quit?"
-quit_origin  = "center"
-quit_offset  = [ 0, 0, 50, 15 ]
-
-[pick]
-open_title  = "Open with:"
-open_origin = "hovered"
-open_offset = [ 0, 1, 50, 7 ]
-
-[which]
-sort_by      	 = "none"
-sort_sensitive = false
-sort_reverse 	 = false
-sort_translit  = false
-
+micro_workers = 5
+macro_workers = 10
+bizarre_retry = 5
 
 [log]
 enabled = false
 
-
-[plugin]
-prepend_previewers = [
-  { name = "*.md", run = "glow" },
-  { name = "*.html", run = "html" },
-  { mime = "text/html", run = "html" },
-  { mime = "application/epub+zip", run = "epub-preview" },
-  { mime= "application/octet-stream", run = "video"}
-]
-
-# prepend_preloaders= [
-# 	# { mime = "image/{avif,hei?,jxl,svg+xml}", run = "disable" },
-# 	{ mime = "image/*", run = "disable" },
-# 	# Video
-# 	{ mime = "video/*", run = "disable" },
-# 	# PDF
-# 	# { mime = "application/pdf", run = "disable" },
-# 	# Font
-# 	{ mime = "font/*", run = "disable" },
-# 	{ mime = "application/vnd.ms-opentype", run = "disable" },
-# ]
+[[plugin.prepend_fetchers]]
+id    = "mime" # Remove if Yazi > v26.1.22
+url   = "local://*"
+run   = "mime-ext.local"
+prio  = "high"
+group = "mime"
 
 [[plugin.prepend_fetchers]]
-id   = "mime"
-if   = "!(mime|dummy)"
-name = "*"
-run  = "mime-ext"
-prio = "high"
+id    = "mime" # Remove if Yazi > v26.1.22
+url   = "remote://*"
+run   = "mime-ext.remote"
+prio  = "high"
+group = "mime"
 
 [[plugin.prepend_fetchers]]
 id   = "git"
-name = "*"
+url = "*"
 run  = "git"
+group = "git"
 
 [[plugin.prepend_fetchers]]
 id   = "git"
-name = "*/"
+url = "*/"
 run  = "git"
+group = "git"
 
 
 [[plugin.prepend_fetchers]]
 id   = "current-size"
-name = "*"
+url = "*"
 run  = "current-size"
+group = "current-size"
 
 [[plugin.prepend_fetchers]]
 id   = "current-size"
-name = "*/"
+url = "*/"
 run  = "current-size"
+group = "current-size"
 
+[[plugin.prepend_previewers]]
+url = "*.epub"
+run  = 'epub-preview'
+group = "epub"
+
+[[plugin.prepend_previewers]]
+url = "*.md"
+run  = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark %s1'
+
+[[plugin.prepend_previewers]]
+url = "*.docx"
+run  = 'piper -- CLICOLOR_FORCE=1 doxx --export ansi --image-width $w -w $w %s1'
+
+[[plugin.prepend_previewers]]
+url = "*.html"
+run  = 'piper -- w3m -I UTF-8 -T text/html %s1'
+
+[[plugin.prepend_previewers]]
+mime = "text/html"
+run  = 'piper -- w3m -I UTF-8 -T text/html %s1'
+
+[[plugin.prepend_previewers]]
+mime = "application/octet-stream"
+run  = "video"
+
+[[plugin.prepend_previewers]]
+url = "*.csv"
+run  = 'piper -- bat -p --color=always %s1'
+
+[[plugin.prepend_preloaders]]
+mime = "video/*"
+run  = "video-preloader"

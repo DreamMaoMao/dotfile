@@ -62,8 +62,8 @@ local load_file_to_state = ya.sync(function(state,filename)
 		return
 	end
 
-	for line in file:lines() do
-		line = line:gsub("[\r\n]", "")
+	for line_itme in file:lines() do
+		local line = line_itme:gsub("[\r\n]", "")
 		local bookmark = string_split(line,"###")
 		if bookmark == nil or #bookmark < 4 then
 			goto nextline
@@ -225,7 +225,7 @@ local function get_bind_key()
 	local key_set, event = ya.input({
 		realtime = false,
 		title = "set your bind key(one key):",
-		position = { "top-center", y = 3, w = 40 },
+		pos = { "top-center", y = 3, w = 40 },
 	})
 	if event == 1 and key_set ~= "" then
 		local key_set = assign_key(key_set)
@@ -256,7 +256,7 @@ return {
 			local value, event = ya.input({
 				realtime = false,
 				title = "set bookmark message:",
-				position = { "top-center", y = 3, w = 40 },
+				pos = { "top-center", y = 3, w = 40 },
 			})
 			if event == 1 then
 				local key = get_bind_key()
@@ -272,7 +272,7 @@ return {
 			local value, event = ya.input({
 				realtime = false,
 				title = "input change key:",
-				position = { "top-center", y = 3, w = 40 },
+				pos = { "top-center", y = 3, w = 40 },
 			})
 			if event == 1 then
 				modify_bookmark(value)
@@ -298,7 +298,7 @@ return {
 				return
 			end
 
-			ya.mgr_emit(bookmarks[selected].isdir == "true" and "cd" or "reveal", { bookmarks[selected].file_url })
+			ya.emit(bookmarks[selected].isdir == "true" and "cd" or "reveal", { bookmarks[selected].file_url })
 
 			return
 		elseif action == "delete" then

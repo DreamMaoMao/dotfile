@@ -86,18 +86,18 @@ local save = ya.sync(function(st, git_branch,git_file_status,git_is_dirty,git_st
 	st.git_status_str = git_status_str
 	st.is_ignore_dir = is_ignore_dir
 	st.is_untracked_dir= is_untracked_dir
-	ya.render()
+	ui.render()
 end)
 
 local clear_state = ya.sync(function(st)
 	st.git_branch = ""
 	st.git_file_status = ""
 	st.git_is_dirty = ""
-	ya.render()
+	ui.render()
 end)
 
 local function update_git_status(path)
-	ya.mgr_emit("plugin", { "git"})	
+	ya.emit("plugin", { "git"})	
 end
 
 local is_in_git_dir = ya.sync(function(st)
@@ -109,7 +109,7 @@ local flush_empty_folder_status = ya.sync(function(st)
 	local folder = cx.active.current
 	if #folder.window == 0 then
 		clear_state()
-		ya.mgr_emit("plugin", { "git", ya.quote(tostring(cwd))})		
+		ya.emit("plugin", { "git", ya.quote(tostring(cwd))})		
 	end
 end)
 
@@ -159,7 +159,7 @@ local M = {
 			if st.cwd ~= cwd then
 				st.cwd = cwd
 				clear_state()
-				ya.mgr_emit("plugin", { "git"})		
+				ya.emit("plugin", { "git"})		
 			end
 			return ui.Line{}				
 		end
@@ -187,7 +187,7 @@ local M = {
 
 		local git_branch
 		local result, _ = Command("git")
-		:args({ "symbolic-ref", "HEAD" })
+		:arg({ "symbolic-ref", "HEAD" })
 		:stdout(Command.PIPED)
 		:output()
 
@@ -205,7 +205,7 @@ local M = {
 		local git_status_str = ""
 		local git_file_status = nil
 		local result, _ = Command("git")
-		:args({ "--no-optional-locks","-c", "core.quotePath=", "status", "--ignored", "-s", "--ignore-submodules=dirty" })
+		:arg({ "--no-optional-locks","-c", "core.quotePath=", "status", "--ignored", "-s", "--ignore-submodules=dirty" })
 		:stdout(Command.PIPED)
 		:output()
 

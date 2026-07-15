@@ -64,7 +64,7 @@ local toggle_ui = ya.sync(function(st)
 		st.status_ej_id = nil
 		Entity._inc = Entity._inc - 1
 		Status._inc = Status._inc - 1
-		ya.render()
+		ui.render()
 		return
 	end
 
@@ -93,7 +93,7 @@ local toggle_ui = ya.sync(function(st)
 	end
 	st.status_ej_id = Status:children_add(status_ej,1001,Status.LEFT)
 
-	ya.render()
+	ui.render()
 end)
 
 local update_double_first_key = ya.sync(function(state, str)
@@ -128,7 +128,7 @@ local function read_input_todo (current_num,cursor,offset,first_key_of_lable)
 			if pos == nil or pos > current_num then
 				goto nextkey
 			else
-				ya.mgr_emit("arrow",{ pos - cursor - 1 + offset })	
+				ya.emit("arrow",{ pos - cursor - 1 + offset })	
 				return
 			end
 		end		
@@ -159,7 +159,7 @@ local function read_input_todo (current_num,cursor,offset,first_key_of_lable)
 			if pos == nil or pos > current_num then -- get the second double key fail, continue to get it
 				goto nextkey
 			else
-				ya.mgr_emit("arrow",{ pos - cursor - 1 + offset })	
+				ya.emit("arrow",{ pos - cursor - 1 + offset })	
 				return
 			end
 		end

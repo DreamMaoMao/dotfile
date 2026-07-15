@@ -164,7 +164,7 @@
     "custom/power": {
         "format": "",
         "tooltip": false,
-        "on-click": "wlogout -b 6 --protocol layer-shell",
+        "on-click": "wlogout -C ~/.config/sway/wlogout/style.css -l  ~/.config/sway/wlogout/layout  -b 6 --protocol layer-shell",
   		  "menu": "on-click-right",
   		  "menu-file": "~/.config/labwc/waybar/battery_menu.xml",
 		    "menu-actions": {

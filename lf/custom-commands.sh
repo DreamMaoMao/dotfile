@@ -311,8 +311,11 @@ cmd visual-toggle &{{
 
 # Fuzzy finding commands
 cmd fzf-jump ${{
-    selected_file=$(fzf --preview="bat --color=always {}" --prompt '> ')
-    
+    selected_file=$(fzf --preview='file -b --mime-type {} | grep -q "^image/"; and begin; \
+        echo {}; \
+        chafa -f sixels --size "$FZF_PREVIEW_COLUMNS"x(math $FZF_PREVIEW_LINES - 2) {} 2>/dev/null; \
+        end; or bat --color=always {}' --prompt '> ') 
+        
     if [[ -n "$selected_file" ]]; then
         dir=$(dirname "$selected_file")
         base=$(basename "$selected_file")
@@ -336,7 +339,7 @@ cmd fzf-rg-jump-with-action ${{
         file_path=$(echo "$selected" | cut -d: -f1)
         line_number=$(echo "$selected" | cut -d: -f2)
 
-        action=$(echo -e "nvim\nhelix\njump" | fzf \
+        action=$(echo -e "nvim\njump" | fzf \
             --height 50% \
             --layout=reverse \
             --border rounded \
@@ -348,9 +351,6 @@ cmd fzf-rg-jump-with-action ${{
         case "$action" in
             "nvim")
                 nvim +$line_number "$file_path"
-                ;;
-            "helix")
-                helix +$line_number "$file_path"
                 ;;
             "jump"|*)
                 dir=$(dirname "$file_path")

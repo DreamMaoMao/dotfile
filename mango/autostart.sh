@@ -3,10 +3,8 @@
 
 set +e
 
+systemctl --user restart xdg-desktop-portal &
 # /usr/sbin/xwayland-satellite :11 &
-
-# obs
-dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=wlroots >/dev/null 2>&1
 
 # /usr/lib/xdg-desktop-portal-wlr  >/dev/null 2>&1 &
 
@@ -20,14 +18,16 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 # qs -c noctalia-shell >/dev/null 2>&1 &
 
 # # notify
-swaync -c ~/.config/mango/swaync/config.json -s ~/.config/mango/swaync/style.css >/dev/null 2>&1 &
+swaync -c ~/.config/mango/swaync/config.json -s ~/.config/mango/swaync/style/style.scss >/dev/null 2>&1 &
+# mako &
 #
 # # night light
 wlsunset -T 3001 -t 3000 >/dev/null 2>&1 &
 #
 # # wallpaper
 swaybg -i ~/.config/mango/wallpaper/snow.jpg >/dev/null 2>&1 &
-#
+# swaybg -i ~/.config/mango/wallpaper/tk.jpeg >/dev/null 2>&1 &
+
 # # top bar
 waybar -c ~/.config/mango/waybar/config.jsonc -s ~/.config/mango/waybar/style.css >/dev/null 2>&1 &
 #
@@ -45,6 +45,9 @@ wl-clip-persist --clipboard regular --reconnect-tries 0 >/dev/null 2>&1 &
 # # clipboard content manager
 wl-paste --type text --watch cliphist store >/dev/null 2>&1 &
 #
+#ter
+# alacritty --daemon &
+kitty -1 --start-as=hidden 2>&1 &
 # # bluetooth 
 blueman-applet >/dev/null 2>&1 &
 #
@@ -65,3 +68,9 @@ sway-audio-idle-inhibit >/dev/null 2>&1 &
 
 # change light value and volume value by swayosd-client in keybind
 swayosd-server >/dev/null 2>&1 &
+
+# foot --server &
+wswitch --daemon &
+
+# otd-daemon &
+

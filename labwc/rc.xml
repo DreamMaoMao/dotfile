@@ -11,7 +11,7 @@
     <decoration>server</decoration>
     <gap>0</gap>
     <adaptiveSync>no</adaptiveSync>
-    <allowTearing>no</allowTearing>
+    <allowTearing>yes</allowTearing>
     <autoEnableOutputs>yes</autoEnableOutputs>
     <reuseOutputMode>no</reuseOutputMode>
     <xwaylandPersistence>yes</xwaylandPersistence>
@@ -58,6 +58,10 @@
 
   <windowRule identifier="mpv">
     <action name="ToggleMaximize" />
+  </windowRule>
+
+  <windowRule title="vkcube">
+    <action name="ToggleTearing" />
   </windowRule>
 
   <windowRule identifier="qxdrag.py">
@@ -121,6 +125,11 @@
     </keybind>
 
 
+    <keybind key="A-Tab">
+      <action name="NextWindow"/>
+    </keybind>
+
+
     <keybind key="W-space">
       <action name="Execute" command="rofi -theme ~/.config/labwc/rofi/gruvbox-dark-hard.rasi -modi blocks -show blocks -blocks-wrap ~/.config/rofi/history.lua" />
     </keybind>
@@ -133,6 +142,11 @@
     <keybind key="W-Return">
       <action name="Execute" command="google-chrome-stable" />
     </keybind>
+
+    <keybind key="W-p">
+      <action name="Execute" command="bash ~/.config/labwc/scripts/monitor.sh" />
+    </keybind>
+
 
     <keybind key="C-A-a">
       <action name="Execute" command="bash ~/.config/labwc/scripts/screenshot.sh" />
@@ -163,6 +177,11 @@
     <keybind key="C-W-Return">
       <action name="Execute" command="st -e yazi" />
     </keybind>
+
+    <keybind key="W-Tab">
+      <action name="Execute" command="wswitch next" />
+    </keybind>
+
 
     <keybind key="A-W-Return">
       <action name="Execute" command="mpv --player-operation-mode=pseudo-gui" />

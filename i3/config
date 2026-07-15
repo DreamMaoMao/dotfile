@@ -1,0 +1,164 @@
+# i3 config file (converted from i3)
+# Read `man i3` for a complete reference.
+font Maple Mono NF CN 20
+### 变量 (Variables)
+set $mod Mod1
+set $left h
+set $down j
+set $up k
+set $right l
+set $term st
+set $menu rofi -config ~/.config/mango/rofi/config.rasi -show drun
+
+### 基础设置
+# i3-gaps 语法 (在最新版 i3 中已内置)
+default_border pixel 4
+default_floating_border pixel 3
+gaps inner 5
+gaps outer 0
+# smart_borders on
+# smart_gaps on
+
+focus_follows_mouse yes
+
+# 颜色配置 (client.<class> <border> <bg> <text> <indicator> <child_border>)
+client.focused          #c9b890 #c9b890 #ffffff #835529 #c9b890
+client.unfocused        #45475a #412406 #ffffff #835529 #45475a
+client.urgent           #ad401f #ad401f #ffffff #835529 #ad401f
+
+### 快捷键绑定 (Key bindings)
+# 基础操作
+bindsym $mod+Return exec $term
+bindsym $mod+q kill
+bindsym $mod+space exec $menu
+
+# 拖拽与缩放 (i3 中通常只使用浮动修改器)
+floating_modifier Mod4
+
+# 重载/退出
+bindsym Mod4+r reload
+bindsym Mod4+Shift+r restart
+bindsym Mod4+m exec i3-msg exit
+
+# 移动焦点
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# 移动窗口
+bindsym Shift+Mod4+Left move left
+bindsym Shift+Mod4+Down move down
+bindsym Shift+Mod4+Up move up
+bindsym Shift+Mod4+Right move right
+
+### 工作区 (Workspaces)
+# 切换工作区
+bindsym Ctrl+Left workspace prev
+bindsym Ctrl+Right workspace next
+
+bindsym Ctrl+mod2+KP_0 workspace number 0
+bindsym Ctrl+mod2+KP_1 workspace number 1
+bindsym Ctrl+mod2+KP_2 workspace number 2
+bindsym Ctrl+mod2+KP_3 workspace number 3
+bindsym Ctrl+mod2+KP_4 workspace number 4
+bindsym Ctrl+mod2+KP_5 workspace number 5
+bindsym Ctrl+mod2+KP_6 workspace number 6
+bindsym Ctrl+mod2+KP_7 workspace number 7
+bindsym Ctrl+mod2+KP_8 workspace number 8
+bindsym Ctrl+mod2+KP_9 workspace number 9
+
+# 注意：脚本路径需确保 i3 能访问，且脚本内的 i3msg 需改为 i3-msg
+bindsym Mod4+Left exec bash ~/.config/i3/scripts/workspace.sh viewleft
+bindsym Mod4+Right exec bash ~/.config/i3/scripts/workspace.sh viewright
+
+# 移动容器到工作区
+bindsym Mod1+mod2+KP_0 exec bash ~/.config/i3/scripts/workspace.sh move0
+bindsym Mod1+mod2+KP_1 exec bash ~/.config/i3/scripts/workspace.sh move1
+bindsym Mod1+mod2+KP_2 exec bash ~/.config/i3/scripts/workspace.sh move2
+bindsym Mod1+mod2+KP_3 exec bash ~/.config/i3/scripts/workspace.sh move3
+bindsym Mod1+mod2+KP_4 exec bash ~/.config/i3/scripts/workspace.sh move4
+bindsym Mod1+mod2+KP_5 exec bash ~/.config/i3/scripts/workspace.sh move5
+bindsym Mod1+mod2+KP_6 exec bash ~/.config/i3/scripts/workspace.sh move6
+bindsym Mod1+mod2+KP_7 exec bash ~/.config/i3/scripts/workspace.sh move7
+bindsym Mod1+mod2+KP_8 exec bash ~/.config/i3/scripts/workspace.sh move8
+bindsym Mod1+mod2+KP_9 exec bash ~/.config/i3/scripts/workspace.sh move9
+bindsym Ctrl+Mod4+Left exec bash ~/.config/i3/scripts/workspace.sh moveleft
+bindsym Ctrl+Mod4+Right exec bash ~/.config/i3/scripts/workspace.sh moveright
+
+### 布局 (Layout)
+bindsym Mod1+Shift+Right split h
+bindsym Mod1+Shift+Down split v
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+a fullscreen
+bindsym $mod+backslash floating toggle
+bindsym $mod+t focus mode_toggle
+bindsym $mod+Mod4+p focus parent
+
+### 临时工作区 (Scratchpad)
+bindsym Mod4+i move scratchpad
+bindsym Mod1+z scratchpad show
+
+### 调整大小模式 (Resize mode)
+mode "resize" {
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym Mod1+Mod4+u mode "resize"
+
+### 应用快捷键
+bindsym Mod4+Return exec google-chrome
+bindsym Ctrl+Return exec bash ~/tool/clash.sh 
+# 注意：wshowkey 是 Wayland 专用，X11 下建议使用 screenkey
+bindsym Mod4+k exec screenkey 
+bindsym Ctrl+Mod4+Return exec st -e yazi
+bindsym Mod1+Mod4+Return exec mpv --player-operation-mode=pseudo-gui
+# 截图：grim/slurp 替换为 maim 或 scrot
+bindsym Ctrl+Mod1+a exec "maim -s | xclip -selection clipboard -t image/png"
+bindsym Ctrl+Mod1+Return exec konsole -e "~/tool/ter-multiplexer.sh"
+bindsym Mod4+l exec i3lock -c 000000
+bindsym Mod4+space exec rofi -show drun -theme ~/.config/rofi/themes/gruvbox-dark-hard.rasi
+
+# 亮度与音量 (保持原脚本调用，确认脚本内部适配 X11)
+bindsym Ctrl+period exec ~/.config/hypr/scripts/brightness.sh up
+bindsym Ctrl+comma exec ~/.config/hypr/scripts/brightness.sh down
+bindsym Mod1+period exec ~/.config/hypr/scripts/volume.sh up
+bindsym Mod1+comma exec ~/.config/hypr/scripts/volume.sh down
+
+### 启动项 (Autostart)
+# X11 DPI 设置
+exec_always xrdb -merge <<< "Xft.dpi: 140"
+
+# 壁纸 (i3bg 替换为 feh)
+exec_always feh --bg-fill /home/wrq/Images/czd.png
+
+# 输入法
+exec --no-startup-id fcitx5 -d
+
+# 通知 (i3nc 建议替换为 dunst)
+exec --no-startup-id dunst
+
+# 状态栏 (waybar 替换为 i3bar 或 polybar)
+# 这里保留你的 waybar 命令，但 waybar 在 X11 下可能无法运行，建议改用 polybar
+# exec_always --no-startup-id polybar mybar &
+bar {
+    status_command i3status
+    position top
+    font pango:Maple Mono NF CN 10
+}
+
+# 其他守护进程
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id udisksctl mount -t ext4 -b /dev/sda4
+exec --no-startup-id redshift
+exec --no-startup-id numlockx on
+exec --no-startup-id picom
