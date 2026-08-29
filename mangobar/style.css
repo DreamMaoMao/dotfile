@@ -1,0 +1,190 @@
+/* =========================================================
+ * mangobar style — colors ported from
+ * ~/.config/mango/waybar/style.css
+ * ========================================================= */
+
+/* ==================== Colors (from waybar) ==================== */
+@define-color color-bg                                  #1b1a1a;
+@define-color color-fg                                  #ebdbb2;
+@define-color color-button-bg                           #83a598;
+@define-color color-button-fg                           #1b1a1a;
+@define-color color-button-urgent-bg                    #fb4934;
+@define-color color-button-urgent-fg                    #1b1a1a;
+@define-color color-workspace-button-bg                 #403b36;
+@define-color color-workspace-button-fg                 #ebdbb2;
+@define-color color-workspace-button-hover-bg           #665c54;
+@define-color color-workspace-button-hover-fg           #ebdbb2;
+@define-color color-workspace-button-focused-bg         #83a598;
+@define-color color-workspace-button-focused-fg         #1b1a1a;
+@define-color color-widget-audio-bg                     #e3ac2b;
+@define-color color-widget-audio-fg                     #1b1a1a;
+@define-color color-widget-clock-bg                     #c4b595;
+@define-color color-widget-clock-fg                     #1b1a1a;
+@define-color color-widget-battery-bg                   #b8bb26;
+@define-color color-widget-battery-fg                   #1b1a1a;
+@define-color color-widget-backlight-bg                 #d3869b;
+@define-color color-widget-backlight-fg                 #1b1a1a;
+@define-color color-widget-memory-bg                    #83a598;
+@define-color color-widget-memory-fg                    #1b1a1a;
+@define-color color-widget-cpu-bg                       #c4b595;
+@define-color color-widget-cpu-fg                       #1b1a1a;
+@define-color color-widget-network-bg                   #b8bb26;
+@define-color color-widget-network-fg                   #1b1a1a;
+@define-color color-widget-tray-bg                      #504945;
+@define-color color-widget-power-bg                     #83a598;
+@define-color color-widget-power-fg                     #1b1a1a;
+@define-color color-widget-window-bg                    #bd788a;
+@define-color color-widget-window-fg                    #111111;
+@define-color color-widget-layout-bg                    #bd788a;
+@define-color color-widget-layout-fg                    #111111;
+@define-color color-widget-language-bg                  #bd788a;
+@define-color color-widget-language-fg                  #1b1a1a;
+@define-color color-widget-keymode-bg                   #83a598;
+@define-color color-widget-keymode-fg                   #1b1a1a;
+@define-color color-menu-bg                             #241F19;
+@define-color color-menuitem-fg                         #ebdbb2;
+@define-color color-menuitem-hover-bg                   #b8bb26;
+@define-color color-menuitem-hover-fg                   #1b1a1a;
+@define-color color-gradient-fade                       #fbf1c7;
+
+/* ==================== Font ==================== */
+* {
+    font-family: "Maple Mono NF CN";
+    font-size: 20px;
+    font-weight: bold;
+}
+
+* {
+    color: #ebdbb2;
+    background-color: #504945;
+    padding: 0px 10px;
+    margin: 5px 1px;
+    border-radius: 100px;
+}
+
+#bar {
+    background: none;
+    margin: 5px 10px;
+}
+#bar.sel {
+    background: none;
+}
+
+/* Workspace buttons (waybar #workspaces button) */
+#tags {
+    padding: 0px 13px;
+    margin: 0px 2px;
+    background: linear-gradient(to top, mix(@color-workspace-button-bg, @color-bg, 0.15), mix(@color-workspace-button-bg, @color-gradient-fade, 0.30));
+    color: @color-workspace-button-fg;
+}
+#tags:hover {
+    background: linear-gradient(to top, mix(@color-workspace-button-hover-bg, @color-bg, 0.15), mix(@color-workspace-button-hover-bg, @color-gradient-fade, 0.30));
+    color: @color-workspace-button-hover-fg;
+}
+#tags.active {
+    background: linear-gradient(to top, mix(@color-workspace-button-focused-bg, @color-bg, 0.15), mix(@color-workspace-button-focused-bg, @color-gradient-fade, 0.30));
+    color: @color-workspace-button-focused-fg;
+}
+#tags.occupied {
+    background: linear-gradient(to top, mix(@color-workspace-button-bg, @color-bg, 0.15), mix(@color-workspace-button-bg, @color-gradient-fade, 0.30));
+    color: @color-workspace-button-fg;
+}
+#tags.urgent {
+    background: linear-gradient(to top, mix(@color-button-urgent-bg, @color-bg, 0.15), mix(@color-button-urgent-bg, @color-gradient-fade, 0.30));
+    color: @color-button-urgent-fg;
+}
+#tags.empty {
+    background: linear-gradient(to top, mix(@color-workspace-button-bg, @color-bg, 0.15), mix(@color-workspace-button-bg, @color-gradient-fade, 0.30));
+    color: @color-workspace-button-fg;
+}
+
+/* Overview mode */
+#overview {
+    background: linear-gradient(to top, mix(@color-workspace-button-focused-bg, @color-bg, 0.15), mix(@color-workspace-button-focused-bg, @color-gradient-fade, 0.30));
+    color: @color-workspace-button-focused-fg;
+}
+
+/* Layout symbol */
+#layout {
+    padding: 0px 12px;
+    min-width: 37px;
+    margin: 5px 5px;
+    background: linear-gradient(to top, mix(@color-widget-layout-bg, @color-bg, 0.15), mix(@color-widget-layout-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-layout-fg;
+}
+
+/* Window title */
+#title {
+    background: linear-gradient(to top, mix(@color-widget-window-bg, @color-bg, 0.08), mix(@color-widget-window-bg, @color-gradient-fade, 0.3));
+    color: @color-widget-window-fg;
+}
+
+/* Right-side system modules */
+#clock {
+    background: linear-gradient(to top, mix(@color-widget-clock-bg, @color-bg, 0.15), mix(@color-widget-clock-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-clock-fg;
+}
+/* Date module (clock#date) uses the network color, same as waybar */
+#clock.date {
+    background: linear-gradient(to top, mix(@color-widget-network-bg, @color-bg, 0.15), mix(@color-widget-network-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-network-fg;
+}
+#cpu {
+    padding: 0px 15px;
+    background: linear-gradient(to top, mix(@color-widget-cpu-bg, @color-bg, 0.15), mix(@color-widget-cpu-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-cpu-fg;
+}
+#mem {
+    background: linear-gradient(to top, mix(@color-widget-memory-bg, @color-bg, 0.15), mix(@color-widget-memory-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-memory-fg;
+}
+#brightness {
+    background: linear-gradient(to top, mix(@color-widget-backlight-bg, @color-bg, 0.15), mix(@color-widget-backlight-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-backlight-fg;
+}
+#volume {
+    background: linear-gradient(to top, mix(@color-widget-audio-bg, @color-bg, 0.15), mix(@color-widget-audio-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-audio-fg;
+}
+#network {
+    background: linear-gradient(to top, mix(@color-widget-network-bg, @color-bg, 0.15), mix(@color-widget-network-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-network-fg;
+}
+#battery {
+    background: linear-gradient(to top, mix(@color-widget-battery-bg, @color-bg, 0.15), mix(@color-widget-battery-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-battery-fg;
+}
+#keymode {
+    background: linear-gradient(to top, mix(@color-widget-keymode-bg, @color-bg, 0.15), mix(@color-widget-keymode-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-keymode-fg;
+}
+#keyboardlayout {
+    background: linear-gradient(to top, mix(@color-widget-language-bg, @color-bg, 0.15), mix(@color-widget-language-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-language-fg;
+}
+
+/* Custom modules use #custom-<name> (e.g. custom/power -> #custom-power) */
+#custom-power {
+    margin: 0px 5px;
+    background: linear-gradient(to top, mix(@color-widget-power-bg, @color-bg, 0.15), mix(@color-widget-power-bg, @color-gradient-fade, 0.30));
+    color: @color-widget-power-fg;
+}
+
+#tray {
+    padding: 0px 15px;
+    background: linear-gradient(to top, mix(@color-widget-tray-bg, @color-bg, 0.16), mix(@color-widget-tray-bg, @color-gradient-fade, 0.30));
+}
+
+menu {
+    background-color: @color-menu-bg;
+    border-color: #ebdbb2;
+    border-radius: 10px;
+    font-size: 14px;
+}
+menuitem {
+    color: @color-menuitem-fg;
+}
+menuitem:hover {
+    color: @color-menuitem-hover-fg;
+    background-color: @color-menuitem-hover-bg;
+}
